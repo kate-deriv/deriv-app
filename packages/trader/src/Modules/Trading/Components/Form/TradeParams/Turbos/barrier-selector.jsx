@@ -48,7 +48,7 @@ const BarrierSelector = ({ barrier_1, onChange, setHoveredBarrier, turbos_barrie
 
     return (
         <React.Fragment>
-            {isMobile ? (
+            {isMobile() ? (
                 <div className='mobile-widget'>
                     <div className='mobile-widget__spot'>{localize('Spot')}</div>
                     <div className='mobile-widget__barriers-value'>{barrier_1}</div>
