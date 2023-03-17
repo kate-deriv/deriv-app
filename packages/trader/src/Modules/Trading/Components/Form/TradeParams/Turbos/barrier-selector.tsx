@@ -61,7 +61,7 @@ const BarrierSelector = observer(() => {
             <Popover
                 alignment='bottom'
                 icon='info'
-                zIndex={'9999'}
+                zIndex='9999'
                 message={header_tooltip_text}
                 is_open={is_mobile_tooltip_visible}
                 onClick={toggleMobileTooltip}
