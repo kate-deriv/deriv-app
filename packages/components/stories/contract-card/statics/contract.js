@@ -119,14 +119,6 @@ export const getUnsupportedContracts = () => ({
         name: 'Reset Put',
         position: 'bottom',
     },
-    TICKHIGH: {
-        name: 'High Tick',
-        position: 'top',
-    },
-    TICKLOW: {
-        name: 'Low Tick',
-        position: 'bottom',
-    },
     ASIANU: {
         name: 'Asian Up',
         position: 'top',
@@ -241,6 +233,14 @@ export const getSupportedContracts = is_high_low => ({
     },
     UPORDOWN: {
         name: 'Goes Outside',
+        position: 'bottom',
+    },
+    TICKHIGH: {
+        name: 'High Tick',
+        position: 'top',
+    },
+    TICKLOW: {
+        name: 'Low Tick',
         position: 'bottom',
     },
 });

@@ -106,14 +106,6 @@ export const getUnsupportedContracts = () => ({
         name: localize('Reset Put'),
         position: 'bottom',
     },
-    TICKHIGH: {
-        name: localize('High Tick'),
-        position: 'top',
-    },
-    TICKLOW: {
-        name: localize('Low Tick'),
-        position: 'bottom',
-    },
     ASIANU: {
         name: localize('Asian Up'),
         position: 'top',
@@ -220,6 +212,14 @@ export const getSupportedContracts = is_high_low => ({
     },
     UPORDOWN: {
         name: localize('Goes Outside'),
+        position: 'bottom',
+    },
+    TICKHIGH: {
+        name: localize('High Tick'),
+        position: 'top',
+    },
+    TICKLOW: {
+        name: localize('Low Tick'),
         position: 'bottom',
     },
 });

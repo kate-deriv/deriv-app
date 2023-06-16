@@ -145,14 +145,6 @@ export const getUnsupportedContracts = () => ({
         name: <Localize i18n_default_text='Reset Put' />,
         position: 'bottom',
     },
-    TICKHIGH: {
-        name: <Localize i18n_default_text='High Tick' />,
-        position: 'top',
-    },
-    TICKLOW: {
-        name: <Localize i18n_default_text='Low Tick' />,
-        position: 'bottom',
-    },
     ASIANU: {
         name: <Localize i18n_default_text='Asian Up' />,
         position: 'top',
@@ -276,6 +268,14 @@ export const getSupportedContracts = is_high_low => ({
     },
     UPORDOWN: {
         name: <Localize i18n_default_text='Goes Outside' />,
+        position: 'bottom',
+    },
+    TICKHIGH: {
+        name: <Localize i18n_default_text='High Tick' />,
+        position: 'top',
+    },
+    TICKLOW: {
+        name: <Localize i18n_default_text='Low Tick' />,
         position: 'bottom',
     },
 });
