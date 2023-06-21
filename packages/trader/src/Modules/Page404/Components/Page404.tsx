@@ -1,10 +1,9 @@
 import React from 'react';
 import { PageError } from '@deriv/components';
 import { routes, getUrlBase } from '@deriv/shared';
-
 import { localize } from '@deriv/translations';
 
-const Page404 = () => (
+const Page404: React.FC = () => (
     <PageError
         header={localize('We couldn’t find that page')}
         messages={[
