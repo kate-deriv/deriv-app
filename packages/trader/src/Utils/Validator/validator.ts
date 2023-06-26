@@ -5,15 +5,15 @@ import { getValidationRules } from 'Stores/Modules/Trading/Constants/validation-
 import { TTradeStore } from 'Types';
 
 type TOptions = {
-    min?: number;
-    max?: number | string;
-    type?: string;
-    decimals?: string | number;
-    regex?: RegExp;
     [key: string]: unknown;
+    decimals?: string | number;
     is_required?: boolean;
+    max?: number | string;
+    min?: number;
     name1?: string;
     name2?: string;
+    regex?: RegExp;
+    type?: string;
 };
 
 type TInitPreBuildDVRs = ReturnType<typeof getValidationRules>;
