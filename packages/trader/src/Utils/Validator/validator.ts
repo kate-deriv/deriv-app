@@ -106,7 +106,7 @@ class Validator {
                         ruleObject.options,
                         this.store,
                         this.input
-                    );
+                    ) as TValidationResult;
                     is_valid = is_ok;
                     error_message = message;
                 } else {
