@@ -42,4 +42,3 @@ export const getTradeTypeName = (category: string) =>
     category
         ? (getContractConfig()[category.toUpperCase() as keyof typeof getContractConfig] as TTradeConfig)?.name
         : null;
-

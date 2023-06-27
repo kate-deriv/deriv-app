@@ -27,9 +27,9 @@ type TRuleOptions = {
 type TRule = string | Array<string | TRuleOptions>;
 
 type TValidationResult = {
-  is_ok: boolean;
-  message: string;
-}
+    is_ok: boolean;
+    message: string;
+};
 
 class Validator {
     input: { [key: string]: any };
