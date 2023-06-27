@@ -6,6 +6,7 @@ import type {
     GetLimits,
     GetSettings,
     LogOutResponse,
+    Proposal,
     ProposalOpenContract,
 } from '@deriv/api-types';
 import type { Moment } from 'moment';
@@ -324,10 +325,7 @@ type TPortfolioPositionContract = {
         buy: number;
         sell: number;
     };
-    limit_order?: {
-        stop_loss?: null | number;
-        take_profit?: null | number;
-    };
+    limit_order?: Proposal['limit_order'];
     underlying?: string;
 };
 
@@ -348,6 +346,7 @@ type TPortfolioPositions = {
 type TPortfolioStore = {
     active_positions: TPortfolioPositions;
     all_positions: TPortfolioPositions;
+    barriers: TBarrierStore[];
     error: TCommonStoreError;
     getPositionById: (id: number) => ProposalOpenContract;
     is_loading: boolean;
@@ -361,6 +360,21 @@ type TPortfolioStore = {
 
 type TContractStore = {
     getContractById: (id: number) => ProposalOpenContract;
+    contract_info: TPortfolioPositionContract;
+    contract_update_stop_loss: string;
+    contract_update_take_profit: string;
+    has_contract_update_stop_loss: boolean;
+    has_contract_update_take_profit: boolean;
+};
+
+type TBarrierStore = {
+    key: string;
+    draggable: boolean;
+    hideOffscreenBarrier: boolean;
+    high: string | number;
+    isSingleBarrier: boolean;
+    onChange: ({ high, low }: { high: string; low?: string }) => void;
+    updateBarrierColor: (input: boolean) => void;
 };
 
 type TMenuStore = {
@@ -425,6 +439,7 @@ export type TCoreStores = {
     ui: TUiStore;
     portfolio: TPortfolioStore;
     contract_trade: TContractStore;
+    barrier: TBarrierStore;
     // This should be `any` as this property will be handled in each package.
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     modules: Record<string, any>;
