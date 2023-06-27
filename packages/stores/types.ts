@@ -224,6 +224,7 @@ type TClientStore = {
     should_allow_authentication: boolean;
     is_crypto: (currency?: string) => boolean;
     dxtrade_accounts_list: DetailsOfEachMT5Loginid[];
+    derivez_accounts_list: DetailsOfEachMT5Loginid[];
     default_currency: string;
     resetVirtualBalance: () => Promise<void>;
     has_enabled_two_fa: boolean;
@@ -285,6 +286,7 @@ type TUiStore = {
     setReportsTabIndex: (value: number) => void;
     setIsClosingCreateRealAccountModal: (value: boolean) => void;
     setRealAccountSignupEnd: (status: boolean) => void;
+    setPurchaseState: (index: number) => void;
     sub_section_index: number;
     setSubSectionIndex: (index: number) => void;
     shouldNavigateAfterChooseCrypto: (value: string) => void;
@@ -305,11 +307,47 @@ type TUiStore = {
     toggleNeedRealAccountForCashierModal: () => void;
     populateHeaderExtensions: (header_items: JSX.Element | null) => void;
     populateSettingsExtensions: (menu_items: Array<TPopulateSettingsExtensionsMenuItem> | null) => void;
+    purchase_states: boolean[];
     setShouldShowCooldownModal: (value: boolean) => void;
 };
 
+type TPortfolioPositionContract = {
+    buy_price?: number;
+    contract_id?: number;
+    contract_type?: string;
+    entry_spot?: number | null;
+    longcode?: string;
+    payout?: number;
+    shortcode?: string;
+    transaction_id?: number;
+    transaction_ids?: {
+        buy: number;
+        sell: number;
+    };
+    limit_order?: {
+        stop_loss?: null | number;
+        take_profit?: null | number;
+    };
+    underlying?: string;
+};
+
+type TPortfolioPositions = {
+    contract_info: TPortfolioPositionContract;
+    details: string;
+    display_name: string;
+    id?: number;
+    indicative: number;
+    payout: number;
+    purchase: number;
+    reference: number;
+    type?: string;
+    is_unsupported: boolean;
+    contract_update: TPortfolioPositionContract['limit_order'];
+}[];
+
 type TPortfolioStore = {
-    active_positions: ProposalOpenContract[];
+    active_positions: TPortfolioPositions;
+    all_positions: TPortfolioPositions;
     error: TCommonStoreError;
     getPositionById: (id: number) => ProposalOpenContract;
     is_loading: boolean;
@@ -368,9 +406,10 @@ type TTradersHubStore = {
     multipliers_account_status: string;
     financial_restricted_countries: boolean;
     selected_account_type: string;
+    setSelectedAccount: (account: { login?: string; account_id?: string }) => void;
     no_CR_account: boolean;
     no_MF_account: boolean;
-    setSelectedAccount: (account: { login?: string; account_id?: string }) => void;
+    CFDs_restricted_countries: boolean;
     toggleAccountTransferModal: () => void;
     is_demo: boolean;
     selectAccountType: (account_type: string) => void;

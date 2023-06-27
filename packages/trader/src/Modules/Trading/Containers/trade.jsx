@@ -2,12 +2,12 @@ import React from 'react';
 import classNames from 'classnames';
 import { DesktopWrapper, Div100vhContainer, MobileWrapper, SwipeableWrapper } from '@deriv/components';
 import { isDesktop, isMobile } from '@deriv/shared';
-import ChartLoader from 'App/Components/Elements/chart-loader.jsx';
+import ChartLoader from 'App/Components/Elements/chart-loader';
 import PositionsDrawer from 'App/Components/Elements/PositionsDrawer';
 import MarketIsClosedOverlay from 'App/Components/Elements/market-is-closed-overlay.jsx';
 import Test from './test.jsx';
 import { ChartBottomWidgets, ChartTopWidgets, DigitsWidget } from './chart-widgets.jsx';
-import FormLayout from '../Components/Form/form-layout.jsx';
+import FormLayout from '../Components/Form/form-layout';
 import AllMarkers from '../../SmartChart/Components/all-markers.jsx';
 import AccumulatorsChartElements from '../../SmartChart/Components/Markers/accumulators-chart-elements.jsx';
 import ToolbarWidgets from '../../SmartChart/Components/toolbar-widgets.jsx';
@@ -57,7 +57,7 @@ const Trade = observer(() => {
         should_show_multipliers_onboarding,
         is_dark_mode_on: is_dark_theme,
     } = ui;
-    const { is_eu, is_virtual } = client;
+    const { is_eu } = client;
     const { network_status } = common;
 
     const [digits, setDigits] = React.useState([]);
@@ -224,11 +224,7 @@ const Trade = observer(() => {
                 <FormLayout
                     is_market_closed={is_market_closed}
                     is_trade_enabled={
-                        is_trade_enabled &&
-                        form_components.length > 0 &&
-                        network_status.class === 'online' &&
-                        // TODO: delete the below line for releasing ACCU trade for real
-                        (is_virtual || !form_components.includes('accumulator'))
+                        is_trade_enabled && form_components.length > 0 && network_status.class === 'online'
                     }
                 />
             </div>
