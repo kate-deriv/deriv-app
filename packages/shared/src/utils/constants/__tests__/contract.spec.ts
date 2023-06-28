@@ -9,7 +9,7 @@ import {
     getContractTypePosition,
 } from '../contract';
 
-type TTest = Parameters<typeof getContractTypeDisplay>[0];
+type TTest = keyof ReturnType<typeof getSupportedContracts>;
 const card_label = localize('Apply');
 const markets_name = localize('AUD/CAD');
 const unsupported_contract = {
