@@ -102,7 +102,6 @@ export const getLimitOrder = (
         contract_info,
     } = contract_update;
 
-    // const limit_order = {};
     const limit_order: { take_profit?: number | null; stop_loss?: number | null } = {};
 
     const new_take_profit = has_contract_update_take_profit ? +contract_update_take_profit : null;
