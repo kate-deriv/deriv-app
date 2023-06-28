@@ -64,14 +64,14 @@ export const getProposalInfo = (
     const is_stake = contract_basis?.value === 'stake';
 
     const price = is_stake ? stake : proposal?.[contract_basis?.value as keyof PriceProposalResponse['proposal']];
-    let has_increased: boolean | null = null;
+    let has_increased = false;
 
     if (price !== undefined) {
         has_increased = price > obj_prev_contract_basis.value;
     }
 
     if (!obj_prev_contract_basis.value || price === obj_prev_contract_basis.value) {
-        has_increased = null;
+        has_increased = !!null;
     }
 
     const obj_contract_basis = {
