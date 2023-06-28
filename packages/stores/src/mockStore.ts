@@ -336,6 +336,7 @@ const mock = (): TStores & { is_mock: boolean } => {
             onClickCancel: jest.fn(),
             onClickSell: jest.fn(),
             onMount: jest.fn(),
+            positions: [],
             removePositionById: jest.fn(),
         },
         contract_trade: {
