@@ -2,14 +2,14 @@ import { ContractType as ContractTypeHelper } from 'Stores/Modules/Trading/Helpe
 import * as ContractType from '../Actions/contract-type';
 import * as Duration from '../Actions/duration';
 import * as StartDate from '../Actions/start-date';
-import { useTraderStore } from 'Stores/useTraderStores';
+import { TTradeStore } from 'Types';
 
 const processInSequence = async (
-    store: ReturnType<typeof useTraderStore>,
+    store: TTradeStore,
     functions: ReturnType<typeof getMethodsList> | ReturnType<typeof getExpiryMethodsList>
 ) => {
     //@ts-expect-error need to typescript convert base store and make parameters optional else it will break
-    const snapshot = store.getSnapshot() as ReturnType<typeof useTraderStore>;
+    const snapshot = store.getSnapshot() as TTradeStore;
     // To make sure that every function is invoked and affects the snapshot respectively, we have to use for instead of forEach
     for (let i = 0; i < functions.length; i++) {
         // Shallow copy with Object.assign is good enough to extend the snapshot with new state
@@ -21,10 +21,7 @@ const processInSequence = async (
     });
 };
 
-export const processTradeParams = async (
-    store: ReturnType<typeof useTraderStore>,
-    new_state: DeepPartial<ReturnType<typeof useTraderStore>>
-) => {
+export const processTradeParams = async (store: TTradeStore, new_state: DeepPartial<TTradeStore>) => {
     const functions = getMethodsList(store, new_state);
     await processInSequence(store, functions);
 

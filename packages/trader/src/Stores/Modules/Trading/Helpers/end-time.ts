@@ -1,12 +1,12 @@
 import { useStore } from '@deriv/stores';
-import { useTraderStore } from 'Stores/useTraderStores';
+import { TTradeStore } from 'Types';
 import moment from 'moment';
 
 type TTime = {
     server_time: NonNullable<ReturnType<typeof useStore>['common']['server_time']>;
     selected_time: moment.Moment;
-    market_open_times: ReturnType<typeof useTraderStore>['market_open_times'];
-    market_close_times: ReturnType<typeof useTraderStore>['market_close_times'];
+    market_open_times: TTradeStore['market_open_times'];
+    market_close_times: TTradeStore['market_close_times'];
 };
 
 const getClosestTime = (time: moment.Moment | string, interval: number): moment.Moment => {

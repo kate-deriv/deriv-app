@@ -1,7 +1,6 @@
 import { PriceProposalResponse } from '@deriv/api-types';
 import { convertToUnix, getDecimalPlaces, getPropertyValue, isAccumulatorContract, toMoment } from '@deriv/shared';
-import { useTraderStore } from 'Stores/useTraderStores';
-import { TError } from 'Types';
+import { TError, TTradeStore } from 'Types';
 
 type TObjContractBasis = {
     text: string;
@@ -47,7 +46,7 @@ export const getProposalErrorField = (response: PriceProposalResponse) => {
 };
 
 export const getProposalInfo = (
-    store: ReturnType<typeof useTraderStore>,
+    store: TTradeStore,
     response: PriceProposalResponse & TError,
     obj_prev_contract_basis: TObjContractBasis
 ) => {
@@ -107,7 +106,7 @@ export const getProposalInfo = (
     };
 };
 
-export const createProposalRequests = (store: ReturnType<typeof useTraderStore>) => {
+export const createProposalRequests = (store: TTradeStore) => {
     const requests = {} as Record<string, ReturnType<typeof createProposalRequestForContract>>;
 
     Object.keys(store.trade_types).forEach(type => {
@@ -118,7 +117,7 @@ export const createProposalRequests = (store: ReturnType<typeof useTraderStore>)
     return requests;
 };
 
-const setProposalMultiplier = (store: ReturnType<typeof useTraderStore>, obj_multiplier: TObjMultiplier) => {
+const setProposalMultiplier = (store: TTradeStore, obj_multiplier: TObjMultiplier) => {
     obj_multiplier.multiplier = store.multiplier;
     obj_multiplier.cancellation = store.has_cancellation ? store.cancellation_duration : undefined;
 
@@ -133,7 +132,7 @@ const setProposalMultiplier = (store: ReturnType<typeof useTraderStore>, obj_mul
     }
 };
 
-const setProposalAccumulator = (store: ReturnType<typeof useTraderStore>, obj_accumulator: TObjAccum) => {
+const setProposalAccumulator = (store: TTradeStore, obj_accumulator: TObjAccum) => {
     obj_accumulator.growth_rate = store.growth_rate;
 
     obj_accumulator.limit_order = store.has_take_profit ? {} : undefined;
@@ -143,7 +142,7 @@ const setProposalAccumulator = (store: ReturnType<typeof useTraderStore>, obj_ac
     }
 };
 
-const createProposalRequestForContract = (store: ReturnType<typeof useTraderStore>, type_of_contract: string) => {
+const createProposalRequestForContract = (store: TTradeStore, type_of_contract: string) => {
     const obj_accumulator: TObjAccum = {};
     const obj_expiry: TObjExpiry = {};
     const obj_multiplier: TObjMultiplier = {};

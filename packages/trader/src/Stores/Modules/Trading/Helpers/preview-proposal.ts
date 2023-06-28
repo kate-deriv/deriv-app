@@ -1,15 +1,11 @@
 import debounce from 'lodash.debounce';
 import { isEmptyObject, WS } from '@deriv/shared';
 import { createProposalRequests } from './proposal';
-import { useTraderStore } from 'Stores/useTraderStores';
 import { PriceProposalResponse } from '@deriv/api-types';
+import { TTradeStore } from 'Types';
 
 export const requestPreviewProposal = debounce(
-    (
-        store: ReturnType<typeof useTraderStore>,
-        override = {},
-        onProposalResponse: (response: PriceProposalResponse) => void
-    ) => {
+    (store: TTradeStore, override = {}, onProposalResponse: (response: PriceProposalResponse) => void) => {
         const new_store = { ...store, ...override };
         const requests = createProposalRequests(new_store);
         const subscription_map: { [key: string]: boolean } = {};

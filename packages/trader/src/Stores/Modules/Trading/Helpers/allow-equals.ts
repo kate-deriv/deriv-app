@@ -1,10 +1,10 @@
 import { isEmptyObject, getPropertyValue } from '@deriv/shared';
 import { ContractType } from 'Stores/Modules/Trading/Helpers/contract-type';
-import { useTraderStore } from 'Stores/useTraderStores';
 import { PriceProposalRequest } from '@deriv/api-types';
+import { TTradeStore } from 'Types';
 
 type THasDurationForCallPutEqual = {
-    contract_type_list: ReturnType<typeof useTraderStore>['contract_types_list'];
+    contract_type_list: TTradeStore['contract_types_list'];
     duration_unit: PriceProposalRequest['duration_unit'];
     contract_start_type: string;
 };

@@ -6,12 +6,12 @@
  * @returns an object of the same type as previous_ticks_history_stats.
  */
 
-import { useTraderStore } from 'Stores/useTraderStores';
+import { TTradeStore } from 'Types';
 
 type TGetUpdatedTicksHistoryStats = {
-    previous_ticks_history_stats: ReturnType<typeof useTraderStore>['ticks_history_stats'];
-    new_ticks_history_stats: ReturnType<typeof useTraderStore>['ticks_history_stats']['ticks_stayed_in'];
-    last_tick_epoch: ReturnType<typeof useTraderStore>['ticks_history_stats']['last_tick_epoch'];
+    previous_ticks_history_stats: TTradeStore['ticks_history_stats'];
+    new_ticks_history_stats: TTradeStore['ticks_history_stats']['ticks_stayed_in'];
+    last_tick_epoch: TTradeStore['ticks_history_stats']['last_tick_epoch'];
 };
 
 export const getUpdatedTicksHistoryStats = ({

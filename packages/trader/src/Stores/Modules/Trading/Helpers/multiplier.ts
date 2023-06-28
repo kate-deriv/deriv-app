@@ -1,14 +1,14 @@
-import { useTraderStore } from 'Stores/useTraderStores';
+import { TTradeStore } from 'Types';
 
 type TData = Partial<
     Pick<
-        ReturnType<typeof useTraderStore>,
+        TTradeStore,
         'cancellation_duration' | 'cancellation_price' | 'has_cancellation' | 'has_stop_loss' | 'has_take_profit'
     >
 >;
 
 type TOnToggleCancellation = {
-    has_cancellation: ReturnType<typeof useTraderStore>['has_cancellation'];
+    has_cancellation: TTradeStore['has_cancellation'];
     onChangeMultiple: (data: TData) => void;
 };
 
