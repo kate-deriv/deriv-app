@@ -6,7 +6,7 @@ import { useTraderStore } from 'Stores/useTraderStores';
 
 const processInSequence = async (
     store: ReturnType<typeof useTraderStore>,
-    functions: ReturnType<typeof getMethodsList>
+    functions: ReturnType<typeof getMethodsList> | ReturnType<typeof getExpiryMethodsList>
 ) => {
     //@ts-expect-error error will persist until basestore is typescript converted
     const snapshot: ReturnType<typeof useTraderStore> = store.getSnapshot();

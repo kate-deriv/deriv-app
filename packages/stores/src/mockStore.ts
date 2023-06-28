@@ -316,7 +316,6 @@ const mock = (): TStores & { is_mock: boolean } => {
         portfolio: {
             active_positions: [],
             all_positions: [],
-            barriers: [],
             error: {
                 header: '',
                 message: '',
@@ -346,15 +345,6 @@ const mock = (): TStores & { is_mock: boolean } => {
             has_contract_update_stop_loss: false,
             has_contract_update_take_profit: false,
             getContractById: jest.fn(),
-        },
-        barrier: {
-            draggable: false,
-            hideOffscreenBarrier: false,
-            high: '',
-            isSingleBarrier: false,
-            key: '',
-            onChange: jest.fn,
-            updateBarrierColor: jest.fn(),
         },
         modules: {},
         exchange_rates: {

@@ -16,7 +16,7 @@ export const LIMIT_ORDER_TYPES = {
 } as const;
 
 type TSetLimitOrderBarriers = {
-    barriers: ReturnType<typeof useStore>['portfolio']['barriers'];
+    barriers: ChartBarrierStore[];
     contract_type: string;
     contract_info: Parameters<typeof isLimitOrderBarrierSupported>[1];
     is_over: boolean;
@@ -52,6 +52,7 @@ export const setLimitOrderBarriers = ({
 
                 barrier.onChange({
                     high: obj_limit_order.value,
+                    low: undefined, //TODO: wait until ChartBarrierStore is ts migrated and 'low' can be an optional parameter
                 });
             } else {
                 const obj_barrier = {
@@ -67,8 +68,7 @@ export const setLimitOrderBarriers = ({
                     isSingleBarrier: true,
                     opacityOnOverlap: key === LIMIT_ORDER_TYPES.STOP_OUT && 0.15,
                 };
-                //@ts-expect-error until chart barrier store in modules/smartchart is migrated to TS
-                barrier = new ChartBarrierStore(obj_limit_order.value) as ReturnType<typeof useStore>['barrier'];
+                barrier = new ChartBarrierStore(obj_limit_order.value);
 
                 Object.assign(barrier, obj_barrier);
                 barriers.push(barrier);

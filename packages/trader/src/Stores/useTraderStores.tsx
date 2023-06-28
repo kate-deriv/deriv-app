@@ -54,8 +54,8 @@ type TOverrideTradeStore = Omit<
     | 'clearContractPurchaseToastBox'
     | 'contract_purchase_toast_box'
     | 'contract_types_list'
-    | 'duration_units_list'
     | 'duration_min_max'
+    | 'duration_units_list'
     | 'expiry_date'
     | 'expiry_time'
     | 'expiry_type'
@@ -77,10 +77,10 @@ type TOverrideTradeStore = Omit<
     clearContractPurchaseToastBox: () => void;
     contract_purchase_toast_box: TToastBoxObject;
     contract_types_list: TContractCategoriesList;
-    duration_units_list: Array<TTextValueStrings>;
     duration_min_max: {
         [key: string]: { min: number; max: number };
     };
+    duration_units_list: Array<TTextValueStrings>;
     expiry_date: string | null;
     expiry_time: string | null;
     expiry_type: string | null;

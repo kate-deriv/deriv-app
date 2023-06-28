@@ -11,7 +11,7 @@ export const requestPreviewProposal = debounce(
         onProposalResponse: (response: PriceProposalResponse) => void
     ) => {
         const new_store = { ...store, ...override };
-        const requests = createProposalRequests(new_store) as Record<string, unknown>;
+        const requests = createProposalRequests(new_store);
         const subscription_map: { [key: string]: boolean } = {};
 
         const onResponse = (response: PriceProposalResponse) => {

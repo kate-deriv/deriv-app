@@ -27,6 +27,16 @@ type TObjExpiry = {
     date_expiry?: number;
 };
 
+type TError = {
+    error?: {
+        code?: string;
+        details?: {
+            field?: string;
+        };
+        message?: string;
+    };
+};
+
 const isVisible = (elem: HTMLElement) => !(!elem || (elem.offsetWidth === 0 && elem.offsetHeight === 0));
 
 const map_error_field: { [key: string]: string } = {
@@ -47,7 +57,7 @@ export const getProposalErrorField = (response: PriceProposalResponse) => {
 
 export const getProposalInfo = (
     store: ReturnType<typeof useTraderStore>,
-    response: PriceProposalResponse,
+    response: PriceProposalResponse & TError,
     obj_prev_contract_basis: TObjContractBasis
 ) => {
     const proposal = response.proposal || ({} as PriceProposalResponse['proposal']);
@@ -61,12 +71,16 @@ export const getProposalInfo = (
         : basis_list.find(o => o.value !== store.basis);
 
     const is_stake = contract_basis?.value === 'stake';
-    //@ts-expect-error we are using key that does not exist in proposal
-    const price = is_stake ? stake : proposal[contract_basis?.value];
-    let has_increased = price > obj_prev_contract_basis.value;
+
+    const price = is_stake ? stake : proposal?.[contract_basis?.value as keyof PriceProposalResponse['proposal']];
+    let has_increased: boolean | null = null;
+
+    if (price !== undefined) {
+        has_increased = price > obj_prev_contract_basis.value;
+    }
 
     if (!obj_prev_contract_basis.value || price === obj_prev_contract_basis.value) {
-        has_increased = !!null;
+        has_increased = null;
     }
 
     const obj_contract_basis = {
@@ -87,13 +101,10 @@ export const getProposalInfo = (
         id: proposal?.id || '',
         has_error: !!response.error,
         has_error_details: !!getProposalErrorField(response),
-        //@ts-expect-error error object is not defined in api/types response
-        error_code: response?.error.code,
-        //@ts-expect-error error object is not defined in api/types response
+        error_code: response?.error?.code,
         error_field: response?.error?.details?.field,
         has_increased,
         limit_order: proposal?.limit_order,
-        //@ts-expect-error error object is not defined in api/types response
         message: proposal?.longcode || response?.error?.message,
         obj_contract_basis,
         payout: proposal?.payout,
@@ -106,7 +117,7 @@ export const getProposalInfo = (
 };
 
 export const createProposalRequests = (store: ReturnType<typeof useTraderStore>) => {
-    const requests = {} as Record<string, unknown>;
+    const requests = {} as Record<string, ReturnType<typeof createProposalRequestForContract>>;
 
     Object.keys(store.trade_types).forEach(type => {
         const new_req = createProposalRequestForContract(store, type);

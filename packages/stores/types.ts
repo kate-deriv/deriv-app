@@ -335,7 +335,6 @@ type TPortfolioPosition = {
 type TPortfolioStore = {
     active_positions: TPortfolioPosition[];
     all_positions: TPortfolioPosition[];
-    barriers: TBarrierStore[];
     error: TCommonStoreError;
     getPositionById: (id: number) => TPortfolioPosition;
     is_loading: boolean;
@@ -355,16 +354,6 @@ type TContractStore = {
     contract_update_take_profit: string;
     has_contract_update_stop_loss: boolean;
     has_contract_update_take_profit: boolean;
-};
-
-type TBarrierStore = {
-    key: string;
-    draggable: boolean;
-    hideOffscreenBarrier: boolean;
-    high: string | number;
-    isSingleBarrier: boolean;
-    onChange: ({ high, low }: { high: string; low?: string }) => void;
-    updateBarrierColor: (input: boolean) => void;
 };
 
 type TMenuStore = {
@@ -429,7 +418,6 @@ export type TCoreStores = {
     ui: TUiStore;
     portfolio: TPortfolioStore;
     contract_trade: TContractStore;
-    barrier: TBarrierStore;
     // This should be `any` as this property will be handled in each package.
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     modules: Record<string, any>;
