@@ -8,8 +8,7 @@ const processInSequence = async (
     store: ReturnType<typeof useTraderStore>,
     functions: ReturnType<typeof getMethodsList> | ReturnType<typeof getExpiryMethodsList>
 ) => {
-    //@ts-expect-error error will persist until basestore is typescript converted
-    const snapshot: ReturnType<typeof useTraderStore> = store.getSnapshot();
+    const snapshot = store.getSnapshot(['']) as ReturnType<typeof useTraderStore>;
     // To make sure that every function is invoked and affects the snapshot respectively, we have to use for instead of forEach
     for (let i = 0; i < functions.length; i++) {
         // Shallow copy with Object.assign is good enough to extend the snapshot with new state
