@@ -1,6 +1,7 @@
 import { PriceProposalResponse } from '@deriv/api-types';
 import { convertToUnix, getDecimalPlaces, getPropertyValue, isAccumulatorContract, toMoment } from '@deriv/shared';
 import { useTraderStore } from 'Stores/useTraderStores';
+import { TError } from 'Types';
 
 type TObjContractBasis = {
     text: string;
@@ -25,16 +26,6 @@ type TObjAccum = {
 
 type TObjExpiry = {
     date_expiry?: number;
-};
-
-type TError = {
-    error?: {
-        code?: string;
-        details?: {
-            field?: string;
-        };
-        message?: string;
-    };
 };
 
 const isVisible = (elem: HTMLElement) => !(!elem || (elem.offsetWidth === 0 && elem.offsetHeight === 0));

@@ -15,8 +15,13 @@ export type TProposalTypeInfo = {
 };
 
 export type TError = {
-    code: string | number;
-    message: string;
+    error?: {
+        code?: string;
+        details?: {
+            field?: string;
+        };
+        message?: string;
+    };
 };
 
 export type TTradeStore = ReturnType<typeof useTraderStore>;
