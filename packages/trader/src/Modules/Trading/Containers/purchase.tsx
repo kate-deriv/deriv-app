@@ -14,8 +14,10 @@ import { observer, useStore } from '@deriv/stores';
 import { TProposalTypeInfo } from 'Types';
 import ContractInfo from 'Modules/Trading/Components/Form/Purchase/contract-info.jsx';
 
+type TGetSupportedContractsKey = keyof ReturnType<typeof getSupportedContracts>;
+
 const getSortedIndex = (type: string, index: number) => {
-    switch (getContractTypePosition(type as keyof ReturnType<typeof getSupportedContracts>)) {
+    switch (getContractTypePosition(type as TGetSupportedContractsKey)) {
         case 'top':
             return 0;
         case 'bottom':
@@ -107,11 +109,10 @@ const Purchase = observer(({ is_market_closed }: { is_market_closed: boolean }) 
             </div>
         );
 
-        if (!is_vanilla && getContractTypePosition(type as keyof ReturnType<typeof getSupportedContracts>) === 'top') {
+        if (!is_vanilla && getContractTypePosition(type as TGetSupportedContractsKey) === 'top') {
             components.unshift(purchase_fieldset);
         } else if (
-            (!is_vanilla &&
-                getContractTypePosition(type as keyof ReturnType<typeof getSupportedContracts>) !== 'top') ||
+            (!is_vanilla && getContractTypePosition(type as TGetSupportedContractsKey) !== 'top') ||
             vanilla_trade_type === type
         ) {
             components.push(purchase_fieldset);
