@@ -19,8 +19,6 @@ export class ChartBarrierStore {
     hideOffscreenLine;
     title;
 
-    key;
-
     onChartBarrierChange;
 
     constructor(high_barrier, low_barrier, onChartBarrierChange = null, { color, line_style, not_draggable } = {}) {
@@ -30,7 +28,6 @@ export class ChartBarrierStore {
             shade: observable,
             shadeColor: observable,
             high: observable,
-            key: observable,
             low: observable,
             relative: observable,
             draggable: observable,

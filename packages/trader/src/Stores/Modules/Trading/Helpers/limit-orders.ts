@@ -15,8 +15,10 @@ export const LIMIT_ORDER_TYPES = {
     STOP_LOSS: 'stop_loss',
 } as const;
 
+type TBarrier = ChartBarrierStore & { key?: string };
+
 type TSetLimitOrderBarriers = {
-    barriers: ChartBarrierStore[];
+    barriers: TBarrier[];
     contract_type: string;
     contract_info: Parameters<typeof isLimitOrderBarrierSupported>[1];
     is_over: boolean;
