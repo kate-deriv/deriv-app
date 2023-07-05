@@ -51,9 +51,9 @@ export const getProposalInfo = (
     obj_prev_contract_basis: TObjContractBasis
 ) => {
     const proposal = response.proposal || ({} as Proposal);
-    const profit = (proposal?.payout || 0) - (proposal?.ask_price || 0);
-    const returns = (profit * 100) / (proposal?.ask_price || 1);
-    const stake = proposal?.display_value;
+    const profit = (proposal.payout || 0) - (proposal.ask_price || 0);
+    const returns = (profit * 100) / (proposal.ask_price || 1);
+    const stake = proposal.display_value;
     const basis_list = store.basis_list;
 
     const contract_basis: TObjContractBasis | undefined = store.is_vanilla
@@ -62,7 +62,7 @@ export const getProposalInfo = (
 
     const is_stake = contract_basis?.value === 'stake';
 
-    const price = is_stake ? stake : proposal?.[contract_basis?.value as keyof Proposal];
+    const price = is_stake ? stake : proposal[contract_basis?.value as keyof Proposal];
     let has_increased = false;
 
     if (price !== undefined && price !== null) {
@@ -78,30 +78,30 @@ export const getProposalInfo = (
         value: price || '',
     };
 
-    const commission = proposal?.commission;
-    const cancellation = proposal?.cancellation;
+    const commission = proposal.commission;
+    const cancellation = proposal.cancellation;
     const accumulators_details = {
-        ...proposal?.contract_details,
+        ...proposal.contract_details,
         growth_rate: store.growth_rate,
     };
 
     return {
         commission,
         cancellation,
-        id: proposal?.id || '',
+        id: proposal.id || '',
         has_error: !!response.error,
         has_error_details: !!getProposalErrorField(response),
         error_code: response?.error?.code,
         error_field: response?.error?.details?.field,
         has_increased,
-        limit_order: proposal?.limit_order,
-        message: proposal?.longcode || response?.error?.message,
+        limit_order: proposal.limit_order,
+        message: proposal.longcode || response?.error?.message,
         obj_contract_basis,
-        payout: proposal?.payout,
+        payout: proposal.payout,
         profit: profit.toFixed(getDecimalPlaces(store.currency)),
         returns: `${returns.toFixed(2)}%`,
         stake,
-        spot: proposal?.spot,
+        spot: proposal.spot,
         ...accumulators_details,
     };
 };
