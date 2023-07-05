@@ -335,7 +335,7 @@ type TPortfolioPosition = {
 type TPortfolioStore = {
     active_positions: TPortfolioPosition[];
     all_positions: TPortfolioPosition[];
-    error: TCommonStoreError;
+    error: string;
     getPositionById: (id: number) => TPortfolioPosition;
     is_loading: boolean;
     is_multiplier: boolean;

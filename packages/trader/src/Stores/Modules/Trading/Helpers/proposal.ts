@@ -1,4 +1,4 @@
-import { PriceProposalResponse } from '@deriv/api-types';
+import { PriceProposalResponse, Proposal } from '@deriv/api-types';
 import { convertToUnix, getDecimalPlaces, getPropertyValue, isAccumulatorContract, toMoment } from '@deriv/shared';
 import { TError, TTradeStore } from 'Types';
 
@@ -50,7 +50,7 @@ export const getProposalInfo = (
     response: PriceProposalResponse & TError,
     obj_prev_contract_basis: TObjContractBasis
 ) => {
-    const proposal = response.proposal || ({} as PriceProposalResponse['proposal']);
+    const proposal = response.proposal || ({} as Proposal);
     const profit = (proposal?.payout || 0) - (proposal?.ask_price || 0);
     const returns = (profit * 100) / (proposal?.ask_price || 1);
     const stake = proposal?.display_value;
@@ -58,14 +58,14 @@ export const getProposalInfo = (
 
     const contract_basis: TObjContractBasis | undefined = store.is_vanilla
         ? { text: 'Payout', value: 'number_of_contracts' }
-        : basis_list.find(o => o.value !== store.basis);
+        : basis_list.find(o => o.value !== store.basis) || ({} as TObjContractBasis);
 
     const is_stake = contract_basis?.value === 'stake';
 
-    const price = is_stake ? stake : proposal?.[contract_basis?.value as keyof PriceProposalResponse['proposal']];
+    const price = is_stake ? stake : proposal?.[contract_basis?.value as keyof Proposal];
     let has_increased = false;
 
-    if (price !== undefined) {
+    if (price !== undefined && price !== null) {
         has_increased = price > obj_prev_contract_basis.value;
     }
 
