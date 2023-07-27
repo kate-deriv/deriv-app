@@ -286,6 +286,7 @@ const TradeParamsMobile = observer(
                 {isVisible('duration') ? (
                     <div data-header-content={getHeaderContent('duration')}>
                         <DurationMobile
+                            // @ts-expect-error We expect error here because <DurationMobile /> is not in TS yet
                             toggleModal={toggleModal}
                             amount_tab_idx={amount_tab_idx}
                             duration_tab_idx={duration_tab_idx}
@@ -318,6 +319,8 @@ const TradeParamsMobile = observer(
                             setAmountError={setAmountError}
                             stake_value={stake_value}
                             payout_value={payout_value}
+                            basis={''}
+                            selected_basis={''}
                         />
                     </div>
                 ) : null}
