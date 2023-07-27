@@ -86,7 +86,10 @@ const ContractInfo = ({
     const setHintMessage = () => {
         if (['VANILLALONGCALL', 'VANILLALONGPUT'].includes(type)) {
             return (
-                <Localize i18n_default_text='The payout at expiry is equal to the payout per pip multiplied by the difference, in pips, between the final price and the strike price.' />
+                <Localize
+                    i18n_default_text='The payout at expiry is equal to the payout per pip multiplied by the difference, <0>in pips</0>, between the final price and the strike price.'
+                    components={[<strong key={0} />]}
+                />
             );
         }
         return message;
@@ -155,7 +158,10 @@ const ContractInfo = ({
                                         id='dt_vanilla-stake__tooltip'
                                         zIndex={9999}
                                         message={
-                                            <Localize i18n_default_text='The payout at expiry is equal to the payout per pip multiplied by the difference, in pips, between the final price and the strike price.' />
+                                            <Localize
+                                                i18n_default_text='The payout at expiry is equal to the payout per pip multiplied by the difference, <0>in pips</0>, between the final price and the strike price.'
+                                                components={[<strong key={0} />]}
+                                            />
                                         }
                                     />
                                 </div>
