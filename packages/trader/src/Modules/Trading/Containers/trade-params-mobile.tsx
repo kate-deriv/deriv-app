@@ -1,7 +1,5 @@
 import 'Sass/app/modules/trading-mobile.scss';
-
 import { Div100vhContainer, Modal, Money, Tabs, ThemedScrollbars, usePreventIOSZoom } from '@deriv/components';
-
 import AmountMobile from 'Modules/Trading/Components/Form/TradeParams/amount-mobile';
 import Barrier from 'Modules/Trading/Components/Form/TradeParams/barrier';
 import DurationMobile from 'Modules/Trading/Components/Form/TradeParams/Duration/duration-mobile.jsx';
@@ -17,6 +15,57 @@ type TTradeParamsModal = {
     toggleModal: () => void;
 };
 
+type TTextValueStrings = {
+    text: string;
+    value: string;
+};
+
+type TTradeParamsMobile = {
+    currency: string;
+    toggleModal: () => void;
+    isVisible: (component_key: string) => boolean;
+    setAmountTabIdx: (amount_tab_idx?: number) => void;
+    amount_tab_idx?: number;
+    setTradeParamTabIdx: (trade_param_tab_idx: number) => void;
+    trade_param_tab_idx: number;
+    setDurationTabIdx: (duration_tab_idx?: number) => void;
+    duration_unit: string;
+    duration_units_list: Array<TTextValueStrings>;
+    duration_value: number;
+    duration_tab_idx?: number;
+    has_amount_error: boolean;
+    has_duration_error: boolean;
+    // amount
+    setAmountError: (has_error: boolean) => void;
+    setSelectedAmount: (basis: string, selected_basis_value: string | number) => void;
+    stake_value: number;
+    payout_value: number;
+    // duration
+    setDurationError: (has_error: boolean) => void;
+    setSelectedDuration: (selected_duration_unit: string, selected_duration: number) => void;
+    t_duration: number;
+    s_duration: number;
+    m_duration: number;
+    h_duration: number;
+    d_duration: number;
+};
+
+type TReducer = Pick<
+    TTradeParamsMobile,
+    | 'trade_param_tab_idx'
+    | 'duration_tab_idx'
+    | 'amount_tab_idx'
+    | 'has_amount_error'
+    | 'has_duration_error'
+    | 't_duration'
+    | 's_duration'
+    | 'm_duration'
+    | 'h_duration'
+    | 'd_duration'
+    | 'stake_value'
+    | 'payout_value'
+> & { curr_duration_unit: string; curr_duration_value: number };
+
 const DEFAULT_DURATION = Object.freeze({
     t: 5,
     s: 15,
@@ -25,20 +74,21 @@ const DEFAULT_DURATION = Object.freeze({
     d: 1,
 });
 
-const reducer = (state, payload) => {
+const reducer = (state: TReducer, payload: Partial<TReducer>) => {
     return {
         ...state,
         ...payload,
     };
 };
 
-const makeGetDefaultDuration = (trade_duration, trade_duration_unit) => (duration_unit: string) =>
-    trade_duration_unit === duration_unit ? trade_duration : DEFAULT_DURATION[duration_unit as typeof DEFAULT_DURATION];
+const makeGetDefaultDuration = (trade_duration: number, trade_duration_unit: string) => (duration_unit: string) =>
+    trade_duration_unit === duration_unit
+        ? trade_duration
+        : DEFAULT_DURATION[duration_unit as keyof typeof DEFAULT_DURATION];
 
 const TradeParamsModal = observer(({ is_open, toggleModal }: TTradeParamsModal) => {
-    const { client, ui } = useStore();
+    const { client } = useStore();
     const { currency } = client;
-    const { enableApp, disableApp } = ui;
     const { amount, form_components, duration, duration_unit, duration_units_list } = useTraderStore();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -75,7 +125,7 @@ const TradeParamsModal = observer(({ is_open, toggleModal }: TTradeParamsModal) 
 
     const setDurationTabIdx = (duration_tab_idx?: number) => dispatch({ duration_tab_idx });
 
-    const setAmountTabIdx = (amount_tab_idx: number) => dispatch({ amount_tab_idx });
+    const setAmountTabIdx = (amount_tab_idx?: number) => dispatch({ amount_tab_idx });
 
     const setSelectedAmount = (basis: string, selected_basis_value: string | number) =>
         dispatch({ [`${basis}_value`]: selected_basis_value });
@@ -95,17 +145,14 @@ const TradeParamsModal = observer(({ is_open, toggleModal }: TTradeParamsModal) 
         dispatch({ has_duration_error: has_error });
     };
 
-    const isVisible = (component_key: string) => form_components.includes(component_key);
-
+    const isVisible = (component_key: string): boolean => form_components.includes(component_key);
     return (
         <React.Fragment>
             <Modal
                 id='dt_trade_parameters_mobile'
                 className='trade-params'
-                enableApp={enableApp}
                 is_open={is_open}
                 header={<div />}
-                disableApp={disableApp}
                 toggleModal={toggleModal}
                 height='auto'
                 width='calc(100vw - 32px)'
@@ -179,7 +226,7 @@ const TradeParamsMobile = observer(
         m_duration,
         h_duration,
         d_duration,
-    }) => {
+    }: TTradeParamsMobile) => {
         const { basis_list, basis, is_vanilla, expiry_epoch } = useTraderStore();
         const getDurationText = () => {
             const duration = duration_units_list.find(d => d.value === duration_unit);
@@ -236,7 +283,7 @@ const TradeParamsMobile = observer(
                 onTabItemClick={setTradeParamTabIdx}
                 top
             >
-                {isVisible('duration') && (
+                {isVisible('duration') ? (
                     <div data-header-content={getHeaderContent('duration')}>
                         <DurationMobile
                             toggleModal={toggleModal}
@@ -257,8 +304,8 @@ const TradeParamsMobile = observer(
                             expiry_epoch={expiry_epoch}
                         />
                     </div>
-                )}
-                {isVisible('amount') && (
+                ) : null}
+                {isVisible('amount') ? (
                     <div data-header-content={getHeaderContent('amount')}>
                         <AmountMobile
                             duration_unit={duration_unit}
@@ -273,7 +320,7 @@ const TradeParamsMobile = observer(
                             payout_value={payout_value}
                         />
                     </div>
-                )}
+                ) : null}
             </Tabs>
         );
     }
@@ -281,10 +328,10 @@ const TradeParamsMobile = observer(
 
 export const LastDigitMobile = observer(() => {
     const { form_components } = useTraderStore();
-    return form_components.includes('last_digit') && <LastDigit />;
+    return form_components.includes('last_digit') ? <LastDigit /> : null;
 });
 
 export const BarrierMobile = observer(() => {
     const { form_components } = useTraderStore();
-    return form_components.includes('barrier') && <Barrier />;
+    return form_components.includes('barrier') ? <Barrier /> : null;
 });

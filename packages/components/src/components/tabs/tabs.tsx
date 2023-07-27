@@ -14,20 +14,20 @@ declare module 'react' {
 }
 
 type TTabsProps = RouteComponentProps & {
-    active_icon_color: string;
+    active_icon_color?: string;
     active_index?: number;
-    background_color: string;
+    background_color?: string;
     bottom?: boolean;
-    center: boolean;
-    children: React.ReactElement[];
+    center?: boolean;
+    children: (React.ReactElement | null)[];
     className?: string;
-    fit_content: boolean;
+    fit_content?: boolean;
     has_active_line?: boolean;
     has_bottom_line?: boolean;
     header_fit_content?: boolean;
-    history: History;
-    icon_color: string;
-    icon_size: number;
+    history?: History;
+    icon_color?: string;
+    icon_size?: number;
     is_100vw?: boolean;
     is_full_width?: boolean;
     is_overflow_hidden?: boolean;
@@ -99,7 +99,7 @@ const Tabs = ({
                 initial_index_to_show = hash_index;
             } else {
                 // if no hash is in url but component has passed hash prop, set hash of the tab shown
-                const child_props = children[initial_index_to_show].props;
+                const child_props = children[initial_index_to_show]?.props;
                 const current_id = child_props && child_props.hash;
                 if (current_id) {
                     pushHash(current_id);
@@ -128,7 +128,7 @@ const Tabs = ({
 
     const onClickTabItem = (index: number) => {
         if (should_update_hash) {
-            const hash = children[index].props['data-hash'];
+            const hash = children[index]?.props['data-hash'];
             pushHash(hash);
         }
         setActiveTabIndex(index);
@@ -179,12 +179,12 @@ const Tabs = ({
                             const count = child.props['data-count'];
                             return (
                                 <Tab
-                                    active_icon_color={active_icon_color}
+                                    active_icon_color={active_icon_color ?? ''}
                                     className={className}
                                     count={count}
                                     icon={icon}
-                                    icon_color={icon_color}
-                                    icon_size={icon_size}
+                                    icon_color={icon_color ?? ''}
+                                    icon_size={icon_size ?? 0}
                                     is_active={index === active_tab_index}
                                     key={label}
                                     is_label_hidden={children.length === 1 && single_tab_has_no_label}
