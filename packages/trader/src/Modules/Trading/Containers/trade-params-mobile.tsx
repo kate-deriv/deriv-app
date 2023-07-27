@@ -12,6 +12,11 @@ import React from 'react';
 import classNames from 'classnames';
 import { localize } from '@deriv/translations';
 
+type TTradeParamsModal = {
+    is_open: boolean;
+    toggleModal: () => void;
+};
+
 const DEFAULT_DURATION = Object.freeze({
     t: 5,
     s: 15,
@@ -27,10 +32,10 @@ const reducer = (state, payload) => {
     };
 };
 
-const makeGetDefaultDuration = (trade_duration, trade_duration_unit) => duration_unit =>
-    trade_duration_unit === duration_unit ? trade_duration : DEFAULT_DURATION[duration_unit];
+const makeGetDefaultDuration = (trade_duration, trade_duration_unit) => (duration_unit: string) =>
+    trade_duration_unit === duration_unit ? trade_duration : DEFAULT_DURATION[duration_unit as typeof DEFAULT_DURATION];
 
-const TradeParamsModal = observer(({ is_open, toggleModal }) => {
+const TradeParamsModal = observer(({ is_open, toggleModal }: TTradeParamsModal) => {
     const { client, ui } = useStore();
     const { currency } = client;
     const { enableApp, disableApp } = ui;
@@ -66,15 +71,16 @@ const TradeParamsModal = observer(({ is_open, toggleModal }) => {
         // duration and duration_unit can be changed in trade-store when contract type is changed
     }, [duration, duration_unit]);
 
-    const setTradeParamTabIdx = trade_param_tab_idx => dispatch({ trade_param_tab_idx });
+    const setTradeParamTabIdx = (trade_param_tab_idx: number) => dispatch({ trade_param_tab_idx });
 
-    const setDurationTabIdx = duration_tab_idx => dispatch({ duration_tab_idx });
+    const setDurationTabIdx = (duration_tab_idx?: number) => dispatch({ duration_tab_idx });
 
-    const setAmountTabIdx = amount_tab_idx => dispatch({ amount_tab_idx });
+    const setAmountTabIdx = (amount_tab_idx: number) => dispatch({ amount_tab_idx });
 
-    const setSelectedAmount = (basis, selected_basis_value) => dispatch({ [`${basis}_value`]: selected_basis_value });
+    const setSelectedAmount = (basis: string, selected_basis_value: string | number) =>
+        dispatch({ [`${basis}_value`]: selected_basis_value });
 
-    const setSelectedDuration = (selected_duration_unit, selected_duration) => {
+    const setSelectedDuration = (selected_duration_unit: string, selected_duration: number) => {
         dispatch({
             [`${selected_duration_unit}_duration`]: selected_duration,
             curr_duration_unit: selected_duration_unit,
@@ -82,14 +88,14 @@ const TradeParamsModal = observer(({ is_open, toggleModal }) => {
         });
     };
 
-    const setAmountError = has_error => {
+    const setAmountError = (has_error: boolean) => {
         dispatch({ has_amount_error: has_error });
     };
-    const setDurationError = has_error => {
+    const setDurationError = (has_error: boolean) => {
         dispatch({ has_duration_error: has_error });
     };
 
-    const isVisible = component_key => form_components.includes(component_key);
+    const isVisible = (component_key: string) => form_components.includes(component_key);
 
     return (
         <React.Fragment>
@@ -189,7 +195,7 @@ const TradeParamsMobile = observer(
             return <Money currency={currency} show_currency amount={active_index === 1 ? payout_value : stake_value} />;
         };
 
-        const getHeaderContent = tab_key => {
+        const getHeaderContent = (tab_key: string) => {
             switch (tab_key) {
                 case 'duration':
                     return (
