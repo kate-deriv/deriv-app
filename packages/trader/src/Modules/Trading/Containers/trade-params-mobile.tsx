@@ -286,7 +286,7 @@ const TradeParamsMobile = observer(
                 {isVisible('duration') ? (
                     <div data-header-content={getHeaderContent('duration')}>
                         <DurationMobile
-                            // @ts-expect-error We expect error here because <DurationMobile /> is not in TS yet. TODO: TS migarion of <DurationMobile />
+                            // @ts-expect-error: TODO: check if TS error is gone after <DurationMobile /> is migrated to TS
                             toggleModal={toggleModal}
                             amount_tab_idx={amount_tab_idx}
                             duration_tab_idx={duration_tab_idx}
