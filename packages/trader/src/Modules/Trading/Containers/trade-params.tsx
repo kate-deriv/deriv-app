@@ -28,7 +28,7 @@ const TradeParams = observer(({ is_minimized }: TTradeParams) => {
     return (
         <React.Fragment>
             {isVisible('duration') && (
-                // @ts-expect-error: we expect error here because <Duration /> is not in TS yet
+                // @ts-expect-error: we expect error here because <Duration /> is not in TS yet. TODO: TS migration of <Duration />
                 <Duration key={'duration'} is_minimized={is_minimized} />
             )}
             {isVisible('barrier') && <Barrier key={'barrier'} is_minimized={is_minimized} />}

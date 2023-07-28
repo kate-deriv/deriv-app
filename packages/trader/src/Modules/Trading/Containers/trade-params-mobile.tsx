@@ -30,7 +30,7 @@ type TTradeParamsMobile = {
     trade_param_tab_idx: number;
     setDurationTabIdx: (duration_tab_idx?: number) => void;
     duration_unit: string;
-    duration_units_list: Array<TTextValueStrings>;
+    duration_units_list: TTextValueStrings[];
     duration_value: number;
     duration_tab_idx?: number;
     has_amount_error: boolean;
@@ -286,7 +286,7 @@ const TradeParamsMobile = observer(
                 {isVisible('duration') ? (
                     <div data-header-content={getHeaderContent('duration')}>
                         <DurationMobile
-                            // @ts-expect-error We expect error here because <DurationMobile /> is not in TS yet
+                            // @ts-expect-error We expect error here because <DurationMobile /> is not in TS yet. TODO: TS migarion of <DurationMobile />
                             toggleModal={toggleModal}
                             amount_tab_idx={amount_tab_idx}
                             duration_tab_idx={duration_tab_idx}

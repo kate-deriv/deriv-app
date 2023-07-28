@@ -25,7 +25,7 @@ type TTabsProps = RouteComponentProps & {
     has_active_line?: boolean;
     has_bottom_line?: boolean;
     header_fit_content?: boolean;
-    history?: History;
+    history: History;
     icon_color?: string;
     icon_size?: number;
     is_100vw?: boolean;
@@ -39,27 +39,27 @@ type TTabsProps = RouteComponentProps & {
 };
 
 const Tabs = ({
-    active_icon_color,
+    active_icon_color = '',
     active_index = 0,
-    background_color,
-    bottom,
-    center,
+    background_color = '',
+    bottom = false,
+    center = false,
     children,
-    className,
-    fit_content,
+    className = '',
+    fit_content = false,
     has_active_line = true,
     has_bottom_line = true,
-    header_fit_content,
+    header_fit_content = false,
     history,
-    icon_color,
-    icon_size,
-    is_100vw,
-    is_full_width,
-    is_overflow_hidden,
-    is_scrollable,
+    icon_color = '',
+    icon_size = 0,
+    is_100vw = false,
+    is_full_width = false,
+    is_overflow_hidden = false,
+    is_scrollable = false,
     onTabItemClick,
-    should_update_hash,
-    single_tab_has_no_label,
+    should_update_hash = false,
+    single_tab_has_no_label = false,
     top,
 }: TTabsProps) => {
     const [active_line_style, updateActiveLineStyle] = React.useState({});
@@ -179,12 +179,12 @@ const Tabs = ({
                             const count = child.props['data-count'];
                             return (
                                 <Tab
-                                    active_icon_color={active_icon_color ?? ''}
+                                    active_icon_color={active_icon_color}
                                     className={className}
                                     count={count}
                                     icon={icon}
-                                    icon_color={icon_color ?? ''}
-                                    icon_size={icon_size ?? 0}
+                                    icon_color={icon_color}
+                                    icon_size={icon_size}
                                     is_active={index === active_tab_index}
                                     key={label}
                                     is_label_hidden={children.length === 1 && single_tab_has_no_label}

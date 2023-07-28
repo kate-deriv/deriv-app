@@ -30,7 +30,7 @@ const Div100vhContainer = ({
     is_bypassed = false,
     is_disabled = false,
     id,
-    height_offset,
+    height_offset = '',
     max_autoheight_offset,
 }: React.PropsWithChildren<TDiv100vhContainer>) => {
     const height_rule = height_offset ? `calc(100rvh - ${height_offset})` : 'calc(100rvh)';
