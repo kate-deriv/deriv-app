@@ -4,6 +4,7 @@ import AmountMobile from 'Modules/Trading/Components/Form/TradeParams/amount-mob
 import Barrier from 'Modules/Trading/Components/Form/TradeParams/barrier';
 import DurationMobile from 'Modules/Trading/Components/Form/TradeParams/Duration/duration-mobile.jsx';
 import LastDigit from 'Modules/Trading/Components/Form/TradeParams/last-digit';
+import { TTextValueStrings } from '../../../Types/common-prop.type';
 import { observer, useStore } from '@deriv/stores';
 import { useTraderStore } from 'Stores/useTraderStores';
 import React from 'react';
@@ -13,11 +14,6 @@ import { localize } from '@deriv/translations';
 type TTradeParamsModal = {
     is_open: boolean;
     toggleModal: () => void;
-};
-
-type TTextValueStrings = {
-    text: string;
-    value: string;
 };
 
 type TTradeParamsMobile = {
