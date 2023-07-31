@@ -54,10 +54,8 @@ const Basis = observer(
             setSelectedAmount(basis, num);
             validateAmount(num);
         };
-        const formatAmount = (value: number | string) => {
-            const numericValue = typeof value === 'string' ? Number(value) : value;
-            return !isNaN(numericValue) ? parseFloat(numericValue.toFixed(user_currency_decimal_places)) : numericValue;
-        };
+        const formatAmount = (value: number | string) =>
+            !isNaN(+value) && value !== '' ? Number(value).toFixed(user_currency_decimal_places) : value;
         const setBasisAndAmount = (amount: number | string) => {
             const on_change_obj = {} as TObject;
 
