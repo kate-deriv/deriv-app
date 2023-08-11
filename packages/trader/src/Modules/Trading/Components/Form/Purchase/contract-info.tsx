@@ -5,21 +5,7 @@ import { Localize, localize } from '@deriv/translations';
 import { getContractSubtype, getCurrencyDisplayCode, getLocalizedBasis, getGrowthRatePercentage } from '@deriv/shared';
 import CancelDealInfo from './cancel-deal-info';
 import ValueMovement from './value-movement';
-
-type TProposalInfo = {
-    has_error?: boolean;
-    id: string;
-    has_increased?: boolean;
-    message?: string;
-    cancellation?: {
-        ask_price: number;
-        date_expiry: number;
-    };
-    growth_rate?: number;
-    obj_contract_basis?: Record<'text' | 'value', string>;
-    returns?: string;
-    stake: string;
-};
+import { TProposalTypeInfo } from 'Types';
 
 type TContractInfo = {
     basis: string;
@@ -31,7 +17,7 @@ type TContractInfo = {
     is_turbos: boolean;
     is_vanilla: boolean;
     is_loading: boolean;
-    proposal_info: TProposalInfo;
+    proposal_info: TProposalTypeInfo;
     should_fade: boolean;
     type: string;
 };

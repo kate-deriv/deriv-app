@@ -1,25 +1,11 @@
 import classNames from 'classnames';
 import React from 'react';
 import { Icon, Money } from '@deriv/components';
-
-type TProposalInfo = {
-    has_error?: boolean;
-    id: string;
-    has_increased?: boolean;
-    message?: string;
-    cancellation?: {
-        ask_price: number;
-        date_expiry: number;
-    };
-    growth_rate?: number;
-    obj_contract_basis?: Record<'text' | 'value', string>;
-    returns?: string;
-    stake: string;
-};
+import { TProposalTypeInfo } from 'Types';
 
 type TValueMovement = {
     has_error_or_not_loaded: boolean;
-    proposal_info?: TProposalInfo;
+    proposal_info?: TProposalTypeInfo;
     currency?: string;
     has_increased?: boolean;
     is_turbos?: boolean;
