@@ -5,7 +5,7 @@ import { DesktopWrapper, MobileWrapper, Popover } from '@deriv/components';
 import Fieldset from 'App/Components/Form/fieldset.jsx';
 import ContractInfo from 'Modules/Trading/Components/Form/Purchase/contract-info.jsx';
 import PurchaseButton from 'Modules/Trading/Components/Elements/purchase-button.jsx';
-import CancelDealInfo from '../Form/Purchase/cancel-deal-info.jsx';
+import CancelDealInfo from '../Form/Purchase/cancel-deal-info';
 
 const PurchaseFieldset = ({
     basis,
