@@ -17,11 +17,8 @@ const CancelDealInfo = observer(({ proposal_info }: { proposal_info: TProposalTy
 
     React.useEffect(() => {
         if (ref.current) {
-            const el_height = ref.current.parentElement?.clientHeight;
-            if (
-                el_height &&
-                ((el_height > 21 && isDesktop()) || ((el_height > 21 || getDecimalPlaces(currency) > 2) && isMobile()))
-            ) {
+            const el_height = Number(ref.current.parentElement?.clientHeight);
+            if ((el_height > 21 && isDesktop()) || ((el_height > 21 || getDecimalPlaces(currency) > 2) && isMobile())) {
                 setIsRowLayout(true);
             } else {
                 setIsRowLayout(false);
