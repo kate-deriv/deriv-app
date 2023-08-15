@@ -1,32 +1,42 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 import { Tabs } from '@deriv/components';
 import { localize } from '@deriv/translations';
 import { WS } from '@deriv/shared';
+import { useTraderStore } from 'Stores/useTraderStores';
 import ContractDetails from './contract-details.jsx';
 import ContractHistory from './contract-history.jsx';
+
+type TContractUpdateHistory = [] | { order_date: number }[];
+
+type TContractAudit = Pick<ReturnType<typeof useTraderStore>, 'is_accumulator' | 'is_turbos' | 'is_multiplier'> & {
+    contract_update_history: TContractUpdateHistory;
+    has_result: boolean;
+    // toggleHistoryTab: (state_change?: boolean) => void;
+    toggleHistoryTab: any;
+};
 
 const ContractAudit = ({
     contract_update_history,
     has_result,
     is_accumulator,
     is_multiplier,
-    is_only_ups_downs,
     is_turbos,
     toggleHistoryTab,
     ...props
-}) => {
+}: TContractAudit) => {
+    //@ts-expect-error until parent component will be typescript migrated
     const { contract_id, currency } = props.contract_info;
-    const [update_history, setUpdateHistory] = React.useState([]);
+    const [update_history, setUpdateHistory] = React.useState<TContractUpdateHistory>([]);
 
-    const getSortedUpdateHistory = history => history.sort((a, b) => b.order_date - a.order_date);
+    const getSortedUpdateHistory = (history: TContractUpdateHistory) =>
+        history.sort((a, b) => b.order_date - a.order_date);
 
     React.useEffect(() => {
         if (!!contract_update_history.length && contract_update_history.length > update_history.length)
             setUpdateHistory(getSortedUpdateHistory(contract_update_history));
     }, [contract_update_history, update_history]);
 
-    const onTabItemClick = tab_index => {
+    const onTabItemClick = (tab_index: number) => {
         toggleHistoryTab(tab_index);
         if (tab_index) {
             WS.contractUpdateHistory(contract_id).then(response => {
@@ -56,17 +66,6 @@ const ContractAudit = ({
             </Tabs>
         </div>
     );
-};
-
-ContractAudit.propTypes = {
-    contract_info: PropTypes.object,
-    contract_update_history: PropTypes.array,
-    has_result: PropTypes.bool,
-    is_accumulator: PropTypes.bool,
-    is_multiplier: PropTypes.bool,
-    is_only_ups_downs: PropTypes.bool,
-    is_turbos: PropTypes.bool,
-    toggleHistoryTab: PropTypes.func,
 };
 
 export default ContractAudit;
