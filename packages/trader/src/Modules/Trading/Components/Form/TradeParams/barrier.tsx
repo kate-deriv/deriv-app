@@ -139,7 +139,7 @@ const Barrier = observer(({ is_minimized, is_absolute_only }: TBarrier) => {
                             <ValueMovement
                                 has_error_or_not_loaded={has_error_or_not_loaded}
                                 value={current_spot}
-                                has_increased={has_spot_increased}
+                                has_increased={!!has_spot_increased}
                                 show_currency={false}
                             />
                         )}
