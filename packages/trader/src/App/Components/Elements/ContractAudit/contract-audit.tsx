@@ -3,7 +3,7 @@ import { Tabs } from '@deriv/components';
 import { localize } from '@deriv/translations';
 import { WS } from '@deriv/shared';
 import { useTraderStore } from 'Stores/useTraderStores';
-import ContractDetails from './contract-details.jsx';
+import ContractDetails from './contract-details';
 import ContractHistory from './contract-history.jsx';
 
 type TContractUpdateHistory = [] | { order_date: number }[];
@@ -53,6 +53,7 @@ const ContractAudit = ({
     if (!is_multiplier && !is_accumulator && !is_turbos) {
         return (
             <div className='contract-audit__wrapper'>
+                {/* @ts-expect-error: until parent component will be typescript migrated in order to verify props */}
                 <ContractDetails {...props} />
             </div>
         );
@@ -61,6 +62,7 @@ const ContractAudit = ({
         <div className='contract-audit__wrapper'>
             <Tabs top className='contract-audit__tabs' onTabItemClick={onTabItemClick}>
                 <div label={localize('Details')}>
+                    {/* @ts-expect-error: until parent component will be typescript migrated in order to verify props */}
                     <ContractDetails {...props} />
                 </div>
                 <div label={localize('History')}>
