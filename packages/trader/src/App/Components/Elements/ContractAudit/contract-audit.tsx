@@ -4,9 +4,11 @@ import { localize } from '@deriv/translations';
 import { WS } from '@deriv/shared';
 import { useTraderStore } from 'Stores/useTraderStores';
 import ContractDetails from './contract-details';
-import ContractHistory from './contract-history.jsx';
+import ContractHistory from './contract-history';
 
-type TContractUpdateHistory = [] | { order_date: number }[];
+type TContractUpdateHistory =
+    | []
+    | { order_date: number; display_name: string; order_amount: number | string; value?: string }[];
 
 type TContractAudit = Pick<ReturnType<typeof useTraderStore>, 'is_accumulator' | 'is_turbos' | 'is_multiplier'> & {
     contract_update_history: TContractUpdateHistory;

@@ -1,12 +1,14 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 import { Icon, Money, ThemedScrollbars, Text } from '@deriv/components';
 import { isMobile } from '@deriv/shared';
-
 import { localize } from '@deriv/translations';
 import ContractAuditItem from './contract-audit-item';
 
-const ContractHistory = ({ currency, history = [] }) => {
+type TContractHistory = {
+    currency: string;
+    history: [] | { order_date: number; display_name: string; order_amount: number | string; value?: string }[];
+};
+const ContractHistory = ({ currency, history = [] }: TContractHistory) => {
     if (!history.length) {
         return (
             <div className='contract-audit__empty'>
@@ -48,11 +50,6 @@ const ContractHistory = ({ currency, history = [] }) => {
             </div>
         </ThemedScrollbars>
     );
-};
-
-ContractHistory.propTypes = {
-    currency: PropTypes.string,
-    history: PropTypes.array,
 };
 
 export default ContractHistory;

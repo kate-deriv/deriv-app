@@ -3,10 +3,10 @@ import { formatDate, formatTime } from '@deriv/shared';
 import { Text } from '@deriv/components';
 
 type TContractAuditItem = {
-    icon: React.ReactNode;
+    icon?: React.ReactNode;
     id: string;
     label: string;
-    timestamp?: string;
+    timestamp?: number;
     value: number | string | React.ReactNode;
     value2?: number | string;
 };
