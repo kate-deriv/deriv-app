@@ -24,7 +24,7 @@ const ContractAudit = ({
     toggleHistoryTab,
     ...props
 }: TContractAudit) => {
-    //@ts-expect-error until parent component will be typescript migrated
+    //@ts-expect-error until parent component will be typescript migrated in order to verify props
     const { contract_id, currency } = props.contract_info;
     const [update_history, setUpdateHistory] = React.useState<TContractUpdateHistory>([]);
 
