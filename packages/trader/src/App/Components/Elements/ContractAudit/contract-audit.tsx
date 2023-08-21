@@ -11,8 +11,11 @@ type TContractUpdateHistory = [] | { order_date: number }[];
 type TContractAudit = Pick<ReturnType<typeof useTraderStore>, 'is_accumulator' | 'is_turbos' | 'is_multiplier'> & {
     contract_update_history: TContractUpdateHistory;
     has_result: boolean;
-    // toggleHistoryTab: (state_change?: boolean) => void;
-    toggleHistoryTab: any;
+    toggleHistoryTab: (state_change?: boolean) => void;
+};
+
+type TResponse = {
+    contract_update_history: TContractUpdateHistory;
 };
 
 const ContractAudit = ({
@@ -37,9 +40,9 @@ const ContractAudit = ({
     }, [contract_update_history, update_history]);
 
     const onTabItemClick = (tab_index: number) => {
-        toggleHistoryTab(tab_index);
+        toggleHistoryTab(!!tab_index);
         if (tab_index) {
-            WS.contractUpdateHistory(contract_id).then(response => {
+            WS.contractUpdateHistory(contract_id).then((response: TResponse) => {
                 setUpdateHistory(getSortedUpdateHistory(response.contract_update_history));
             });
         }

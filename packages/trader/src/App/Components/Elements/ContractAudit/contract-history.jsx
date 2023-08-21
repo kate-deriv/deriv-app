@@ -4,7 +4,7 @@ import { Icon, Money, ThemedScrollbars, Text } from '@deriv/components';
 import { isMobile } from '@deriv/shared';
 
 import { localize } from '@deriv/translations';
-import ContractAuditItem from './contract-audit-item.jsx';
+import ContractAuditItem from './contract-audit-item';
 
 const ContractHistory = ({ currency, history = [] }) => {
     if (!history.length) {
