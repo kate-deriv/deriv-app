@@ -58,9 +58,9 @@ describe('ContractDetails', () => {
             <ContractDetails
                 contract_end_time={123456789}
                 contract_info={contract_info as TContractInfoWithCancellation}
-                duration_unit={'day'}
+                duration_unit='day'
                 duration={1}
-                exit_spot={'123'}
+                exit_spot='123'
                 is_vanilla={true}
             />
         );
@@ -72,9 +72,9 @@ describe('ContractDetails', () => {
             <ContractDetails
                 contract_end_time={123456789}
                 contract_info={contract_info as TContractInfoWithCancellation}
-                duration_unit={'day'}
+                duration_unit='day'
                 duration={1}
-                exit_spot={'123'}
+                exit_spot='123'
                 is_vanilla={true}
             />
         );
