@@ -134,12 +134,12 @@ const Digits = React.memo((props: TDigits) => {
 
     const { contract_info, digits_array, is_digit_contract, is_trade_page, underlying } = props;
 
-    const onChangeStatus: React.ComponentProps<typeof DigitsWrapper>['onChangeStatus'] = params => {
+    const onChangeStatus = (params: TOnChangeStatus) => {
         setStatus(params.status);
         setCurrentTick(params.current_tick);
     };
 
-    const onLastDigitSpot: React.ComponentProps<typeof DigitsWrapper>['onLastDigitSpot'] = params => {
+    const onLastDigitSpot = (params: TOnLastDigitSpot) => {
         setSpot(params.spot);
         setIsLost(params.is_lost);
         setIsSelectedWinning(params.is_selected_winning);
