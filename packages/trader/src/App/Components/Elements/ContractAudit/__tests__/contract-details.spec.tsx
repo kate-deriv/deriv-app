@@ -3,7 +3,7 @@ import { screen, render } from '@testing-library/react';
 import { TContractInfo } from '@deriv/shared';
 import ContractDetails from '../contract-details';
 
-type TTContractInfoCancellation = TContractInfo & {
+type TContractInfoWithCancellation = TContractInfo & {
     cancellation: {
         ask_price: number;
         date_expiry: number;
@@ -57,7 +57,7 @@ describe('ContractDetails', () => {
         render(
             <ContractDetails
                 contract_end_time={123456789}
-                contract_info={contract_info as TTContractInfoCancellation}
+                contract_info={contract_info as TContractInfoWithCancellation}
                 duration_unit={'day'}
                 duration={1}
                 exit_spot={'123'}
@@ -71,7 +71,7 @@ describe('ContractDetails', () => {
         render(
             <ContractDetails
                 contract_end_time={123456789}
-                contract_info={contract_info as TTContractInfoCancellation}
+                contract_info={contract_info as TContractInfoWithCancellation}
                 duration_unit={'day'}
                 duration={1}
                 exit_spot={'123'}
