@@ -2,13 +2,12 @@ import React from 'react';
 import { Tabs } from '@deriv/components';
 import { localize } from '@deriv/translations';
 import { WS } from '@deriv/shared';
+import { ContractUpdateHistory } from '@deriv/api-types';
 import { useTraderStore } from 'Stores/useTraderStores';
 import ContractDetails from './contract-details';
 import ContractHistory from './contract-history';
 
-type TContractUpdateHistory =
-    | []
-    | { order_date: number; display_name: string; order_amount: number | string; value?: string }[];
+type TContractUpdateHistory = [] | ContractUpdateHistory;
 
 type TContractAudit = Pick<ReturnType<typeof useTraderStore>, 'is_accumulator' | 'is_turbos' | 'is_multiplier'> & {
     contract_update_history: TContractUpdateHistory;
@@ -34,7 +33,7 @@ const ContractAudit = ({
     const [update_history, setUpdateHistory] = React.useState<TContractUpdateHistory>([]);
 
     const getSortedUpdateHistory = (history: TContractUpdateHistory) =>
-        history.sort((a, b) => b.order_date - a.order_date);
+        history.sort((a, b) => Number(b?.order_date) - Number(a?.order_date));
 
     React.useEffect(() => {
         if (!!contract_update_history.length && contract_update_history.length > update_history.length)

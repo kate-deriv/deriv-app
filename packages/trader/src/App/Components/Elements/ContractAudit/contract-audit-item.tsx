@@ -5,7 +5,7 @@ import { Text } from '@deriv/components';
 type TContractAuditItem = {
     icon?: React.ReactNode;
     id: string;
-    label: string;
+    label?: string;
     timestamp?: number;
     value: number | string | React.ReactNode;
     value2?: number | string;

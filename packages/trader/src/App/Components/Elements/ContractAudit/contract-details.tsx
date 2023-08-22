@@ -26,7 +26,7 @@ import {
 import ContractAuditItem from './contract-audit-item';
 import { isCancellationExpired } from 'Stores/Modules/Trading/Helpers/logic';
 
-type TTContractInfoCancellation = TContractInfo & {
+type TTContractInfoWithCancellation = TContractInfo & {
     cancellation: {
         ask_price: number;
         date_expiry: number;
@@ -35,7 +35,7 @@ type TTContractInfoCancellation = TContractInfo & {
 
 type TContractDetails = {
     contract_end_time?: number;
-    contract_info: TTContractInfoCancellation;
+    contract_info: TTContractInfoWithCancellation;
     duration: number | string;
     duration_unit: string;
     exit_spot?: string;

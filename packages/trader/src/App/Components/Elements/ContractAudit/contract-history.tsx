@@ -2,11 +2,12 @@ import React from 'react';
 import { Icon, Money, ThemedScrollbars, Text } from '@deriv/components';
 import { isMobile } from '@deriv/shared';
 import { localize } from '@deriv/translations';
+import { ContractUpdateHistory } from '@deriv/api-types';
 import ContractAuditItem from './contract-audit-item';
 
 type TContractHistory = {
     currency: string;
-    history: [] | { order_date: number; display_name: string; order_amount: number | string; value?: string }[];
+    history: [] | ContractUpdateHistory;
 };
 const ContractHistory = ({ currency, history = [] }: TContractHistory) => {
     if (!history.length) {
@@ -28,11 +29,11 @@ const ContractHistory = ({ currency, history = [] }: TContractHistory) => {
                         key={key}
                         id={`dt_history_label_${key}`}
                         label={item.display_name}
-                        timestamp={+item.order_date}
+                        timestamp={Number(item?.order_date)}
                         value={
-                            Math.abs(+item.order_amount) !== 0 ? (
+                            Math.abs(Number(item.order_amount)) !== 0 ? (
                                 <React.Fragment>
-                                    {+item.order_amount < 0 && <strong>-</strong>}
+                                    {Number(item.order_amount) < 0 && <strong>-</strong>}
                                     <Money amount={item.order_amount} currency={currency} />
                                     {item.value && (
                                         <React.Fragment>
