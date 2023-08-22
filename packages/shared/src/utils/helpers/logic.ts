@@ -5,10 +5,9 @@ import { TContractInfo, TContractStore } from '../contract/contract-types';
 import { TickSpotData } from '@deriv/api-types';
 
 type TTick =
-    | (Omit<TickSpotData, 'ask' | 'bid' | 'epoch' | 'pip_size'> & {
+    | (Omit<TickSpotData, 'ask' | 'bid' | 'pip_size'> & {
           ask: TickSpotData['ask'] | null;
           bid: TickSpotData['bid'] | null;
-          epoch: TickSpotData['epoch'];
           pip_size?: TickSpotData['pip_size'];
       })
     | null;
