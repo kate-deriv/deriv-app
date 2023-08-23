@@ -1,17 +1,25 @@
 import React from 'react';
 import { Tabs } from '@deriv/components';
 import { localize } from '@deriv/translations';
-import { WS } from '@deriv/shared';
-import { ContractUpdateHistory } from '@deriv/api-types';
+import { WS, TContractStore, TContractInfo } from '@deriv/shared';
 import { useTraderStore } from 'Stores/useTraderStores';
 import ContractDetails from './contract-details';
 import ContractHistory from './contract-history';
 
-type TContractUpdateHistory = [] | ContractUpdateHistory;
+type TContractUpdateHistory = TContractStore['contract_update_history'];
 
-type TContractAudit = Pick<ReturnType<typeof useTraderStore>, 'is_accumulator' | 'is_turbos' | 'is_multiplier'> & {
+type TContractAudit = Partial<
+    Pick<ReturnType<typeof useTraderStore>, 'is_accumulator' | 'is_turbos' | 'is_multiplier' | 'is_vanilla'>
+> & {
     contract_update_history: TContractUpdateHistory;
+    contract_end_time: number | undefined;
+    contract_info: TContractInfo;
+    duration: string | number;
+    duration_unit: string;
+    exit_spot: string | undefined;
     has_result: boolean;
+    is_dark_theme: boolean;
+    is_open: boolean;
     toggleHistoryTab: (state_change?: boolean) => void;
 };
 
@@ -28,7 +36,6 @@ const ContractAudit = ({
     toggleHistoryTab,
     ...props
 }: TContractAudit) => {
-    //@ts-expect-error until parent component will be typescript migrated in order to verify props
     const { contract_id, currency } = props.contract_info;
     const [update_history, setUpdateHistory] = React.useState<TContractUpdateHistory>([]);
 
@@ -54,7 +61,6 @@ const ContractAudit = ({
     if (!is_multiplier && !is_accumulator && !is_turbos) {
         return (
             <div className='contract-audit__wrapper'>
-                {/* @ts-expect-error: until parent component will be typescript migrated in order to verify props */}
                 <ContractDetails {...props} />
             </div>
         );
@@ -63,7 +69,6 @@ const ContractAudit = ({
         <div className='contract-audit__wrapper'>
             <Tabs top className='contract-audit__tabs' onTabItemClick={onTabItemClick}>
                 <div label={localize('Details')}>
-                    {/* @ts-expect-error: until parent component will be typescript migrated in order to verify props */}
                     <ContractDetails {...props} />
                 </div>
                 <div label={localize('History')}>

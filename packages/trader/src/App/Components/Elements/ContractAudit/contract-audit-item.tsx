@@ -7,8 +7,8 @@ type TContractAuditItem = {
     id: string;
     label?: string;
     timestamp?: number;
-    value: number | string | React.ReactNode;
-    value2?: number | string;
+    value: React.ReactNode;
+    value2?: React.ReactNode;
 };
 
 const ContractAuditItem = ({ icon, id, label, timestamp, value, value2 }: TContractAuditItem) => (

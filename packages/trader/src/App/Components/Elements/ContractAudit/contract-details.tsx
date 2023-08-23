@@ -26,16 +26,9 @@ import {
 import ContractAuditItem from './contract-audit-item';
 import { isCancellationExpired } from 'Stores/Modules/Trading/Helpers/logic';
 
-type TTContractInfoWithCancellation = TContractInfo & {
-    cancellation: {
-        ask_price: number;
-        date_expiry: number;
-    };
-} & Required<Pick<TContractInfo, 'contract_type' | 'date_expiry' | 'exit_tick_time' | 'is_path_dependent'>>;
-
 type TContractDetails = {
     contract_end_time?: number;
-    contract_info: TTContractInfoWithCancellation;
+    contract_info: TContractInfo;
     duration: number | string;
     duration_unit: string;
     exit_spot?: string;
@@ -186,7 +179,7 @@ const ContractDetails = ({
                         icon={<Icon icon='IcContractExitSpot' size={24} />}
                         label={localize('Exit spot')}
                         value={addCommaToNumber(exit_spot) || ' - '}
-                        value2={toGMTFormat(epochToMoment(exit_tick_time)) || ' - '}
+                        value2={toGMTFormat(epochToMoment(Number(exit_tick_time))) || ' - '}
                     />
                 )}
                 {!isNaN(Number(contract_end_time)) && (

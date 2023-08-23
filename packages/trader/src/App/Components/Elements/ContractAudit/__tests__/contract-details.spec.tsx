@@ -3,13 +3,6 @@ import { screen, render } from '@testing-library/react';
 import { TContractInfo } from '@deriv/shared';
 import ContractDetails from '../contract-details';
 
-type TContractInfoWithCancellation = TContractInfo & {
-    cancellation: {
-        ask_price: number;
-        date_expiry: number;
-    };
-} & Required<Pick<TContractInfo, 'contract_type' | 'date_expiry' | 'exit_tick_time' | 'is_path_dependent'>>;
-
 describe('ContractDetails', () => {
     const contract_info = {
         account_id: 73816028,
@@ -57,7 +50,7 @@ describe('ContractDetails', () => {
         render(
             <ContractDetails
                 contract_end_time={123456789}
-                contract_info={contract_info as TContractInfoWithCancellation}
+                contract_info={contract_info as TContractInfo}
                 duration_unit='day'
                 duration={1}
                 exit_spot='123'
@@ -71,7 +64,7 @@ describe('ContractDetails', () => {
         render(
             <ContractDetails
                 contract_end_time={123456789}
-                contract_info={contract_info as TContractInfoWithCancellation}
+                contract_info={contract_info as TContractInfo}
                 duration_unit='day'
                 duration={1}
                 exit_spot='123'

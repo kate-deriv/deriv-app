@@ -1,13 +1,12 @@
 import React from 'react';
 import { Icon, Money, ThemedScrollbars, Text } from '@deriv/components';
-import { isMobile } from '@deriv/shared';
+import { isMobile, TContractStore } from '@deriv/shared';
 import { localize } from '@deriv/translations';
-import { ContractUpdateHistory } from '@deriv/api-types';
 import ContractAuditItem from './contract-audit-item';
 
 type TContractHistory = {
-    currency: string;
-    history: [] | ContractUpdateHistory;
+    currency?: string;
+    history: [] | TContractStore['contract_update_history'];
 };
 const ContractHistory = ({ currency, history = [] }: TContractHistory) => {
     if (!history.length) {
