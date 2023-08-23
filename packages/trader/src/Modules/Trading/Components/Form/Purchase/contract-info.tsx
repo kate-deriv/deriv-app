@@ -12,7 +12,7 @@ type TContractInfo = Pick<
     ReturnType<typeof useTraderStore>,
     'basis' | 'growth_rate' | 'is_accumulator' | 'is_turbos' | 'is_vanilla' | 'is_multiplier' | 'currency'
 > & {
-    has_increased: boolean;
+    has_increased?: boolean | null;
     is_loading: boolean;
     proposal_info: TProposalTypeInfo;
     should_fade: boolean;

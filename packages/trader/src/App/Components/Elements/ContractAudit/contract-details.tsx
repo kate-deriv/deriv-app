@@ -92,7 +92,7 @@ const ContractDetails = ({
                             id='dt_commission_label'
                             icon={<Icon icon='IcContractCommission' size={24} />}
                             label={localize('Commission')}
-                            value={<Money amount={commission || 0} currency={currency} show_currency />}
+                            value={<Money amount={commission ?? ''} currency={currency} show_currency />}
                         />
                         {!!cancellation_price && (
                             <ContractAuditItem
