@@ -2,16 +2,7 @@ import moment from 'moment';
 import { isEmptyObject } from '../object';
 import { isAccumulatorContract, isOpen, isUserSold } from '../contract';
 import { TContractInfo, TContractStore } from '../contract/contract-types';
-
-type TTick = {
-    ask?: number;
-    bid?: number;
-    epoch?: number;
-    id?: string;
-    pip_size: number;
-    quote?: number;
-    symbol?: string;
-};
+import { TickSpotData } from '@deriv/api-types';
 
 type TIsEndedBeforeCancellationExpired = TGetEndTime & {
     cancellation: {
@@ -38,10 +29,10 @@ type TGetEndTime = Pick<
 > &
     Required<Pick<TContractInfo, 'contract_type' | 'date_expiry' | 'exit_tick_time' | 'is_path_dependent'>>;
 
-export const isContractElapsed = (contract_info: TGetEndTime, tick: TTick) => {
+export const isContractElapsed = (contract_info: TContractInfo, tick?: TickSpotData) => {
     if (isEmptyObject(tick) || isEmptyObject(contract_info)) return false;
     const end_time = getEndTime(contract_info) || 0;
-    if (end_time && tick.epoch) {
+    if (end_time && tick && tick.epoch) {
         const seconds = moment.duration(moment.unix(tick.epoch).diff(moment.unix(end_time))).asSeconds();
         return seconds >= 2;
     }
