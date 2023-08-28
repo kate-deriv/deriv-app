@@ -76,7 +76,7 @@ const RiskManagementDialog = observer(({ is_open, onClose, toggleDialog }: TRisk
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         const new_state = { ...state };
-        new_state[name as keyof typeof applied_risk_management_state] = value;
+        new_state[name as 'take_profit' | 'stop_loss' | 'cancellation_duration'] = value;
         setState(new_state);
         validate(new_state);
     };

@@ -7,7 +7,11 @@ import { observer } from '@deriv/stores';
 import { useTraderStore } from 'Stores/useTraderStores';
 import { useIsMounted, WS } from '@deriv/shared';
 
-const MultiplierOptions = observer(({ toggleModal }) => {
+type TMultiplierOptions = {
+    toggleModal: () => void;
+};
+
+const MultiplierOptions = observer(({ toggleModal }: TMultiplierOptions) => {
     const trade_store = useTraderStore();
     const { amount, multiplier, multiplier_range_list, onChange } = trade_store;
     const [commission, setCommission] = React.useState(null);
@@ -47,6 +51,7 @@ const MultiplierOptions = observer(({ toggleModal }) => {
                 toggleModal={toggleModal}
             />
             <MultipliersInfo
+                // @ts-expect-error TODO: ts migration of <MultipliersInfo />
                 className='trade-params__multiplier-trade-info'
                 should_show_tooltip
                 commission={commission}
