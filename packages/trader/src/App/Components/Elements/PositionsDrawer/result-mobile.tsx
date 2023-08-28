@@ -1,11 +1,15 @@
 import classNames from 'classnames';
-import PropTypes from 'prop-types';
 import React from 'react';
 import { CSSTransition } from 'react-transition-group';
 import { Icon } from '@deriv/components';
 import { localize } from '@deriv/translations';
 
-const ResultMobile = ({ is_visible, result }) => {
+type TResultMobile = {
+    is_visible: boolean;
+    result?: 'won' | 'lost';
+};
+
+const ResultMobile = ({ is_visible, result }: TResultMobile) => {
     const is_contract_won = result === 'won';
     return (
         <React.Fragment>
@@ -42,11 +46,6 @@ const ResultMobile = ({ is_visible, result }) => {
             </CSSTransition>
         </React.Fragment>
     );
-};
-
-ResultMobile.propTypes = {
-    is_visible: PropTypes.bool,
-    result: PropTypes.string,
 };
 
 export default ResultMobile;

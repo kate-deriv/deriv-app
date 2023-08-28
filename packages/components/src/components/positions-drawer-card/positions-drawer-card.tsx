@@ -23,27 +23,27 @@ type TPositionsDrawerCardProps = {
     contract_info: TContractInfo;
     contract_update?: TContractInfo['contract_update'];
     currency: string;
-    current_focus: string;
+    current_focus: string | null;
     display_name?: string;
     getContractById: (contract_id?: number) => TContractStore;
     is_mobile?: boolean;
     is_sell_requested?: boolean;
     is_unsupported?: boolean;
-    is_link_disabled: boolean;
+    is_link_disabled?: boolean;
     profit_loss?: number;
     onClickCancel: (contract_id?: number) => void;
     onClickSell: (contract_id?: number) => void;
-    onClickRemove: (contract_id?: number) => void;
+    onClickRemove: (contract_id: number) => void;
     onFooterEntered?: () => void;
     onMouseEnter?: () => void;
     onMouseLeave?: () => void;
     removeToast: (key: string) => void;
     result?: string;
     setCurrentFocus: (value: string) => void;
-    server_time: moment.Moment;
+    server_time?: moment.Moment;
     should_show_transition?: boolean;
     should_show_cancellation_warning: boolean;
-    status: string;
+    status?: string;
     toggleCancellationWarning: () => void;
     toggleUnsupportedContractModal: (value: boolean) => void;
 };
@@ -105,7 +105,7 @@ const PositionsDrawerCard = ({
             is_mobile={is_mobile}
             is_sell_requested={!!is_sell_requested}
             onClickSell={onClickSell}
-            server_time={server_time}
+            server_time={server_time as moment.Moment}
         />
     );
 
@@ -130,7 +130,7 @@ const PositionsDrawerCard = ({
             is_vanilla={is_vanilla}
             has_progress_slider={is_mobile && has_progress_slider}
             removeToast={removeToast}
-            server_time={server_time}
+            server_time={server_time as moment.Moment}
             setCurrentFocus={setCurrentFocus}
             should_show_cancellation_warning={should_show_cancellation_warning}
             status={status}
@@ -148,7 +148,7 @@ const PositionsDrawerCard = ({
             onClickCancel={onClickCancel}
             onClickSell={onClickSell}
             onFooterEntered={onFooterEntered}
-            server_time={server_time}
+            server_time={server_time as moment.Moment}
             should_show_transition={!!should_show_transition}
         />
     );

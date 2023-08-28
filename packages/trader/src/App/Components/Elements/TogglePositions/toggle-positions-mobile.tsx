@@ -5,7 +5,7 @@ import { routes } from '@deriv/shared';
 import { localize } from '@deriv/translations';
 import { NavLink } from 'react-router-dom';
 import EmptyPortfolioMessage from '../EmptyPortfolioMessage';
-import PositionsModalCard from 'App/Components/Elements/PositionsDrawer/positions-modal-card.jsx';
+import PositionsModalCard from 'App/Components/Elements/PositionsDrawer/positions-modal-card';
 import TogglePositions from './toggle-positions';
 import { observer, useStore } from '@deriv/stores';
 
@@ -65,7 +65,6 @@ const TogglePositionsMobile = observer(
                             unmountOnExit
                         >
                             <PositionsModalCard
-                                //@ts-expect-error observer wrapped component needs to be ts migrated first
                                 onClickSell={onClickSell}
                                 onClickCancel={onClickCancel}
                                 key={portfolio_position.id}
