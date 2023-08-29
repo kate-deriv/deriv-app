@@ -23,7 +23,7 @@ import { BinaryLink } from 'App/Components/Routes';
 import { PositionsCardLoader } from 'App/Components/Elements/ContentLoader';
 import { getContractTypeDisplay, getCardLabels } from 'Constants/contract';
 import { getMarketInformation } from 'Utils/Helpers/market-underlying';
-import ResultMobile from './positions-result-mobile';
+import PositionsResultMobile from './positions-result-mobile';
 import { observer, useStore } from '@deriv/stores';
 import { useTraderStore } from 'Stores/useTraderStores';
 
@@ -43,7 +43,7 @@ type TPositionsModalCard = TPickPortfolioStore &
         currency: ReturnType<typeof useStore>['client']['currency'];
         current_tick?: React.ComponentProps<typeof ProgressSliderMobile>['current_tick'];
         is_loading?: boolean;
-        result?: React.ComponentProps<typeof ResultMobile>['result'];
+        result?: React.ComponentProps<typeof PositionsResultMobile>['result'];
         sell_price?: number;
         status?: string;
         togglePositions: TUiStore['togglePositionsDrawer'];
@@ -219,7 +219,10 @@ const PositionsModalCard = observer(
                     </div>
 
                     {result || !!contract_info.is_sold ? (
-                        <ResultMobile is_visible={!!contract_info.is_sold} result={result || fallback_result} />
+                        <PositionsResultMobile
+                            is_visible={!!contract_info.is_sold}
+                            result={result || fallback_result}
+                        />
                     ) : (
                         <ProgressSliderMobile
                             className='positions-modal-card__progress'
@@ -300,7 +303,10 @@ const PositionsModalCard = observer(
                     </div>
 
                     {result || !!contract_info.is_sold ? (
-                        <ResultMobile is_visible={!!contract_info.is_sold} result={result || fallback_result} />
+                        <PositionsResultMobile
+                            is_visible={!!contract_info.is_sold}
+                            result={result || fallback_result}
+                        />
                     ) : (
                         <ProgressSliderMobile
                             className='positions-modal-card__progress'

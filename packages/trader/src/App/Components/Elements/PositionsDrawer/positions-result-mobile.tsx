@@ -6,7 +6,7 @@ import { localize } from '@deriv/translations';
 
 type TPositionsResultMobile = {
     is_visible: boolean;
-    result?: 'won' | 'lost';
+    result: 'won' | 'lost';
 };
 
 const PositionsResultMobile = ({ is_visible, result }: TPositionsResultMobile) => {

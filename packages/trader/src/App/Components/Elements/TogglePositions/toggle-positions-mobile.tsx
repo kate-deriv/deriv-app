@@ -45,8 +45,7 @@ const TogglePositionsMobile = observer(
             setHiddenPositionsIds([...new Set([...hidden_positions_ids, ...closed_positions_ids])]);
             togglePositionsDrawer();
         };
-
-        // Show only 5 most recent open contracts
+        // Show only 5 most recent open contracts)
         const body_content = (
             <React.Fragment>
                 <TransitionGroup component='div'>

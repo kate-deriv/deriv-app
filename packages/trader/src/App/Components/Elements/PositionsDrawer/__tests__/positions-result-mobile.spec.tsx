@@ -4,7 +4,7 @@ import PositionsResultMobile from '../positions-result-mobile';
 
 describe('PositionsResultMobile', () => {
     it('should PositionsResultMobile be in the DOM', () => {
-        render(<PositionsResultMobile is_visible={true} />);
+        render(<PositionsResultMobile is_visible={true} result='won' />);
         expect(screen.getByTestId('result_mobile')).toBeInTheDocument();
     });
 
