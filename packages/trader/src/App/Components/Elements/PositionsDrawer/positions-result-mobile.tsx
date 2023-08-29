@@ -4,12 +4,12 @@ import { CSSTransition } from 'react-transition-group';
 import { Icon } from '@deriv/components';
 import { localize } from '@deriv/translations';
 
-type TResultMobile = {
+type TPositionsResultMobile = {
     is_visible: boolean;
     result?: 'won' | 'lost';
 };
 
-const ResultMobile = ({ is_visible, result }: TResultMobile) => {
+const PositionsResultMobile = ({ is_visible, result }: TPositionsResultMobile) => {
     const is_contract_won = result === 'won';
     return (
         <React.Fragment>
@@ -48,4 +48,4 @@ const ResultMobile = ({ is_visible, result }: TResultMobile) => {
     );
 };
 
-export default ResultMobile;
+export default PositionsResultMobile;
