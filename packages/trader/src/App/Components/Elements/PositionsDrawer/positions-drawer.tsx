@@ -137,7 +137,7 @@ const PositionsDrawer = observer(({ ...props }) => {
         <DataList
             data_source={positions}
             rowRenderer={args => (
-                // @ts-expect-error not sure how to type row so types are compatible wtf
+                // @ts-expect-error not sure how to type row so types are compatible
                 <PositionsDrawerCardItem
                     onHoverPosition={onHoverPosition}
                     symbol={symbol}
