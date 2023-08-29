@@ -5,7 +5,7 @@ export const addCommaToNumber = (
     num: number | null | undefined,
     decimal_places?: number | undefined
 ): string | number | null | undefined => {
-    if (!num || isNaN(+num)) {
+    if (!num || isNaN(num)) {
         return num;
     }
     const n = String(decimal_places ? (+num).toFixed(decimal_places) : num);
