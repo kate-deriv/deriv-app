@@ -6,6 +6,7 @@ import { localize } from '@deriv/translations';
 import { observer } from '@deriv/stores';
 import { useTraderStore } from 'Stores/useTraderStores';
 import { useIsMounted, WS } from '@deriv/shared';
+import { TOnProposalResponse } from 'Types';
 
 type TMultiplierOptions = {
     toggleModal: () => void;
@@ -14,17 +15,17 @@ type TMultiplierOptions = {
 const MultiplierOptions = observer(({ toggleModal }: TMultiplierOptions) => {
     const trade_store = useTraderStore();
     const { amount, multiplier, multiplier_range_list, onChange } = trade_store;
-    const [commission, setCommission] = React.useState(null);
-    const [stop_out, setStopOut] = React.useState(null);
+    const [commission, setCommission] = React.useState<string | number | null>(null);
+    const [stop_out, setStopOut] = React.useState<string | number | null>(null);
     const isMounted = useIsMounted();
 
     React.useEffect(() => {
         if (!amount) return undefined;
 
-        const onProposalResponse = ({ echo_req, proposal, subscription }) => {
+        const onProposalResponse = ({ echo_req, proposal, subscription }: TOnProposalResponse) => {
             if (isMounted() && proposal && echo_req.contract_type === 'MULTUP' && Number(echo_req.amount) === amount) {
                 setCommission(proposal.commission);
-                setStopOut(proposal.limit_order?.stop_out?.order_amount);
+                proposal.limit_order?.stop_out && setStopOut(proposal.limit_order.stop_out?.order_amount);
             } else if (subscription?.id) {
                 WS.forget(subscription.id);
             }

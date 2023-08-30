@@ -8,24 +8,24 @@ import { getDecimalPlaces, isEmptyObject } from '@deriv/shared';
 import MinMaxStakeInfo from './min-max-stake-info';
 
 type TBasis = {
-    basis: string;
-    duration_unit: string;
-    duration_value: number;
+    basis?: string;
+    duration_unit?: string;
+    duration_value?: number;
     toggleModal: () => void;
-    has_duration_error: boolean;
-    selected_basis: string | number;
+    has_duration_error?: boolean;
+    selected_basis?: string | number;
     setSelectedAmount: (basis: string, num: string | number) => void;
-    setAmountError: (has_error: boolean) => void;
+    setAmountError?: (has_error: boolean) => void;
 };
 
 const Basis = observer(
     ({
-        basis,
+        basis = '',
         duration_unit,
         duration_value,
         toggleModal,
         has_duration_error,
-        selected_basis,
+        selected_basis = '',
         setSelectedAmount,
         setAmountError,
     }: TBasis) => {
@@ -75,14 +75,14 @@ const Basis = observer(
 
             if (value.toString() === '0.' || selected_value === 0) {
                 addToast({ key: 'amount_error', content: localized_message, type: 'error', timeout: 2000 });
-                setAmountError(true);
+                setAmountError?.(true);
                 return 'error';
             } else if (isNaN(selected_value) || selected_value < min_amount || value.toString().length < 1) {
                 addToast({ key: 'amount_error', content: localized_message, type: 'error', timeout: 2000 });
-                setAmountError(true);
+                setAmountError?.(true);
                 return false;
             }
-            setAmountError(false);
+            setAmountError?.(false);
             return true;
         };
 
@@ -129,9 +129,9 @@ const Basis = observer(
 
 type TAmountMobile = React.ComponentProps<typeof Basis> & {
     amount_tab_idx?: number;
-    setAmountTabIdx: React.ComponentProps<typeof Tabs>['onTabItemClick'];
+    setAmountTabIdx?: React.ComponentProps<typeof Tabs>['onTabItemClick'];
     stake_value: string | number;
-    payout_value: string | number;
+    payout_value?: string | number;
 };
 
 const Amount = observer(
