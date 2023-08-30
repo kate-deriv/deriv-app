@@ -78,7 +78,7 @@ const TradeParamsMobile = observer(({ toggleModal }: { toggleModal: TToggleModal
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [stake_value]);
 
-    const setSelectedAmount = (stake: number | string) => {
+    const setSelectedAmount = (basis: string | undefined, stake: number | string) => {
         setStakeValue(stake);
         stake_ref.current = stake;
     };

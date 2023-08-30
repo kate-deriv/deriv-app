@@ -8,13 +8,13 @@ import { getDecimalPlaces, isEmptyObject } from '@deriv/shared';
 import MinMaxStakeInfo from './min-max-stake-info';
 
 type TBasis = {
-    basis?: string;
+    basis: string;
     duration_unit?: string;
     duration_value?: number;
     toggleModal: () => void;
     has_duration_error?: boolean;
     selected_basis?: string | number;
-    setSelectedAmount: (num: string | number) => void;
+    setSelectedAmount: (basis: string, num: string | number) => void;
     setAmountError?: (has_error: boolean) => void;
 };
 
@@ -45,7 +45,7 @@ const Basis = observer(
 
         const user_currency_decimal_places = getDecimalPlaces(currency);
         const onNumberChange = (num: number | string) => {
-            setSelectedAmount(num);
+            setSelectedAmount(basis, num);
             validateAmount(num);
         };
         const formatAmount = (value: number | string) =>
@@ -127,7 +127,10 @@ const Basis = observer(
     }
 );
 
-type TAmountMobile = React.ComponentProps<typeof Basis> & {
+type TAmountMobile = Pick<
+    React.ComponentProps<typeof Basis>,
+    'toggleModal' | 'duration_value' | 'duration_unit' | 'has_duration_error' | 'setAmountError' | 'setSelectedAmount'
+> & {
     amount_tab_idx?: number;
     setAmountTabIdx?: React.ComponentProps<typeof Tabs>['onTabItemClick'];
     stake_value: string | number;
