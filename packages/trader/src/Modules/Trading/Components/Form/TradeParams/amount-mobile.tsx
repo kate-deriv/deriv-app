@@ -14,18 +14,18 @@ type TBasis = {
     toggleModal: () => void;
     has_duration_error?: boolean;
     selected_basis?: string | number;
-    setSelectedAmount: (basis: string, num: string | number) => void;
+    setSelectedAmount: (num: string | number) => void;
     setAmountError?: (has_error: boolean) => void;
 };
 
 const Basis = observer(
     ({
-        basis = '',
+        basis,
         duration_unit,
         duration_value,
         toggleModal,
         has_duration_error,
-        selected_basis = '',
+        selected_basis,
         setSelectedAmount,
         setAmountError,
     }: TBasis) => {
@@ -45,7 +45,7 @@ const Basis = observer(
 
         const user_currency_decimal_places = getDecimalPlaces(currency);
         const onNumberChange = (num: number | string) => {
-            setSelectedAmount(basis, num);
+            setSelectedAmount(num);
             validateAmount(num);
         };
         const formatAmount = (value: number | string) =>
@@ -96,7 +96,7 @@ const Basis = observer(
                         })}
                     >
                         <Numpad
-                            value={selected_basis}
+                            value={selected_basis || ''}
                             format={formatAmount}
                             onSubmit={setBasisAndAmount}
                             currency={currency}
