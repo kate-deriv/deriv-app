@@ -51,7 +51,7 @@ const DealCancellationWarningDialog = observer(
                 <Checkbox
                     defaultChecked={!should_show_cancellation_warning}
                     onChange={() => toggleCancellationWarning()}
-                    name={'should_show_cancellation_warning'}
+                    name='should_show_cancellation_warning'
                     label={localize("Don't show this again")}
                 />
             </Dialog>
@@ -101,7 +101,7 @@ const CancelDeal = observer(
                             id='dt_multiplier-stake__tooltip'
                             is_bubble_hover_enabled
                             classNameBubble='trade-container__deal-cancellation-popover'
-                            zIndex={'9999'}
+                            zIndex='9999'
                             message={localize(
                                 'Cancel your trade anytime within a chosen time-frame. Triggered automatically if your trade reaches the stop out level within the chosen time-frame.'
                             )}

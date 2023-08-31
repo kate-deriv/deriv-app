@@ -212,7 +212,6 @@ export default class TradeStore extends BaseStore {
     basis_list: Array<TTextValueStrings> = [];
     currency = '';
     stake_boundary: Partial<TStakeBoundary> = {};
-    trade_stop_out = '';
 
     // Duration
     duration = 5;

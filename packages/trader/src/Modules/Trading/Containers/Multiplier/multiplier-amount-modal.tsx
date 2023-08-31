@@ -7,7 +7,7 @@ import AmountMobile from 'Modules/Trading/Components/Form/TradeParams/amount-mob
 import MultipliersInfo from 'Modules/Trading/Components/Form/TradeParams/Multiplier/info.jsx';
 import { observer } from '@deriv/stores';
 import { useTraderStore } from 'Stores/useTraderStores';
-import { TOnProposalResponse } from 'Types';
+import { TTradeStore } from 'Types';
 
 type TToggleModal = () => void;
 type TMultiplierAmountModal = {
@@ -44,18 +44,18 @@ export default MultiplierAmountModal;
 
 const TradeParamsMobile = observer(({ toggleModal }: { toggleModal: TToggleModal }) => {
     const trade_store = useTraderStore();
-    const { amount, currency, trade_stop_out } = trade_store;
+    const { amount, currency } = trade_store;
 
     const [stake_value, setStakeValue] = React.useState<string | number>(amount);
-    const [commission, setCommission] = React.useState<string | number | null>(null);
-    const [stop_out, setStopOut] = React.useState<string | number | null>(null);
+    const [commission, setCommission] = React.useState<number | null>();
+    const [stop_out, setStopOut] = React.useState<number | null>();
     const stake_ref = React.useRef<string | number>(amount);
     const isMounted = useIsMounted();
 
     React.useEffect(() => {
         if (stake_value === amount) return undefined;
 
-        const onProposalResponse = (response: TOnProposalResponse) => {
+        const onProposalResponse: TTradeStore['onProposalResponse'] = response => {
             const { proposal, echo_req, subscription } = response;
             if (
                 isMounted() &&
@@ -90,14 +90,12 @@ const TradeParamsMobile = observer(({ toggleModal }: { toggleModal: TToggleModal
                     alignment='right'
                     icon='info'
                     id='dt_multiplier-stake__tooltip'
-                    zIndex={'9999'}
+                    zIndex='9999'
                     is_bubble_hover_enabled
                     message={
                         <Localize
                             i18n_default_text='To ensure your loss does not exceed your stake, your contract will be closed automatically when your loss equals to <0/>.'
-                            components={[
-                                <Money key={0} amount={stop_out || trade_stop_out} currency={currency} show_currency />,
-                            ]}
+                            components={[<Money key={0} amount={stop_out || ''} currency={currency} show_currency />]}
                         />
                     }
                 />

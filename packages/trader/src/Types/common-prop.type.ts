@@ -30,22 +30,4 @@ export type TError = {
     };
 };
 
-export type TOnProposalResponse = {
-    echo_req: {
-        contract_type: string;
-        amount: string | number;
-    };
-    proposal: {
-        commission: string | number | null;
-        limit_order?: {
-            stop_out?: {
-                order_amount: string | number | null;
-            };
-        };
-    };
-    subscription: {
-        id?: string | number;
-    };
-};
-
 export type TTradeStore = ReturnType<typeof useTraderStore>;
