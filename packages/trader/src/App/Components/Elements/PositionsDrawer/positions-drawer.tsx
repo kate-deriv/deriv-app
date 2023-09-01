@@ -15,12 +15,10 @@ type TUiStore = Pick<
     | 'addToast'
     | 'current_focus'
     | 'is_mobile'
-    | 'is_positions_drawer_on'
     | 'removeToast'
     | 'setCurrentFocus'
     | 'should_show_cancellation_warning'
     | 'toggleCancellationWarning'
-    | 'togglePositionsDrawer'
     | 'toggleUnsupportedContractModal'
 >;
 type TPortfolioStore = Pick<
@@ -149,13 +147,11 @@ const PositionsDrawer = observer(({ ...props }) => {
                     server_time={server_time}
                     getContractById={getContractById}
                     is_mobile={is_mobile}
-                    is_positions_drawer_on={is_positions_drawer_on}
                     current_focus={current_focus}
                     removeToast={removeToast}
                     setCurrentFocus={setCurrentFocus}
                     should_show_cancellation_warning={should_show_cancellation_warning}
                     toggleCancellationWarning={toggleCancellationWarning}
-                    togglePositionsDrawer={toggleDrawer}
                     toggleUnsupportedContractModal={toggleUnsupportedContractModal}
                     {...args}
                     {...props}
