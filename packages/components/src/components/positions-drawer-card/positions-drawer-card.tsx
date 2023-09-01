@@ -20,7 +20,7 @@ import { TToastConfig } from '../types/contract.types';
 type TPositionsDrawerCardProps = {
     addToast: (toast_config: TToastConfig) => void;
     className?: string;
-    contract_info: TContractInfo;
+    contract_info?: TContractInfo;
     contract_update?: TContractInfo['contract_update'];
     currency: string;
     current_focus: string | null;
@@ -77,13 +77,13 @@ const PositionsDrawerCard = ({
     toggleCancellationWarning,
     toggleUnsupportedContractModal,
 }: TPositionsDrawerCardProps) => {
-    const is_accumulator = isAccumulatorContract(contract_info.contract_type);
-    const is_multiplier = isMultiplierContract(contract_info.contract_type || '');
-    const is_turbos = isTurbosContract(contract_info.contract_type);
-    const is_vanilla = isVanillaContract(contract_info.contract_type);
-    const is_crypto = isCryptoContract(contract_info.underlying || '');
+    const is_accumulator = isAccumulatorContract(contract_info?.contract_type);
+    const is_multiplier = isMultiplierContract(contract_info?.contract_type || '');
+    const is_turbos = isTurbosContract(contract_info?.contract_type);
+    const is_vanilla = isVanillaContract(contract_info?.contract_type);
+    const is_crypto = isCryptoContract(contract_info?.underlying || '');
     const has_progress_slider = !is_multiplier || (is_crypto && is_multiplier);
-    const has_ended = !!getEndTime(contract_info);
+    const has_ended = !!getEndTime(contract_info as TContractInfo);
     const is_mobile = isMobile();
     const contract_card_classname = classNames('dc-contract-card', {
         'dc-contract-card--green': Number(profit_loss) > 0 && !result,
@@ -97,7 +97,7 @@ const PositionsDrawerCard = ({
     );
     const card_header = (
         <ContractCard.Header
-            contract_info={contract_info}
+            contract_info={contract_info as TContractInfo}
             display_name={display_name ?? ''}
             getCardLabels={getCardLabels}
             getContractTypeDisplay={getContractTypeDisplay}
@@ -112,7 +112,7 @@ const PositionsDrawerCard = ({
     const card_body = (
         <ContractCard.Body
             addToast={addToast}
-            contract_info={contract_info}
+            contract_info={contract_info as TContractInfo}
             contract_update={contract_update ?? {}}
             currency={currency}
             current_focus={current_focus}
@@ -140,7 +140,7 @@ const PositionsDrawerCard = ({
 
     const card_footer = (
         <ContractCard.Footer
-            contract_info={contract_info}
+            contract_info={contract_info as TContractInfo}
             getCardLabels={getCardLabels}
             is_multiplier={is_multiplier}
             is_positions
@@ -162,26 +162,26 @@ const PositionsDrawerCard = ({
 
     const supported_contract_card = (
         <div className={contract_card_classname} onClick={() => toggleUnsupportedContractModal(true)}>
-            {contract_info.underlying ? contract_el : loader_el}
+            {contract_info?.underlying ? contract_el : loader_el}
         </div>
     );
 
     const unsupported_contract_card = is_link_disabled ? (
-        <div className={contract_card_classname}>{contract_info.underlying ? contract_el : loader_el}</div>
+        <div className={contract_card_classname}>{contract_info?.underlying ? contract_el : loader_el}</div>
     ) : (
         <NavLink
             className={contract_card_classname}
             to={{
-                pathname: `/contract/${contract_info.contract_id}`,
+                pathname: `/contract/${contract_info?.contract_id}`,
             }}
         >
-            {contract_info.underlying ? contract_el : loader_el}
+            {contract_info?.underlying ? contract_el : loader_el}
         </NavLink>
     );
 
     return (
         <ContractCard
-            contract_info={contract_info}
+            contract_info={contract_info as TContractInfo}
             getCardLabels={getCardLabels}
             getContractPath={getContractPath}
             is_multiplier={is_multiplier}
@@ -194,7 +194,7 @@ const PositionsDrawerCard = ({
             toggleUnsupportedContractModal={toggleUnsupportedContractModal}
         >
             <div
-                id={`dc_contract_card_${contract_info.contract_id}`}
+                id={`dc_contract_card_${contract_info?.contract_id}`}
                 className={className}
                 onMouseEnter={() => {
                     if (typeof onMouseEnter === 'function') onMouseEnter();

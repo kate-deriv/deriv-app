@@ -32,10 +32,11 @@ type TPositionDrawerCardItem = TPortfolioStore &
         is_new_row?: boolean;
         measure?: () => void;
         onClickRemove: ReturnType<typeof useStore>['portfolio']['removePositionById'];
-        row: ReturnType<typeof useStore>['portfolio']['active_positions'][0];
+        row?: TPortfolioPosition | { [key: string]: any };
         server_time: ReturnType<typeof useStore>['common']['server_time'];
         symbol: ReturnType<typeof useTraderStore>['symbol'];
     };
+type TPortfolioPosition = ReturnType<typeof useStore>['portfolio']['active_positions'][0];
 
 const PositionsDrawerCardItem = ({
     row: portfolio_position,
@@ -49,7 +50,7 @@ const PositionsDrawerCardItem = ({
 
     React.useEffect(() => {
         measure?.();
-    }, [portfolio_position.contract_info.is_sold, measure]);
+    }, [portfolio_position?.contract_info.is_sold, measure]);
 
     return (
         <CSSTransition
@@ -69,10 +70,10 @@ const PositionsDrawerCardItem = ({
                     {...portfolio_position}
                     {...props}
                     onMouseEnter={() => {
-                        onHoverPosition(true, portfolio_position, symbol);
+                        onHoverPosition(true, portfolio_position as TPortfolioPosition, symbol);
                     }}
                     onMouseLeave={() => {
-                        onHoverPosition(false, portfolio_position, symbol);
+                        onHoverPosition(false, portfolio_position as TPortfolioPosition, symbol);
                     }}
                     onFooterEntered={measure}
                     should_show_transition={is_new_row}
@@ -135,7 +136,6 @@ const PositionsDrawer = observer(({ ...props }) => {
         <DataList
             data_source={positions}
             rowRenderer={args => (
-                // @ts-expect-error not sure how to type row so types are compatible
                 <PositionsDrawerCardItem
                     onHoverPosition={onHoverPosition}
                     symbol={symbol}
