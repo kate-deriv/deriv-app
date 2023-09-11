@@ -743,6 +743,8 @@ type TContractReplay = {
         is_digit_contract: boolean;
         is_ended: boolean;
     };
+    removeErrorMessage: () => void;
+    error_message: string;
 };
 
 /**

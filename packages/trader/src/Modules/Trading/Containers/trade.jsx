@@ -6,7 +6,7 @@ import ChartLoader from 'App/Components/Elements/chart-loader';
 import PositionsDrawer from 'App/Components/Elements/PositionsDrawer';
 import MarketIsClosedOverlay from 'App/Components/Elements/market-is-closed-overlay.jsx';
 import Test from './test.jsx';
-import { ChartBottomWidgets, ChartTopWidgets, DigitsWidget } from './chart-widgets.jsx';
+import { ChartBottomWidgets, ChartTopWidgets, DigitsWidget } from './chart-widgets';
 import FormLayout from '../Components/Form/form-layout';
 import AllMarkers from '../../SmartChart/Components/all-markers.jsx';
 import AccumulatorsChartElements from '../../SmartChart/Components/Markers/accumulators-chart-elements.jsx';

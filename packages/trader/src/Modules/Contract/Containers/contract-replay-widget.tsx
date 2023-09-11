@@ -4,7 +4,6 @@ import InfoBox from 'Modules/Contract/Components/InfoBox';
 import BottomWidgets from '../../SmartChart/Components/bottom-widgets.jsx';
 import TopWidgets from '../../SmartChart/Components/top-widgets.jsx';
 import { observer, useStore } from '@deriv/stores';
-import { useTraderStore } from 'Stores/useTraderStores';
 
 export const DigitsWidget = observer(() => {
     const { contract_replay } = useStore();
@@ -24,18 +23,10 @@ export const DigitsWidget = observer(() => {
 
 export const InfoBoxWidget = observer(() => {
     const { contract_replay } = useStore();
-    const { is_vanilla } = useTraderStore();
     const { contract_store, removeErrorMessage: removeError, error_message } = contract_replay;
     const { contract_info } = contract_store;
 
-    return (
-        <InfoBox
-            contract_info={contract_info}
-            error_message={error_message}
-            removeError={removeError}
-            is_vanilla={is_vanilla}
-        />
-    );
+    return <InfoBox contract_info={contract_info} error_message={error_message} removeError={removeError} />;
 });
 
 // Chart widgets passed into SmartCharts
