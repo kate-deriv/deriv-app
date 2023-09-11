@@ -1,7 +1,7 @@
 import React from 'react';
 import Digits from 'Modules/Contract/Components/Digits';
 import InfoBox from 'Modules/Contract/Components/InfoBox';
-import BottomWidgets from '../../SmartChart/Components/bottom-widgets.jsx';
+import BottomWidgets from '../../SmartChart/Components/bottom-widgets';
 import TopWidgets from '../../SmartChart/Components/top-widgets.jsx';
 import { observer, useStore } from '@deriv/stores';
 
