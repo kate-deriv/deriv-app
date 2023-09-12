@@ -89,7 +89,11 @@ const TradeCategories = ({ category, onClick }: { category?: string; onClick: ()
                 TradeTypeTemplate = <VanillaTradeDescription onClick={onClick} />;
                 break;
             default:
-                TradeTypeTemplate = <Text as='p'>{<Localize i18n_default_text='Description not found.' />}</Text>;
+                TradeTypeTemplate = (
+                    <Text as='p'>
+                        <Localize i18n_default_text='Description not found.' />
+                    </Text>
+                );
                 break;
         }
     }
