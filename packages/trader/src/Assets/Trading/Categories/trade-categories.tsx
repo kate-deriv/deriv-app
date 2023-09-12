@@ -10,8 +10,11 @@ import TurbosTradeDescription from './Description/turbos-trade-description';
 import EvenOddTradeDescription from './Description/even-odd-trade-description';
 import MatchDiffTradeDescription from './Description/match-diff-trade-description';
 import OverUnderTradeDescription from './Description/over-under-trade-description';
+import TouchTradeDescription from './Description/touch-trade-description';
+import AsianTradeDescription from './Description/asian-trade-description';
+import RunHighLowTradeDescription from './Description/run-high-low-trade-description';
+import ResetTradeDescription from './Description/reset-trade-description';
 
-// Templates are from Binary 1.0, it should be checked if they need change or not and add all of trade types
 const TradeCategories = ({ category, onClick }: { category?: string; onClick: () => void }) => {
     let TradeTypeTemplate;
     if (category) {
@@ -42,83 +45,16 @@ const TradeCategories = ({ category, onClick }: { category?: string; onClick: ()
                 TradeTypeTemplate = <OverUnderTradeDescription />;
                 break;
             case 'touch':
-                TradeTypeTemplate = (
-                    <React.Fragment>
-                        <Text as='p'>
-                            {localize(
-                                'If you select "Touch", you win the payout if the market touches the barrier at any time during the contract period.'
-                            )}
-                        </Text>
-                        <Text as='p'>
-                            {localize(
-                                'If you select "No Touch", you win the payout if the market never touches the barrier at any time during the contract period.'
-                            )}
-                        </Text>
-                    </React.Fragment>
-                );
+                TradeTypeTemplate = <TouchTradeDescription />;
                 break;
             case 'asian':
-                TradeTypeTemplate = (
-                    <React.Fragment>
-                        <Text as='p'>
-                            {localize(
-                                'Asian options settle by comparing the last tick with the average spot over the period.'
-                            )}
-                        </Text>
-                        <Text as='p'>
-                            {localize(
-                                'If you select "Asian Rise", you will win the payout if the last tick is higher than the average of the ticks.'
-                            )}
-                        </Text>
-                        <Text as='p'>
-                            {localize(
-                                'If you select "Asian Fall", you will win the payout if the last tick is lower than the average of the ticks.'
-                            )}
-                        </Text>
-                        <Text as='p'>
-                            {localize(
-                                "If the last tick is equal to the average of the ticks, you don't win the payout."
-                            )}
-                        </Text>
-                    </React.Fragment>
-                );
+                TradeTypeTemplate = <AsianTradeDescription />;
                 break;
             case 'run_high_low':
-                TradeTypeTemplate = (
-                    <React.Fragment>
-                        <Text as='p'>
-                            {localize(
-                                'If you select "Only Ups", you win the payout if consecutive ticks rise successively after the entry spot. No payout if any tick falls or is equal to any of the previous ticks.'
-                            )}
-                        </Text>
-                        <Text as='p'>
-                            {localize(
-                                'If you select "Only Downs", you win the payout if consecutive ticks fall successively after the entry spot. No payout if any tick rises or is equal to any of the previous ticks.'
-                            )}
-                        </Text>
-                    </React.Fragment>
-                );
+                TradeTypeTemplate = <RunHighLowTradeDescription />;
                 break;
             case 'reset':
-                TradeTypeTemplate = (
-                    <React.Fragment>
-                        <Text as='p'>
-                            {localize(
-                                'If you select "Reset-Up”, you win the payout if the exit spot is strictly higher than either the entry spot or the spot at reset time.'
-                            )}
-                        </Text>
-                        <Text as='p'>
-                            {localize(
-                                'If you select "Reset-Down”, you win the payout if the exit spot is strictly lower than either the entry spot or the spot at reset time.'
-                            )}
-                        </Text>
-                        <Text as='p'>
-                            {localize(
-                                "If the exit spot is equal to the barrier or the new barrier (if a reset occurs), you don't win the payout."
-                            )}
-                        </Text>
-                    </React.Fragment>
-                );
+                TradeTypeTemplate = <ResetTradeDescription />;
                 break;
             case 'callputspread':
                 TradeTypeTemplate = (
