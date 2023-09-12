@@ -3,7 +3,10 @@ import { Text } from '@deriv/components';
 import { localize, Localize } from '@deriv/translations';
 import AccumulatorTradeDescription from './Description/accumulator-trade-description';
 import RiseFallTradeDescription from './Description/rise-fall-trade-description';
-import { TurbosTradeDescription } from './Description/turbos-trade-description';
+import HighLowTradeDescription from './Description/high-low-trade-description';
+import EndTradeDescription from './Description/end-trade-description';
+import StayTradeDescription from './Description/stay-trade-description';
+import TurbosTradeDescription from './Description/turbos-trade-description';
 
 // Templates are from Binary 1.0, it should be checked if they need change or not and add all of trade types
 const TradeCategories = ({ category, onClick }: { category?: string; onClick: () => void }) => {
@@ -18,60 +21,13 @@ const TradeCategories = ({ category, onClick }: { category?: string; onClick: ()
                 TradeTypeTemplate = <RiseFallTradeDescription />;
                 break;
             case 'high_low':
-                TradeTypeTemplate = (
-                    <React.Fragment>
-                        <Text as='p'>
-                            {localize(
-                                'If you select "Higher", you win the payout if the exit spot is strictly higher than the barrier.'
-                            )}
-                        </Text>
-                        <Text as='p'>
-                            {localize(
-                                'If you select "Lower", you win the payout if the exit spot is strictly lower than the barrier.'
-                            )}
-                        </Text>
-                        <Text as='p'>
-                            {localize("If the exit spot is equal to the barrier, you don't win the payout.")}
-                        </Text>
-                    </React.Fragment>
-                );
+                TradeTypeTemplate = <HighLowTradeDescription />;
                 break;
             case 'end':
-                TradeTypeTemplate = (
-                    <React.Fragment>
-                        <Text as='p'>
-                            {localize(
-                                'If you select "Ends Between", you win the payout if the exit spot is strictly higher than the Low barrier AND strictly lower than the High barrier.'
-                            )}
-                        </Text>
-                        <Text as='p'>
-                            {localize(
-                                'If you select "Ends Outside", you win the payout if the exit spot is EITHER strictly higher than the High barrier, OR strictly lower than the Low barrier.'
-                            )}
-                        </Text>
-                        <Text as='p'>
-                            {localize(
-                                "If the exit spot is equal to either the Low barrier or the High barrier, you don't win the payout."
-                            )}
-                        </Text>
-                    </React.Fragment>
-                );
+                TradeTypeTemplate = <EndTradeDescription />;
                 break;
             case 'stay':
-                TradeTypeTemplate = (
-                    <React.Fragment>
-                        <Text as='p'>
-                            {localize(
-                                'If you select "Stays Between", you win the payout if the market stays between (does not touch) either the High barrier or the Low barrier at any time during the contract period'
-                            )}
-                        </Text>
-                        <Text as='p'>
-                            {localize(
-                                'If you select "Goes Outside", you win the payout if the market touches either the High barrier or the Low barrier at any time during the contract period.'
-                            )}
-                        </Text>
-                    </React.Fragment>
-                );
+                TradeTypeTemplate = <StayTradeDescription />;
                 break;
             case 'match_diff':
                 TradeTypeTemplate = (
