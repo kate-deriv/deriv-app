@@ -7,6 +7,9 @@ import HighLowTradeDescription from './Description/high-low-trade-description';
 import EndTradeDescription from './Description/end-trade-description';
 import StayTradeDescription from './Description/stay-trade-description';
 import TurbosTradeDescription from './Description/turbos-trade-description';
+import EvenOddTradeDescription from './Description/even-odd-trade-description';
+import MatchDiffTradeDescription from './Description/match-diff-trade-description';
+import OverUnderTradeDescription from './Description/over-under-trade-description';
 
 // Templates are from Binary 1.0, it should be checked if they need change or not and add all of trade types
 const TradeCategories = ({ category, onClick }: { category?: string; onClick: () => void }) => {
@@ -30,52 +33,13 @@ const TradeCategories = ({ category, onClick }: { category?: string; onClick: ()
                 TradeTypeTemplate = <StayTradeDescription />;
                 break;
             case 'match_diff':
-                TradeTypeTemplate = (
-                    <React.Fragment>
-                        <Text as='p'>
-                            {localize(
-                                'If you select "Matches", you will win the payout if the last digit of the last tick is the same as your prediction.'
-                            )}
-                        </Text>
-                        <Text as='p'>
-                            {localize(
-                                'If you select "Differs", you will win the payout if the last digit of the last tick is not the same as your prediction.'
-                            )}
-                        </Text>
-                    </React.Fragment>
-                );
+                TradeTypeTemplate = <MatchDiffTradeDescription />;
                 break;
             case 'even_odd':
-                TradeTypeTemplate = (
-                    <React.Fragment>
-                        <Text as='p'>
-                            {localize(
-                                'If you select "Even", you will win the payout if the last digit of the last tick is an even number (i.e., 2, 4, 6, 8, or 0).'
-                            )}
-                        </Text>
-                        <Text as='p'>
-                            {localize(
-                                'If you select "Odd", you will win the payout if the last digit of the last tick is an odd number (i.e., 1, 3, 5, 7, or 9).'
-                            )}
-                        </Text>
-                    </React.Fragment>
-                );
+                TradeTypeTemplate = <EvenOddTradeDescription />;
                 break;
             case 'over_under':
-                TradeTypeTemplate = (
-                    <React.Fragment>
-                        <Text as='p'>
-                            {localize(
-                                'If you select "Over", you will win the payout if the last digit of the last tick is greater than your prediction.'
-                            )}
-                        </Text>
-                        <Text as='p'>
-                            {localize(
-                                'If you select "Under", you will win the payout if the last digit of the last tick is less than your prediction.'
-                            )}
-                        </Text>
-                    </React.Fragment>
-                );
+                TradeTypeTemplate = <OverUnderTradeDescription />;
                 break;
             case 'touch':
                 TradeTypeTemplate = (
