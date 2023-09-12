@@ -1,11 +1,11 @@
 import React from 'react';
 import { Text } from '@deriv/components';
 import { localize, Localize } from '@deriv/translations';
-import AccumulatorTradeDescription from './accumulator-trade-description';
-import { TurbosTradeDescription } from './turbos-trade-description';
+import AccumulatorTradeDescription from './Description/accumulator-trade-description';
+import RiseFallTradeDescription from './Description/rise-fall-trade-description';
+import { TurbosTradeDescription } from './Description/turbos-trade-description';
 
 // Templates are from Binary 1.0, it should be checked if they need change or not and add all of trade types
-// TODO: refactor the rest of descriptions to use them as components like AccumulatorTradeDescription
 const TradeCategories = ({ category, onClick }: { category?: string; onClick: () => void }) => {
     let TradeTypeTemplate;
     if (category) {
@@ -14,46 +14,8 @@ const TradeCategories = ({ category, onClick }: { category?: string; onClick: ()
                 TradeTypeTemplate = <AccumulatorTradeDescription onClick={onClick} />;
                 break;
             case 'rise_fall':
-                TradeTypeTemplate = (
-                    <React.Fragment>
-                        <Text as='p'>
-                            {localize(
-                                'If you select "Rise", you win the payout if the exit spot is strictly higher than the entry spot.'
-                            )}
-                        </Text>
-                        <Text as='p'>
-                            {localize(
-                                'If you select "Fall", you win the payout if the exit spot is strictly lower than the entry spot.'
-                            )}
-                        </Text>
-                        <Text as='p'>
-                            {localize(
-                                'If you select "Allow equals", you win the payout if exit spot is higher than or equal to entry spot for "Rise". Similarly, you win the payout if exit spot is lower than or equal to entry spot for "Fall".'
-                            )}
-                        </Text>
-                    </React.Fragment>
-                );
-                break;
             case 'rise_fall_equal':
-                TradeTypeTemplate = (
-                    <React.Fragment>
-                        <Text as='p'>
-                            {localize(
-                                'If you select "Rise", you win the payout if the exit spot is strictly higher than the entry spot.'
-                            )}
-                        </Text>
-                        <Text as='p'>
-                            {localize(
-                                'If you select "Fall", you win the payout if the exit spot is strictly lower than the entry spot.'
-                            )}
-                        </Text>
-                        <Text as='p'>
-                            {localize(
-                                'If you select "Allow equals", you win the payout if exit spot is higher than or equal to entry spot for "Rise". Similarly, you win the payout if exit spot is lower than or equal to entry spot for "Fall".'
-                            )}
-                        </Text>
-                    </React.Fragment>
-                );
+                TradeTypeTemplate = <RiseFallTradeDescription />;
                 break;
             case 'high_low':
                 TradeTypeTemplate = (
