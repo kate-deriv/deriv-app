@@ -3,7 +3,7 @@ import { isMobile } from '@deriv/shared';
 import Digits from 'Modules/Contract/Components/Digits';
 import AccumulatorsStats from 'Modules/Contract/Components/AccumulatorsStats';
 import BottomWidgets from '../../SmartChart/Components/bottom-widgets';
-import TopWidgets from '../../SmartChart/Components/top-widgets.jsx';
+import TopWidgets from '../../SmartChart/Components/top-widgets';
 import { symbolChange } from '../../SmartChart/Helpers/symbol';
 import { useTraderStore } from 'Stores/useTraderStores';
 import { observer, useStore } from '@deriv/stores';

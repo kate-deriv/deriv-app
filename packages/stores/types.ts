@@ -604,17 +604,23 @@ type TContractTradeStore = {
     last_contract: TContractStore | Record<string, never>;
     markers_array: Array<{
         type: string;
-        contract_info: {
-            accu_barriers_difference:
-                | boolean
-                | {
-                      top: string;
-                      bottom: string;
-                      font: string;
-                  };
-            has_crossed_accu_barriers: boolean;
-            is_accumulator_trade_without_contract: boolean;
-        };
+        // contract_info: {
+        //     accu_barriers_difference:
+        //         | boolean
+        //         | {
+        //               top: string;
+        //               bottom: string;
+        //               font: string;
+        //           };
+        //     has_crossed_accu_barriers: boolean;
+        //     is_accumulator_trade_without_contract: boolean;
+        //     tick_stream: NonNullable<TContractStore['contract_info']['tick_stream']>[number];
+        //     contract_type: string;
+        // };
+        contract_info: ProposalOpenContract &
+            Portfolio1 & {
+                contract_update?: ContractUpdate;
+            };
         key: string;
         price_array: [string, string];
         epoch_array: [number];

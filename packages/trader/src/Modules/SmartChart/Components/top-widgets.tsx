@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { DesktopWrapper, MobileWrapper, Text } from '@deriv/components';
@@ -7,6 +6,28 @@ import { isEnded, isAccumulatorContract, isDigitContract } from '@deriv/shared';
 import { ChartTitle } from 'Modules/SmartChart';
 import BuyToastNotification from './buy-toast-notification';
 import { observer, useStore } from '@deriv/stores';
+import { useTraderStore } from 'Stores/useTraderStores';
+
+type TTopWidgets = {
+    InfoBox?: React.ReactNode;
+    is_digits_widget_active?: boolean;
+    is_mobile?: boolean;
+    is_title_enabled?: boolean;
+    onSymbolChange?: ReturnType<typeof useTraderStore>['onChange'];
+    open?: boolean;
+    open_market?:
+        | {
+              category: string;
+              subcategory?: undefined;
+          }
+        | {
+              category: never;
+              subcategory: null;
+          }
+        | null;
+    theme?: string;
+    y_axis_width?: number;
+};
 
 const RecentTradeInfo = observer(() => {
     const { contract_trade } = useStore();
@@ -42,7 +63,7 @@ const TopWidgets = ({
     open_market,
     open,
     is_digits_widget_active,
-}) => {
+}: TTopWidgets) => {
     const ChartTitleLocal = (
         <ChartTitle
             open_market={open_market}
@@ -78,18 +99,6 @@ const TopWidgets = ({
             <DesktopWrapper>{ChartTitleLocal}</DesktopWrapper>
         </React.Fragment>
     );
-};
-
-TopWidgets.propTypes = {
-    InfoBox: PropTypes.node,
-    is_digits_widget_active: PropTypes.bool,
-    is_mobile: PropTypes.bool,
-    is_title_enabled: PropTypes.bool,
-    onSymbolChange: PropTypes.func,
-    open: PropTypes.bool,
-    open_market: PropTypes.object,
-    theme: PropTypes.string,
-    y_axis_width: PropTypes.number,
 };
 
 export default TopWidgets;
