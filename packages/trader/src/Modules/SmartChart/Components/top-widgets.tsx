@@ -89,7 +89,7 @@ const TopWidgets = ({
                 {!is_digits_widget_active && <RecentTradeInfo />}
             </div>
         </div>,
-        document.getElementById('app_contents')
+        document.getElementById('app_contents') as Element | DocumentFragment
     );
 
     return (

@@ -1,9 +1,14 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 import { isDesktop, isMobile } from '@deriv/shared';
 import { ChartMode, DrawTools, Share, StudyLegend, Views, ToolbarWidget } from 'Modules/SmartChart';
 
-const ToolbarWidgets = ({ position, updateChartType, updateGranularity }) => {
+type TToolbarWidgets = {
+    position?: string;
+    updateChartType: (type: string) => void;
+    updateGranularity: (granularity: number) => void;
+};
+
+const ToolbarWidgets = ({ position, updateChartType, updateGranularity }: TToolbarWidgets) => {
     return (
         <ToolbarWidget position={position || isMobile() ? 'bottom' : null}>
             <ChartMode portalNodeId='modal_root' onChartType={updateChartType} onGranularity={updateGranularity} />
@@ -13,12 +18,6 @@ const ToolbarWidgets = ({ position, updateChartType, updateGranularity }) => {
             {isDesktop() && <Share portalNodeId='modal_root' />}
         </ToolbarWidget>
     );
-};
-
-ToolbarWidgets.propTypes = {
-    position: PropTypes.string,
-    updateChartType: PropTypes.func,
-    updateGranularity: PropTypes.func,
 };
 
 export default React.memo(ToolbarWidgets);
