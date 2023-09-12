@@ -11,18 +11,9 @@ import { observer, useStore } from '@deriv/stores';
 type TDigits = React.ComponentProps<typeof Digits>;
 type TChartTopWidgets = {
     charts_ref?: { chart: { yAxiswidth: number } } | null;
-    is_digits_widget_active: boolean;
-    open_market:
-        | {
-              category: string;
-              subcategory?: undefined;
-          }
-        | {
-              category: never;
-              subcategory: null;
-          }
-        | null;
-    open: boolean;
+    is_digits_widget_active: React.ComponentProps<typeof TopWidgets>['is_digits_widget_active'];
+    open_market: React.ComponentProps<typeof TopWidgets>['open_market'];
+    open: React.ComponentProps<typeof TopWidgets>['open'];
 };
 type TChartBottomWidgets = {
     digits: TDigits['digits_array'];

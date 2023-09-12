@@ -15,16 +15,10 @@ type TTopWidgets = {
     is_title_enabled?: boolean;
     onSymbolChange?: ReturnType<typeof useTraderStore>['onChange'];
     open?: boolean;
-    open_market?:
-        | {
-              category: string;
-              subcategory?: undefined;
-          }
-        | {
-              category: never;
-              subcategory: null;
-          }
-        | null;
+    open_market?: {
+        category: string | null;
+        subcategory?: string | null;
+    };
     theme?: string;
     y_axis_width?: number;
 };
