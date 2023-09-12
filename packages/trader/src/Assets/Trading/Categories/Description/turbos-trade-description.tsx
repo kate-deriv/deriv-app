@@ -1,16 +1,20 @@
 import React from 'react';
-import { Localize, localize } from '@deriv/translations';
+import { Localize } from '@deriv/translations';
 import { Text } from '@deriv/components';
 
 const TurbosTradeDescription = () => {
     const content = [
         {
             type: 'paragraph',
-            text: localize(
-                'This product allows you to express a strong bullish or bearish view on an underlying asset.'
+            text: (
+                <Localize
+                    i18n_default_text={
+                        'This product allows you to express a strong bullish or bearish view on an underlying asset.'
+                    }
+                />
             ),
         },
-        { type: 'heading', text: localize('For Long:') },
+        { type: 'heading', text: <Localize i18n_default_text={'For Long:'} /> },
         {
             type: 'paragraph',
             text: (
@@ -20,7 +24,7 @@ const TurbosTradeDescription = () => {
                 />
             ),
         },
-        { type: 'heading', text: localize('For Short:') },
+        { type: 'heading', text: <Localize i18n_default_text={'For Short:'} /> },
         {
             type: 'paragraph',
             text: (
@@ -32,7 +36,13 @@ const TurbosTradeDescription = () => {
         },
         {
             type: 'paragraph',
-            text: localize('You can determine the expiry of your contract by setting the duration or end time.'),
+            text: (
+                <Localize
+                    i18n_default_text={
+                        'You can determine the expiry of your contract by setting the duration or end time.'
+                    }
+                />
+            ),
         },
     ];
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text } from '@deriv/components';
-import { localize, Localize } from '@deriv/translations';
+import { localize } from '@deriv/translations';
 import AccumulatorTradeDescription from './Description/accumulator-trade-description';
 import RiseFallTradeDescription from './Description/rise-fall-trade-description';
 import HighLowTradeDescription from './Description/high-low-trade-description';
@@ -14,6 +14,12 @@ import TouchTradeDescription from './Description/touch-trade-description';
 import AsianTradeDescription from './Description/asian-trade-description';
 import RunHighLowTradeDescription from './Description/run-high-low-trade-description';
 import ResetTradeDescription from './Description/reset-trade-description';
+import CallPutSpreadTradeDescription from './Description/call-put-spread-trade-description';
+import TickHighLowTradeDescription from './Description/tick-high-low-trade-description';
+import LbHighLowTradeDescription from './Description/lb-high-low-trade-description';
+import LbPutTradeDescription from './Description/lb-put-trade-desciption';
+import LbCallTradeDescription from './Description/lb-call-trade-description';
+import VanillaTradeDescription from './Description/vanilla-trade-description';
 
 const TradeCategories = ({ category, onClick }: { category?: string; onClick: () => void }) => {
     let TradeTypeTemplate;
@@ -57,128 +63,19 @@ const TradeCategories = ({ category, onClick }: { category?: string; onClick: ()
                 TradeTypeTemplate = <ResetTradeDescription />;
                 break;
             case 'callputspread':
-                TradeTypeTemplate = (
-                    <React.Fragment>
-                        <h2>{localize('Spread Up')}</h2>
-                        <Text as='p'>
-                            {localize(
-                                'Win maximum payout if the exit spot is higher than or equal to the upper barrier.'
-                            )}
-                        </Text>
-                        <Text as='p'>
-                            {localize(
-                                'Win up to maximum payout if exit spot is between lower and upper barrier, in proportion to the difference between exit spot and lower barrier.'
-                            )}
-                        </Text>
-                        <Text as='p'>{localize('No payout if exit spot is below or equal to the lower barrier.')}</Text>
-                        <h2>{localize('Spread Down')}</h2>
-                        <Text as='p'>
-                            {localize(
-                                'Win maximum payout if the exit spot is lower than or equal to the lower barrier.'
-                            )}
-                        </Text>
-                        <Text as='p'>
-                            {localize(
-                                'Win up to maximum payout if exit spot is between lower and upper barrier, in proportion to the difference between upper barrier and exit spot.'
-                            )}
-                        </Text>
-                        <Text as='p'>{localize('No payout if exit spot is above or equal to the upper barrier.')}</Text>
-                    </React.Fragment>
-                );
+                TradeTypeTemplate = <CallPutSpreadTradeDescription />;
                 break;
             case 'tick_high_low':
-                TradeTypeTemplate = (
-                    <React.Fragment>
-                        <Text as='p'>
-                            {localize(
-                                'If you select "High Tick", you win the payout if the selected tick is the highest among the next five ticks.'
-                            )}
-                        </Text>
-                        <Text as='p'>
-                            {localize(
-                                'If you select "Low Tick", you win the payout if the selected tick is the lowest among the next five ticks.'
-                            )}
-                        </Text>
-                    </React.Fragment>
-                );
+                TradeTypeTemplate = <TickHighLowTradeDescription />;
                 break;
             case 'lb_high_low':
-                TradeTypeTemplate = (
-                    <React.Fragment>
-                        <Text as='p'>
-                            {localize(
-                                'By purchasing the "High-to-Low" contract, you\'ll win the multiplier times the difference between the high and low over the duration of the contract.'
-                            )}
-                        </Text>
-                        <Text as='p'>
-                            {localize(
-                                'The high is the highest point ever reached by the market during the contract period.'
-                            )}
-                        </Text>
-                        <Text as='p'>
-                            {localize(
-                                'The low is the lowest point ever reached by the market during the contract period.'
-                            )}
-                        </Text>
-                        <Text as='p'>
-                            {localize(
-                                'The close is the latest tick at or before the end time. If you selected a specific end time, the end time is the selected time.'
-                            )}
-                        </Text>
-                    </React.Fragment>
-                );
+                TradeTypeTemplate = <LbHighLowTradeDescription />;
                 break;
             case 'lb_put':
-                TradeTypeTemplate = (
-                    <React.Fragment>
-                        <Text as='p'>
-                            {localize(
-                                'By purchasing the "High-to-Close" contract, you\'ll win the multiplier times the difference between the high and close over the duration of the contract.'
-                            )}
-                        </Text>
-                        <Text as='p'>
-                            {localize(
-                                'The high is the highest point ever reached by the market during the contract period.'
-                            )}
-                        </Text>
-                        <Text as='p'>
-                            {localize(
-                                'The low is the lowest point ever reached by the market during the contract period.'
-                            )}
-                        </Text>
-                        <Text as='p'>
-                            {localize(
-                                'The close is the latest tick at or before the end time. If you selected a specific end time, the end time is the selected time.'
-                            )}
-                        </Text>
-                    </React.Fragment>
-                );
+                TradeTypeTemplate = <LbPutTradeDescription />;
                 break;
             case 'lb_call':
-                TradeTypeTemplate = (
-                    <React.Fragment>
-                        <Text as='p'>
-                            {localize(
-                                'By purchasing the "Close-to-Low" contract, you\'ll win the multiplier times the difference between the close and low over the duration of the contract.'
-                            )}
-                        </Text>
-                        <Text as='p'>
-                            {localize(
-                                'The high is the highest point ever reached by the market during the contract period.'
-                            )}
-                        </Text>
-                        <Text as='p'>
-                            {localize(
-                                'The low is the lowest point ever reached by the market during the contract period.'
-                            )}
-                        </Text>
-                        <Text as='p'>
-                            {localize(
-                                'The close is the latest tick at or before the end time. If you selected a specific end time, the end time is the selected time.'
-                            )}
-                        </Text>
-                    </React.Fragment>
-                );
+                TradeTypeTemplate = <LbCallTradeDescription />;
                 break;
             case 'multiplier':
                 TradeTypeTemplate = (
@@ -253,58 +150,7 @@ const TradeCategories = ({ category, onClick }: { category?: string; onClick: ()
                 TradeTypeTemplate = <TurbosTradeDescription />;
                 break;
             case 'vanilla':
-                TradeTypeTemplate = (
-                    <React.Fragment>
-                        <Text as='p'>
-                            {localize(
-                                'Vanilla options allow you to predict an upward (bullish) or downward (bearish) direction of the underlying asset by purchasing a "Call" or a "Put".'
-                            )}
-                        </Text>
-                        <Text as='p'>
-                            <Localize
-                                i18n_default_text='If you select <0>"Call"</0>, you’ll earn a <1>payout</1> if the <1>final price</1> is above the <1>strike price</1> at <1>expiry</1>. Otherwise, you won’t receive a payout.'
-                                components={[
-                                    <strong key={0} />,
-                                    <span
-                                        className='contract-type-info__content-definition'
-                                        onClick={onClick}
-                                        key={1}
-                                    />,
-                                ]}
-                            />
-                        </Text>
-                        <Text as='p'>
-                            <Localize
-                                i18n_default_text='If you select <0>"Put"</0>, you’ll earn a payout if the final price is below the strike price at expiry. Otherwise, you won’t receive a payout.'
-                                components={[<strong key={0} />]}
-                            />
-                        </Text>
-                        <Text as='p'>
-                            <Localize
-                                i18n_default_text='Your payout is equal to the <0>payout per point</0> multiplied by the difference between the final price and the strike price. You will only earn a profit if your payout is higher than your initial stake.'
-                                components={[
-                                    <span
-                                        className='contract-type-info__content-definition'
-                                        onClick={onClick}
-                                        key={0}
-                                    />,
-                                ]}
-                            />
-                        </Text>
-                        <Text as='p'>
-                            <Localize
-                                i18n_default_text='You may sell the contract up until 60 seconds before expiry. If you do, we’ll pay you the <0>contract value</0>.'
-                                components={[
-                                    <span
-                                        className='contract-type-info__content-definition'
-                                        onClick={onClick}
-                                        key={0}
-                                    />,
-                                ]}
-                            />
-                        </Text>
-                    </React.Fragment>
-                );
+                TradeTypeTemplate = <VanillaTradeDescription onClick={onClick} />;
                 break;
             default:
                 TradeTypeTemplate = <Text as='p'>{localize('Description not found.')}</Text>;
