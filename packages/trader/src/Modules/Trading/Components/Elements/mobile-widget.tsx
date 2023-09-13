@@ -1,6 +1,6 @@
 import React from 'react';
 import { Money } from '@deriv/components';
-import { localize, Localize } from '@deriv/translations';
+import { Localize } from '@deriv/translations';
 import { getExpiryType, getDurationMinMaxValues, getLocalizedBasis } from '@deriv/shared';
 import { MultiplierAmountWidget } from 'Modules/Trading/Components/Form/TradeParams/Multiplier/widgets.jsx';
 import TradeParamsModal from '../../Containers/trade-params-mobile';
@@ -39,11 +39,11 @@ const MobileWidget = observer(
                 duration_unit
             );
 
-            if (contract_expiry_type === 'tick' && min_value !== null && duration < min_value) {
+            if (contract_expiry_type === 'tick' && duration < Number(min_value)) {
                 onChangeUiStore({ name: `duration_${duration_unit}`, value: min_value });
                 onChange({ target: { name: 'duration', value: min_value } });
             }
-            if (min_value !== null && max_value !== null && !(duration < min_value) && duration > max_value) {
+            if (!(duration < Number(min_value)) && duration > Number(max_value)) {
                 onChangeUiStore({ name: `duration_${duration_unit}`, value: max_value });
                 onChange({ target: { name: 'duration', value: max_value } });
             }
@@ -54,11 +54,11 @@ const MobileWidget = observer(
         const getHumanReadableDuration = () => {
             if (!duration_unit) return '';
             const lookup = {
-                t: [localize('tick'), localize('ticks')],
-                s: [localize('second'), localize('seconds')],
-                m: [localize('min'), localize('mins')],
-                h: [localize('hour'), localize('hours')],
-                d: [localize('day'), localize('days')],
+                t: [<Localize i18n_default_text='tick' key='t' />, <Localize i18n_default_text='ticks' key='ts' />],
+                s: [<Localize i18n_default_text='second' key='s' />, <Localize i18n_default_text='seconds' key='ss' />],
+                m: [<Localize i18n_default_text='min' key='m' />, <Localize i18n_default_text='mins' key='ms' />],
+                h: [<Localize i18n_default_text='hour' key='h' />, <Localize i18n_default_text='hours' key='hs' />],
+                d: [<Localize i18n_default_text='day' key='d' />, <Localize i18n_default_text='days' key='ds' />],
             };
 
             try {

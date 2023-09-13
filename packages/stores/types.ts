@@ -604,10 +604,7 @@ type TContractTradeStore = {
     last_contract: TContractStore | Record<string, never>;
     markers_array: Array<{
         type: string;
-        contract_info: ProposalOpenContract &
-            Portfolio1 & {
-                contract_update?: ContractUpdate;
-            };
+        contract_info: TPortfolioPosition['contract_info'];
         key: string;
         price_array: [string, string];
         epoch_array: [number];
