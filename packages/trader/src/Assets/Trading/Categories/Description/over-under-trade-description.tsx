@@ -3,22 +3,23 @@ import { Localize } from '@deriv/translations';
 import { Text } from '@deriv/components';
 
 const OverUnderTradeDescription = () => {
+    const content = [
+        <Localize
+            i18n_default_text='If you select "Over", you will win the payout if the last digit of the last tick is greater than your prediction.'
+            key='1'
+        />,
+        <Localize
+            i18n_default_text='If you select "Under", you will win the payout if the last digit of the last tick is less than your prediction.'
+            key='2'
+        />,
+    ];
     return (
         <React.Fragment>
-            <Text as='p'>
-                <Localize
-                    i18n_default_text={
-                        'If you select "Over", you will win the payout if the last digit of the last tick is greater than your prediction.'
-                    }
-                />
-            </Text>
-            <Text as='p'>
-                <Localize
-                    i18n_default_text={
-                        'If you select "Under", you will win the payout if the last digit of the last tick is less than your prediction.'
-                    }
-                />
-            </Text>
+            {content.map((paragraph, index) => (
+                <Text as='p' key={index.toString() + paragraph}>
+                    {paragraph}
+                </Text>
+            ))}
         </React.Fragment>
     );
 };

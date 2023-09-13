@@ -3,36 +3,31 @@ import { Localize } from '@deriv/translations';
 import { Text } from '@deriv/components';
 
 const LbHighLowTradeDescription = () => {
+    const content = [
+        <Localize
+            i18n_default_text='By purchasing the "High-to-Low" contract, you\&apos;ll win the multiplier times the difference between the high and low over the duration of the contract.'
+            key='1'
+        />,
+        <Localize
+            i18n_default_text='The high is the highest point ever reached by the market during the contract period.'
+            key='2'
+        />,
+        <Localize
+            i18n_default_text='The low is the lowest point ever reached by the market during the contract period.'
+            key='3'
+        />,
+        <Localize
+            i18n_default_text='The close is the latest tick at or before the end time. If you selected a specific end time, the end time is the selected time.'
+            key='4'
+        />,
+    ];
     return (
         <React.Fragment>
-            <Text as='p'>
-                <Localize
-                    i18n_default_text={
-                        'By purchasing the "High-to-Low" contract, you\'ll win the multiplier times the difference between the high and low over the duration of the contract.'
-                    }
-                />
-            </Text>
-            <Text as='p'>
-                <Localize
-                    i18n_default_text={
-                        'The high is the highest point ever reached by the market during the contract period.'
-                    }
-                />
-            </Text>
-            <Text as='p'>
-                <Localize
-                    i18n_default_text={
-                        'The low is the lowest point ever reached by the market during the contract period.'
-                    }
-                />
-            </Text>
-            <Text as='p'>
-                <Localize
-                    i18n_default_text={
-                        'The close is the latest tick at or before the end time. If you selected a specific end time, the end time is the selected time.'
-                    }
-                />
-            </Text>
+            {content.map((paragraph, index) => (
+                <Text as='p' key={index.toString() + paragraph}>
+                    {paragraph}
+                </Text>
+            ))}
         </React.Fragment>
     );
 };

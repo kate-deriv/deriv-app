@@ -7,14 +7,10 @@ const TurbosTradeDescription = () => {
         {
             type: 'paragraph',
             text: (
-                <Localize
-                    i18n_default_text={
-                        'This product allows you to express a strong bullish or bearish view on an underlying asset.'
-                    }
-                />
+                <Localize i18n_default_text='This product allows you to express a strong bullish or bearish view on an underlying asset.' />
             ),
         },
-        { type: 'heading', text: <Localize i18n_default_text={'For Long:'} /> },
+        { type: 'heading', text: <Localize i18n_default_text='For Long:' /> },
         {
             type: 'paragraph',
             text: (
@@ -24,7 +20,7 @@ const TurbosTradeDescription = () => {
                 />
             ),
         },
-        { type: 'heading', text: <Localize i18n_default_text={'For Short:'} /> },
+        { type: 'heading', text: <Localize i18n_default_text='For Short:' /> },
         {
             type: 'paragraph',
             text: (
@@ -37,11 +33,7 @@ const TurbosTradeDescription = () => {
         {
             type: 'paragraph',
             text: (
-                <Localize
-                    i18n_default_text={
-                        'You can determine the expiry of your contract by setting the duration or end time.'
-                    }
-                />
+                <Localize i18n_default_text='You can determine the expiry of your contract by setting the duration or end time.' />
             ),
         },
     ];
