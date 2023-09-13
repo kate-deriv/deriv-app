@@ -1,23 +1,23 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import AccumulatorTradeDescription from '../accumulator-trade-description';
+import VanillaTradeDescription from '../vanilla-trade-description';
 
 const mocked_props = {
     onClick: jest.fn(),
 };
 
-describe('<AccumulatorTradeDescription />', () => {
+describe('<VanillaTradeDescription />', () => {
     it('a proper text of description should be rendered', () => {
-        render(<AccumulatorTradeDescription {...mocked_props} />);
+        render(<VanillaTradeDescription {...mocked_props} />);
 
-        expect(screen.getByText(/Accumulators allow you to express/i)).toBeInTheDocument();
+        expect(screen.getByText(/Vanilla options allow you to predict/i)).toBeInTheDocument();
     });
 
     it('should call a function if word from vocabulary was clicked', () => {
-        render(<AccumulatorTradeDescription {...mocked_props} />);
+        render(<VanillaTradeDescription {...mocked_props} />);
 
-        const vocabulary_word = screen.getByText(/growth rate/i);
+        const vocabulary_word = screen.getByText(/payout per point/i);
         userEvent.click(vocabulary_word);
 
         expect(mocked_props.onClick).toBeCalled();
