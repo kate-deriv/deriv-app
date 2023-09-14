@@ -34,6 +34,10 @@ describe('<TradeCategores />', () => {
         render(<TradeCategories category='asian' onClick={jest.fn()} />);
         expect(screen.getByText(/mockedAsianTradeDescription/i)).toBeInTheDocument();
     });
+    it('Ensure mockedCallPutSpreadTradeDescription is rendered correctly when trade category is "callputspread"', () => {
+        render(<TradeCategories category='callputspread' onClick={jest.fn()} />);
+        expect(screen.getByText(/mockedCallPutSpreadTradeDescription/i)).toBeInTheDocument();
+    });
     it('Ensure mockedEndTradeDescription is rendered correctly when trade category is "end"', () => {
         render(<TradeCategories category='end' onClick={jest.fn()} />);
         expect(screen.getByText(/mockedEndTradeDescription/i)).toBeInTheDocument();
