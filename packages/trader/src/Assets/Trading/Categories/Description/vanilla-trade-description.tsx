@@ -2,7 +2,7 @@ import React from 'react';
 import { Localize } from '@deriv/translations';
 import { Text } from '@deriv/components';
 
-const VanillaTradeDescription = ({ onClick }: { onClick: () => void }) => {
+const VanillaTradeDescription = ({ onClick }: { onClick: React.MouseEventHandler<HTMLSpanElement> }) => {
     const content = [
         <Localize
             i18n_default_text='Vanilla options allow you to predict an upward (bullish) or downward (bearish) direction of the underlying asset by purchasing a "Call" or a "Put".'
@@ -34,8 +34,8 @@ const VanillaTradeDescription = ({ onClick }: { onClick: () => void }) => {
     ];
     return (
         <React.Fragment>
-            {content.map((paragraph, index) => (
-                <Text as='p' key={index.toString() + paragraph}>
+            {content.map(paragraph => (
+                <Text as='p' key={paragraph.props.key}>
                     {paragraph}
                 </Text>
             ))}

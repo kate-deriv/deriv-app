@@ -22,7 +22,13 @@ import TouchTradeDescription from './Description/touch-trade-description';
 import TickHighLowTradeDescription from './Description/tick-high-low-trade-description';
 import VanillaTradeDescription from './Description/vanilla-trade-description';
 
-const TradeCategories = ({ category, onClick }: { category?: string; onClick: () => void }) => {
+const TradeCategories = ({
+    category,
+    onClick,
+}: {
+    category?: string;
+    onClick: React.MouseEventHandler<HTMLSpanElement>;
+}) => {
     let TradeTypeTemplate;
     if (category) {
         switch (category) {

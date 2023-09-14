@@ -23,8 +23,8 @@ const LbPutTradeDescription = () => {
     ];
     return (
         <React.Fragment>
-            {content.map((paragraph, index) => (
-                <Text as='p' key={index.toString() + paragraph}>
+            {content.map(paragraph => (
+                <Text as='p' key={paragraph.props.key}>
                     {paragraph}
                 </Text>
             ))}

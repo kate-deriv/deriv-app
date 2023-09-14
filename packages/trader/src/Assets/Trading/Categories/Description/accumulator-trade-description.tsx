@@ -2,7 +2,7 @@ import React from 'react';
 import { Localize } from '@deriv/translations';
 import { Text } from '@deriv/components';
 
-const AccumulatorTradeDescription = ({ onClick }: { onClick: () => void }) => {
+const AccumulatorTradeDescription = ({ onClick }: { onClick: React.MouseEventHandler<HTMLSpanElement> }) => {
     const content = [
         <Localize
             i18n_default_text='Accumulators allow you to express a view on the range of movement of an index and grow your stake exponentially at a fixed <0>growth rate</0>.'
@@ -27,8 +27,8 @@ const AccumulatorTradeDescription = ({ onClick }: { onClick: () => void }) => {
     ];
     return (
         <React.Fragment>
-            {content.map((paragraph, index) => (
-                <Text as='p' key={index.toString() + paragraph}>
+            {content.map(paragraph => (
+                <Text as='p' key={paragraph.props.key}>
                     {paragraph}
                 </Text>
             ))}
