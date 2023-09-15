@@ -31,7 +31,7 @@ export const findRouteByPath = (path: string, routes_config?: TRouteConfig[]): R
 };
 
 export const isRouteVisible = (route?: TRouteConfig, is_logged_in?: boolean) =>
-    !(route && route.is_authenticated && !is_logged_in);
+    !(route?.is_authenticated && !is_logged_in);
 
 export const getPath = (route_path: string, params: { [key: string]: string } = {}) =>
     Object.keys(params).reduce((p, name) => p.replace(`:${name}`, params[name]), route_path);
