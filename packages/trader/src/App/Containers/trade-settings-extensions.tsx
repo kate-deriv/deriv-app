@@ -13,7 +13,7 @@ type TTradeSettingsExtensionsProps = {
 const ChartSettingContainer = Loadable({
     loader: () =>
         import(
-            /* webpackChunkName: "settings-chart", webpackPrefetch: true */ 'App/Containers/SettingsModal/settings-chart.jsx'
+            /* webpackChunkName: "settings-chart", webpackPrefetch: true */ 'App/Containers/SettingsModal/settings-chart'
         ),
     loading: () => <UILoader />,
 });
