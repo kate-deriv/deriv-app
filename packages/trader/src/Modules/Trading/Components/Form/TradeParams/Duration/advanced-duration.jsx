@@ -7,7 +7,7 @@ import { getDurationMinMaxValues, getUnitMap, hasIntradayDurationUnit, toMoment 
 import RangeSlider from 'App/Components/Form/RangeSlider';
 import TradingDatePicker from '../../DatePicker';
 import TradingTimePicker from '../../TimePicker';
-import ExpiryText from './expiry-text.jsx';
+import ExpiryText from './expiry-text';
 import DurationRangeText from './duration-range-text';
 import { observer, useStore } from '@deriv/stores';
 import { useTraderStore } from 'Stores/useTraderStores';
