@@ -7,7 +7,7 @@ import Fieldset from 'App/Components/Form/fieldset';
 import RangeSlider from 'App/Components/Form/RangeSlider';
 import { Dropdown } from '@deriv/components';
 import { toMoment, isVanillaContract } from '@deriv/shared';
-import DurationToggle from './duration-toggle.jsx';
+import DurationToggle from './duration-toggle';
 import AdvancedDuration from './advanced-duration.jsx';
 import SimpleDuration from './simple-duration.jsx';
 
