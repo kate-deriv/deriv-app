@@ -16,9 +16,9 @@ type TSimpleDuration = {
     };
     shared_input_props: {
         is_hj_whitelisted: boolean;
-        onChange: ({ target }: { target: { name: string; value: boolean } }) => void;
-        max_value: number | null;
-        min_value: number | null;
+        onChange: ({ target }: { target: { name: string; value: string | number } }) => void;
+        max_value: number;
+        min_value: number;
     };
     simple_duration_unit: string;
 };
