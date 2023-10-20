@@ -322,6 +322,7 @@ const mock = (): TStores & { is_mock: boolean } => {
             is_app_disabled: false,
             has_only_forward_starting_contracts: false,
             header_extension: null,
+            getDurationFromUnit: jest.fn(),
             is_link_expired_modal_visible: false,
             is_mobile: false,
             is_tablet: false,

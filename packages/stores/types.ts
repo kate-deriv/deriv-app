@@ -564,6 +564,7 @@ type TUiStore = {
     has_only_forward_starting_contracts: boolean;
     has_real_account_signup_ended: boolean;
     header_extension: JSX.Element | null;
+    getDurationFromUnit: (unit: string) => string;
     is_account_settings_visible: boolean;
     is_additional_kyc_info_modal_open: boolean;
     is_advanced_duration: boolean;

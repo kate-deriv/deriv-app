@@ -3,12 +3,12 @@ import React from 'react';
 import { Icon } from '@deriv/components';
 import { localize } from '@deriv/translations';
 
-type DurationToggle = {
+type TDurationToggle = {
     name: string;
     onChange: ({ target }: { target: { name: string; value: boolean } }) => void;
     value: boolean;
 };
-const DurationToggle = ({ name, onChange, value }: DurationToggle) => {
+const DurationToggle = ({ name, onChange, value }: TDurationToggle) => {
     const toggle = () => {
         onChange({ target: { value: !value, name } });
     };
