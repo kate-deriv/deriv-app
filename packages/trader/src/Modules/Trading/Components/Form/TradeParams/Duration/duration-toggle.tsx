@@ -8,6 +8,7 @@ type TDurationToggle = {
     onChange: ({ target }: { target: { name: string; value: boolean } }) => void;
     value: boolean;
 };
+
 const DurationToggle = ({ name, onChange, value }: TDurationToggle) => {
     const toggle = () => {
         onChange({ target: { value: !value, name } });

@@ -4,8 +4,8 @@ import { addComma } from '@deriv/shared';
 import { Localize } from '@deriv/translations';
 
 type TDurationRangeText = {
-    min: string;
-    max: string;
+    min: number | null;
+    max: number | null;
     duration_unit_text: string;
 };
 

@@ -1,6 +1,4 @@
 import classNames from 'classnames';
-import { PropTypes as MobxPropTypes } from 'mobx-react';
-import PropTypes from 'prop-types';
 import React from 'react';
 import { Dropdown, ButtonToggle, InputField } from '@deriv/components';
 import { getDurationMinMaxValues, getUnitMap, hasIntradayDurationUnit, toMoment } from '@deriv/shared';
@@ -9,8 +7,48 @@ import TradingDatePicker from '../../DatePicker';
 import TradingTimePicker from '../../TimePicker';
 import ExpiryText from './expiry-text';
 import DurationRangeText from './duration-range-text';
+import type { TDuration } from './duration';
 import { observer, useStore } from '@deriv/stores';
 import { useTraderStore } from 'Stores/useTraderStores';
+
+type TAdvancedDuration = Pick<
+    TDuration,
+    | 'advanced_duration_unit'
+    | 'advanced_expiry_type'
+    | 'duration_t'
+    | 'duration_units_list'
+    | 'expiry_date'
+    | 'expiry_epoch'
+    | 'expiry_type'
+    | 'getDurationFromUnit'
+    | 'onChange'
+    | 'onChangeUiStore'
+    | 'server_time'
+    | 'start_date'
+> & {
+    changeDurationUnit: ({ target }: { target: { name: string; value: string } }) => void;
+    expiry_list: {
+        text: string;
+        value: string;
+    }[];
+    number_input_props: {
+        type: string;
+        is_incrementable: boolean;
+    };
+    shared_input_props: {
+        is_hj_whitelisted: boolean;
+        onChange: ({
+            target,
+        }: {
+            target: {
+                name: string;
+                value: string | number;
+            };
+        }) => void;
+        max_value: number;
+        min_value: number;
+    };
+};
 
 const AdvancedDuration = observer(
     ({
@@ -30,7 +68,7 @@ const AdvancedDuration = observer(
         server_time,
         shared_input_props,
         start_date,
-    }) => {
+    }: TAdvancedDuration) => {
         const { ui } = useStore();
         const { current_focus, setCurrentFocus } = ui;
         const { contract_expiry_type, duration_min_max, is_vanilla, validation_errors } = useTraderStore();
@@ -49,7 +87,7 @@ const AdvancedDuration = observer(
             'has-time': is_24_hours_contract,
         });
 
-        const changeExpiry = ({ target }) => {
+        const changeExpiry = ({ target }: { target: { name: string; value: string | number | boolean } }) => {
             const { name, value } = target;
 
             onChange({ target: { name: 'expiry_type', value } });
@@ -58,7 +96,7 @@ const AdvancedDuration = observer(
 
         const has_error = !!validation_errors?.duration?.length;
 
-        const { name_plural, name } = getUnitMap()[advanced_duration_unit];
+        const { name_plural, name } = getUnitMap()[advanced_duration_unit as ReturnType<keyof typeof getUnitMap>];
         const duration_unit_text = name_plural ?? name;
 
         return (
@@ -91,7 +129,7 @@ const AdvancedDuration = observer(
                                 />
                             )}
                             {advanced_duration_unit === 't' && contract_expiry_type === 'tick' && (
-                                <RangeSlider name='duration' ticks={10} value={duration_t} {...shared_input_props} />
+                                <RangeSlider name='duration' value={duration_t} {...shared_input_props} />
                             )}
                             {advanced_duration_unit === 'd' && (
                                 <TradingDatePicker
@@ -107,7 +145,7 @@ const AdvancedDuration = observer(
                                     classNameInput='trade-container__input'
                                     current_focus={current_focus}
                                     error_messages={validation_errors.duration}
-                                    label={duration_units_list.length === 1 ? duration_units_list[0].text : null}
+                                    label={duration_units_list.length === 1 ? duration_units_list[0].text : undefined}
                                     name='duration'
                                     setCurrentFocus={setCurrentFocus}
                                     value={getDurationFromUnit(advanced_duration_unit)}
@@ -119,7 +157,7 @@ const AdvancedDuration = observer(
                                 <DurationRangeText min={min} max={max} duration_unit_text={duration_unit_text} />
                             )}
                             {advanced_duration_unit === 'd' && (
-                                <ExpiryText expiry_epoch={expiry_epoch} has_error={has_error} />
+                                <ExpiryText expiry_epoch={Number(expiry_epoch)} has_error={has_error} />
                             )}
                         </div>
                     </>
@@ -135,7 +173,7 @@ const AdvancedDuration = observer(
                                 is_24_hours_contract && <TradingTimePicker />
                                 // validation_errors={validation_errors.end_time} TODO: add validation_errors for end time
                             }
-                            {!is_24_hours_contract && <ExpiryText expiry_epoch={expiry_epoch} />}
+                            {!is_24_hours_contract && <ExpiryText expiry_epoch={Number(expiry_epoch)} />}
                         </div>
                     </>
                 )}
@@ -143,23 +181,5 @@ const AdvancedDuration = observer(
         );
     }
 );
-
-AdvancedDuration.propTypes = {
-    advanced_duration_unit: PropTypes.string,
-    advanced_expiry_type: PropTypes.string,
-    changeDurationUnit: PropTypes.func,
-    duration_t: PropTypes.number,
-    duration_units_list: MobxPropTypes.arrayOrObservableArray,
-    expiry_date: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    expiry_list: PropTypes.array,
-    expiry_type: PropTypes.string,
-    getDurationFromUnit: PropTypes.func,
-    number_input_props: PropTypes.object,
-    onChange: PropTypes.func,
-    onChangeUiStore: PropTypes.func,
-    server_time: PropTypes.object,
-    shared_input_props: PropTypes.object,
-    start_date: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-};
 
 export default AdvancedDuration;

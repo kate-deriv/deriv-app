@@ -8,12 +8,12 @@ import { toMoment, isVanillaContract } from '@deriv/shared';
 import { useStore } from '@deriv/stores';
 import { useTraderStore } from 'Stores/useTraderStores';
 import DurationToggle from './duration-toggle';
-import AdvancedDuration from './advanced-duration.jsx';
+import AdvancedDuration from './advanced-duration';
 import SimpleDuration from './simple-duration';
 
 type TUIStore = ReturnType<typeof useStore>['ui'];
 type TTradeStore = ReturnType<typeof useTraderStore>;
-type TDuration = {
+export type TDuration = {
     advanced_duration_unit: TUIStore['advanced_duration_unit'];
     advanced_expiry_type: TUIStore['advanced_expiry_type'];
     contract_type: TTradeStore['contract_type'];
@@ -29,7 +29,6 @@ type TDuration = {
     hasDurationUnit: (duration_type: string, is_advanced: boolean) => boolean;
     is_advanced_duration: TUIStore['is_advanced_duration'];
     is_minimized?: boolean;
-    market_open_times: TTradeStore['market_open_times'];
     max_value: number | null;
     min_value: number | null;
     onChange: TTradeStore['onChange'];
@@ -56,7 +55,6 @@ const Duration = ({
     hasDurationUnit,
     is_advanced_duration,
     is_minimized,
-    market_open_times,
     max_value,
     min_value,
     onChange,
@@ -193,7 +191,6 @@ const Duration = ({
                 <>
                     {is_advanced_duration && (
                         <AdvancedDuration
-                            // @ts-expect-error: TODO TS migration of the component
                             advanced_duration_unit={advanced_duration_unit}
                             advanced_expiry_type={advanced_expiry_type}
                             changeDurationUnit={changeDurationUnit}
@@ -204,7 +201,6 @@ const Duration = ({
                             expiry_list={expiry_list}
                             expiry_type={expiry_type}
                             getDurationFromUnit={getDurationFromUnit}
-                            market_open_times={market_open_times}
                             number_input_props={default_props.number_input}
                             onChange={onChange}
                             onChangeUiStore={onChangeUiStore}
