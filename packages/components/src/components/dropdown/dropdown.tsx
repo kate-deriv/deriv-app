@@ -26,6 +26,7 @@ type TDropdown = {
     };
     has_symbol?: boolean;
     hint?: string;
+    id?: string;
     initial_offset?: number;
     initial_height_offset?: number;
     is_align_text_left?: boolean;
@@ -245,6 +246,7 @@ const Dropdown = ({
     handleBlur,
     has_symbol,
     hint,
+    id,
     initial_offset = 0,
     initial_height_offset = 0,
     is_align_text_left,

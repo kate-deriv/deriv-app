@@ -1,10 +1,13 @@
 import React from 'react';
 import { getDurationMinMaxValues } from '@deriv/shared';
-import Duration from './duration.jsx';
+import Duration from './duration';
 import { observer, useStore } from '@deriv/stores';
 import { useTraderStore } from 'Stores/useTraderStores';
 
-const DurationWrapper = observer(() => {
+type TDurationWrapper = {
+    is_minimized?: boolean;
+};
+const DurationWrapper = observer(({ is_minimized }: TDurationWrapper) => {
     const { ui } = useStore();
     const {
         advanced_expiry_type,
@@ -47,6 +50,7 @@ const DurationWrapper = observer(() => {
         expiry_time,
         expiry_type,
         getDurationFromUnit,
+        is_minimized,
         is_advanced_duration,
         market_open_times,
         onChange,
