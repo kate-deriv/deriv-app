@@ -96,7 +96,11 @@ const AdvancedDuration = observer(
 
         const has_error = !!validation_errors?.duration?.length;
 
-        const { name_plural, name } = getUnitMap()[advanced_duration_unit as ReturnType<keyof typeof getUnitMap>];
+        const { name_plural, name } = getUnitMap()[advanced_duration_unit as keyof ReturnType<typeof getUnitMap>] as {
+            name_plural?: string;
+            name_singular?: string;
+            name?: string;
+        };
         const duration_unit_text = name_plural ?? name;
 
         return (

@@ -6,7 +6,7 @@ import { Localize } from '@deriv/translations';
 type TDurationRangeText = {
     min: number | null;
     max: number | null;
-    duration_unit_text: string;
+    duration_unit_text?: string;
 };
 
 const DurationRangeText = ({ min, max, duration_unit_text }: TDurationRangeText) => (
