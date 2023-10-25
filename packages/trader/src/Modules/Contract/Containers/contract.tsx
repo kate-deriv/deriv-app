@@ -4,7 +4,7 @@ import { CSSTransition } from 'react-transition-group';
 import { routes } from '@deriv/shared';
 import ErrorComponent from 'App/Components/Elements/Errors';
 import { localize } from '@deriv/translations';
-import ContractReplay from './contract-replay.jsx';
+import ContractReplay from './contract-replay';
 import { observer, useStore } from '@deriv/stores';
 
 type TContract = {
@@ -60,10 +60,7 @@ const Contract = observer(({ match, history }: TContract) => {
                     }}
                     unmountOnExit
                 >
-                    {
-                        // @ts-expect-error TODO: remove this comment after ContractReplay will be in TS
-                        <ContractReplay contract_id={+match.params.contract_id} key={+match.params.contract_id} />
-                    }
+                    <ContractReplay contract_id={+match.params.contract_id} key={+match.params.contract_id} />
                 </CSSTransition>
             )}
         </React.Fragment>

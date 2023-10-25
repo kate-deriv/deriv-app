@@ -575,6 +575,7 @@ type TUiStore = {
     is_cashier_visible: boolean;
     is_wallet_modal_visible: boolean;
     is_chart_asset_info_visible?: boolean;
+    is_chart_countdown_visible: boolean;
     is_chart_layout_default: boolean;
     is_closing_create_real_account_modal: boolean;
     is_kyc_information_submitted_modal_open: boolean;
@@ -627,6 +628,7 @@ type TUiStore = {
     toggleAccountsDialog: () => void;
     toggleAccountSettings: (props?: boolean) => void;
     toggleCashier: () => void;
+    toggleHistoryTab: (state_change?: boolean) => void;
     toggleLanguageSettingsModal: () => void;
     toggleLinkExpiredModal: (state_change: boolean) => void;
     togglePositionsDrawer: () => void;
@@ -937,15 +939,54 @@ type TTradersHubStore = {
 
 type TContractReplay = {
     contract_store: {
+        accumulator_previous_spot_time: number | null;
+        barriers_array: Array<string | number> | [];
+        contract_config:
+            | Record<string, never>
+            | {
+                  chart_type: string;
+                  granularity?: number;
+                  end_epoch?: number;
+                  start_epoch: string | number;
+                  scroll_to_epoch: boolean;
+              }
+            | null;
         contract_info: TPortfolioPosition['contract_info'];
+        contract_update: ProposalOpenContract['limit_order'];
+        contract_update_history: TContractStore['contract_update_history'];
         digits_info: { [key: number]: { digit: number; spot: string } };
         display_status: string;
+        getContractsArray: () => {
+            type: string;
+            markers: unknown[];
+            props: {
+                hasPersistentBorders: boolean;
+            };
+        }[];
         is_digit_contract: boolean;
         is_ended: boolean;
+        marker: {
+            type: string;
+            markers: unknown[];
+            color: unknown;
+        } | null;
+        markers_array: [] | Array<Record<string, unknown>>;
     };
+    chart_state: string;
+    chartStateChange: (state: string, option: Record<string, unknown>) => void;
     error_code?: string;
     error_message?: string;
     has_error: boolean;
+    indicative_status?: string;
+    is_chart_loading: boolean;
+    is_forward_starting: boolean;
+    is_market_closed: boolean;
+    is_sell_requested: boolean;
+    margin?: number;
+    onClickCancel: (contract_id?: number) => void;
+    onClickSell: (contract_id?: number) => void;
+    onMount: (contract_id?: number) => void;
+    onUnmount: () => void;
     removeErrorMessage: () => void;
     removeAccountSwitcherListener: () => void;
     setAccountSwitcherListener: (contract_id: string | number, history: Array<string>) => void;
