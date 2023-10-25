@@ -33,10 +33,10 @@ const SimpleDuration = observer(
         simple_duration_unit: simple_duration_unit_prop,
     }: TSimpleDuration) => {
         const { ui } = useStore();
-        const { current_focus, setCurrentFocus, simple_duration_unit: simple_duration_unit_store } = ui;
+        const { current_focus, setCurrentFocus } = ui;
         const { contract_expiry_type, validation_errors } = useTraderStore();
 
-        const simple_duration_unit = simple_duration_unit_prop || simple_duration_unit_store;
+        const simple_duration_unit = simple_duration_unit_prop || ui.simple_duration_unit;
         const filterMinutesAndTicks = (arr: TSimpleDuration['duration_units_list']) => {
             const filtered_arr = arr.filter(du => du.value === 't' || du.value === 'm');
             if (filtered_arr.length <= 1) return [];

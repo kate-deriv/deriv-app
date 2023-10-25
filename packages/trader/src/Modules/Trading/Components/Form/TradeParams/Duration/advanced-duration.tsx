@@ -2,6 +2,7 @@ import classNames from 'classnames';
 import React from 'react';
 import { Dropdown, ButtonToggle, InputField } from '@deriv/components';
 import { getDurationMinMaxValues, getUnitMap, hasIntradayDurationUnit, toMoment } from '@deriv/shared';
+import type { TUnitMap } from '@deriv/shared';
 import RangeSlider from 'App/Components/Form/RangeSlider';
 import TradingDatePicker from '../../DatePicker';
 import TradingTimePicker from '../../TimePicker';
@@ -49,12 +50,6 @@ type TAdvancedDuration = Pick<
         max_value: number;
         min_value: number;
     };
-};
-
-export type TUnitMap = {
-    name_plural?: string;
-    name_singular?: string;
-    name?: string;
 };
 
 const AdvancedDuration = observer(

@@ -2,13 +2,13 @@ import React from 'react';
 import classNames from 'classnames';
 import { Tabs, TickPicker, Numpad, RelativeDatepicker } from '@deriv/components';
 import { isEmptyObject, addComma, getDurationMinMaxValues, getUnitMap } from '@deriv/shared';
+import type { TUnitMap } from '@deriv/shared';
 import { Localize, localize } from '@deriv/translations';
 import { observer, useStore } from '@deriv/stores';
 import { useTraderStore } from 'Stores/useTraderStores';
 import moment from 'moment';
 import ExpiryText from './expiry-text';
 import DurationRangeText from './duration-range-text';
-import type { TUnitMap } from './advanced-duration';
 import type { TTradeParamsMobile } from '../../../../Containers/trade-params-mobile';
 
 type TDuration = Pick<
