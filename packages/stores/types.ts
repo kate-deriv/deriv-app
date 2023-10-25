@@ -590,7 +590,7 @@ type TUiStore = {
     is_positions_drawer_on: boolean;
     is_services_error_visible: boolean;
     is_unsupported_contract_modal_visible: boolean;
-    onChangeUiStore: ({ name, value }: { name: string; value: string | number | boolean }) => void;
+    onChangeUiStore: ({ name, value }: { name: string; value: unknown }) => void;
     openPositionsDrawer: () => void;
     openRealAccountSignup: (
         value: 'maltainvest' | 'svg' | 'add_crypto' | 'choose' | 'add_fiat' | 'set_currency' | 'manage'

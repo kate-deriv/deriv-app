@@ -29,6 +29,7 @@ export type TDuration = {
     hasDurationUnit: (duration_type: string, is_advanced: boolean) => boolean;
     is_advanced_duration: TUIStore['is_advanced_duration'];
     is_minimized?: boolean;
+    market_open_times: TTradeStore['market_open_times'];
     max_value: number | null;
     min_value: number | null;
     onChange: TTradeStore['onChange'];
@@ -55,6 +56,7 @@ const Duration = ({
     hasDurationUnit,
     is_advanced_duration,
     is_minimized,
+    market_open_times,
     max_value,
     min_value,
     onChange,
@@ -150,7 +152,7 @@ const Duration = ({
         }
     };
 
-    const default_props = {
+    const passthrough_props = {
         shared_input: {
             is_hj_whitelisted: true,
             onChange: changeDurationValue,
@@ -176,7 +178,6 @@ const Duration = ({
                 <Dropdown
                     classNameDisplay='dc-dropdown__display--duration'
                     disabled={false}
-                    id='duration'
                     is_alignment_left
                     is_nativepicker={false}
                     list={duration_units_list}
@@ -186,7 +187,7 @@ const Duration = ({
                     value={simple_duration_unit}
                 />
             )}
-            {!has_toggle && <RangeSlider name='duration' value={duration_t} {...default_props.shared_input} />}
+            {!has_toggle && <RangeSlider name='duration' value={duration_t} {...passthrough_props.shared_input} />}
             {has_toggle && (
                 <>
                     {is_advanced_duration && (
@@ -201,11 +202,12 @@ const Duration = ({
                             expiry_list={expiry_list}
                             expiry_type={expiry_type}
                             getDurationFromUnit={getDurationFromUnit}
-                            number_input_props={default_props.number_input}
+                            market_open_times={market_open_times}
+                            number_input_props={passthrough_props.number_input}
                             onChange={onChange}
                             onChangeUiStore={onChangeUiStore}
                             server_time={server_time}
-                            shared_input_props={default_props.shared_input}
+                            shared_input_props={passthrough_props.shared_input}
                             start_date={start_date}
                         />
                     )}
@@ -215,8 +217,8 @@ const Duration = ({
                             changeDurationUnit={changeDurationUnit}
                             duration_t={duration_t}
                             duration_units_list={duration_units_list}
-                            number_input_props={default_props.number_input}
-                            shared_input_props={default_props.shared_input}
+                            number_input_props={passthrough_props.number_input}
+                            shared_input_props={passthrough_props.shared_input}
                             simple_duration_unit={simple_duration_unit}
                         />
                     )}

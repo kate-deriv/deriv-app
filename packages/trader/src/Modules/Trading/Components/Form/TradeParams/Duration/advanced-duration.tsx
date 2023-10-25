@@ -25,6 +25,7 @@ type TAdvancedDuration = Pick<
     | 'onChangeUiStore'
     | 'server_time'
     | 'start_date'
+    | 'market_open_times'
 > & {
     changeDurationUnit: ({ target }: { target: { name: string; value: string } }) => void;
     expiry_list: {
@@ -48,6 +49,12 @@ type TAdvancedDuration = Pick<
         max_value: number;
         min_value: number;
     };
+};
+
+export type TUnitMap = {
+    name_plural?: string;
+    name_singular?: string;
+    name?: string;
 };
 
 const AdvancedDuration = observer(
@@ -87,7 +94,7 @@ const AdvancedDuration = observer(
             'has-time': is_24_hours_contract,
         });
 
-        const changeExpiry = ({ target }: { target: { name: string; value: string | number | boolean } }) => {
+        const changeExpiry = ({ target }: { target: { name: string; value: unknown } }) => {
             const { name, value } = target;
 
             onChange({ target: { name: 'expiry_type', value } });
@@ -96,11 +103,9 @@ const AdvancedDuration = observer(
 
         const has_error = !!validation_errors?.duration?.length;
 
-        const { name_plural, name } = getUnitMap()[advanced_duration_unit as keyof ReturnType<typeof getUnitMap>] as {
-            name_plural?: string;
-            name_singular?: string;
-            name?: string;
-        };
+        const { name_plural, name } = getUnitMap()[
+            advanced_duration_unit as keyof ReturnType<typeof getUnitMap>
+        ] as TUnitMap;
         const duration_unit_text = name_plural ?? name;
 
         return (
@@ -122,7 +127,6 @@ const AdvancedDuration = observer(
                                 <Dropdown
                                     classNameDisplay='dc-dropdown__display--duration'
                                     disabled={false}
-                                    id='duration'
                                     is_alignment_left
                                     is_nativepicker={false}
                                     list={duration_units_list}

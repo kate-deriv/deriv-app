@@ -30,6 +30,7 @@ const DurationWrapper = observer(({ is_minimized }: TDurationWrapper) => {
         expiry_epoch,
         expiry_time,
         start_date,
+        market_open_times,
         onChange,
         onChangeMultiple,
     } = useTraderStore();
@@ -51,6 +52,7 @@ const DurationWrapper = observer(({ is_minimized }: TDurationWrapper) => {
         getDurationFromUnit,
         is_minimized,
         is_advanced_duration,
+        market_open_times,
         onChange,
         onChangeMultiple,
         onChangeUiStore,

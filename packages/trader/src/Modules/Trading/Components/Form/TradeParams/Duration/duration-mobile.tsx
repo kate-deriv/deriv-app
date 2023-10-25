@@ -3,12 +3,13 @@ import classNames from 'classnames';
 import { Tabs, TickPicker, Numpad, RelativeDatepicker } from '@deriv/components';
 import { isEmptyObject, addComma, getDurationMinMaxValues, getUnitMap } from '@deriv/shared';
 import { Localize, localize } from '@deriv/translations';
-import ExpiryText from './expiry-text';
-import DurationRangeText from './duration-range-text';
-import type { TTradeParamsMobile } from '../../../../Containers/trade-params-mobile';
 import { observer, useStore } from '@deriv/stores';
 import { useTraderStore } from 'Stores/useTraderStores';
 import moment from 'moment';
+import ExpiryText from './expiry-text';
+import DurationRangeText from './duration-range-text';
+import type { TUnitMap } from './advanced-duration';
+import type { TTradeParamsMobile } from '../../../../Containers/trade-params-mobile';
 
 type TDuration = Pick<
     TTradeParamsMobile,
@@ -247,11 +248,7 @@ const Numbers = observer(
 
         const fixed_date = !has_error ? setExpiryDate(Number(expiry_epoch), Number(duration_values?.d_duration)) : '';
 
-        const { name_plural, name } = getUnitMap()[duration_unit as keyof ReturnType<typeof getUnitMap>] as {
-            name_plural?: string;
-            name_singular?: string;
-            name?: string;
-        };
+        const { name_plural, name } = getUnitMap()[duration_unit as keyof ReturnType<typeof getUnitMap>] as TUnitMap;
         const duration_unit_text = name_plural ?? name;
 
         return (
