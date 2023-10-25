@@ -943,6 +943,12 @@ type TContractReplay = {
         is_digit_contract: boolean;
         is_ended: boolean;
     };
+    error_code?: string;
+    error_message?: string;
+    has_error: boolean;
+    removeErrorMessage: () => void;
+    removeAccountSwitcherListener: () => void;
+    setAccountSwitcherListener: (contract_id: string | number, history: Array<string>) => void;
 };
 type TGtmStore = {
     is_gtm_applicable: boolean;

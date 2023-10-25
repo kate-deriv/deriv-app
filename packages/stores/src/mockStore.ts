@@ -593,6 +593,10 @@ const mock = (): TStores & { is_mock: boolean } => {
                 is_digit_contract: false,
                 is_ended: false,
             },
+            has_error: false,
+            removeErrorMessage: jest.fn(),
+            removeAccountSwitcherListener: jest.fn(),
+            setAccountSwitcherListener: jest.fn(),
         },
         chart_barrier_store: {},
         active_symbols: {
