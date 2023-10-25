@@ -3,7 +3,7 @@ import { localize } from '@deriv/translations';
 import moment from 'moment';
 import { TContractInfo } from '../contract';
 
-export type TUnitMap = {
+type TUnitMap = {
     name_plural?: string;
     name_singular?: string;
     name?: string;
@@ -46,7 +46,7 @@ export const getUnitMap = () => {
         m: { name_plural: localize('minutes'), name_singular: localize('minute') },
         s: { name: localize('seconds') },
         t: { name_plural: localize('ticks'), name_singular: localize('tick') },
-    };
+    } as { [key: string]: TUnitMap };
 };
 
 const TIME = {

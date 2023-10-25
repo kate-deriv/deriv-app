@@ -2,7 +2,6 @@ import React from 'react';
 import classNames from 'classnames';
 import { Tabs, TickPicker, Numpad, RelativeDatepicker } from '@deriv/components';
 import { isEmptyObject, addComma, getDurationMinMaxValues, getUnitMap } from '@deriv/shared';
-import type { TUnitMap } from '@deriv/shared';
 import { Localize, localize } from '@deriv/translations';
 import { observer, useStore } from '@deriv/stores';
 import { useTraderStore } from 'Stores/useTraderStores';
@@ -248,7 +247,7 @@ const Numbers = observer(
 
         const fixed_date = !has_error ? setExpiryDate(Number(expiry_epoch), Number(duration_values?.d_duration)) : '';
 
-        const { name_plural, name } = getUnitMap()[duration_unit as keyof ReturnType<typeof getUnitMap>] as TUnitMap;
+        const { name_plural, name } = getUnitMap()[duration_unit];
         const duration_unit_text = name_plural ?? name;
 
         return (

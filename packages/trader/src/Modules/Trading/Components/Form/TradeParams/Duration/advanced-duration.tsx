@@ -2,7 +2,6 @@ import classNames from 'classnames';
 import React from 'react';
 import { Dropdown, ButtonToggle, InputField } from '@deriv/components';
 import { getDurationMinMaxValues, getUnitMap, hasIntradayDurationUnit, toMoment } from '@deriv/shared';
-import type { TUnitMap } from '@deriv/shared';
 import RangeSlider from 'App/Components/Form/RangeSlider';
 import TradingDatePicker from '../../DatePicker';
 import TradingTimePicker from '../../TimePicker';
@@ -98,9 +97,7 @@ const AdvancedDuration = observer(
 
         const has_error = !!validation_errors?.duration?.length;
 
-        const { name_plural, name } = getUnitMap()[
-            advanced_duration_unit as keyof ReturnType<typeof getUnitMap>
-        ] as TUnitMap;
+        const { name_plural, name } = getUnitMap()[advanced_duration_unit];
         const duration_unit_text = name_plural ?? name;
 
         return (
