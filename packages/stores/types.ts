@@ -940,15 +940,15 @@ type TTradersHubStore = {
 type TContractReplay = {
     contract_store: {
         accumulator_previous_spot_time: number | null;
-        barriers_array: Array<string | number> | [];
+        barriers_array: Array<unknown> | [];
         contract_config:
             | Record<string, never>
             | {
                   chart_type: string;
                   granularity?: number;
                   end_epoch?: number;
-                  start_epoch: string | number;
-                  scroll_to_epoch: boolean;
+                  start_epoch: number;
+                  scroll_to_epoch: number;
               }
             | null;
         contract_info: TPortfolioPosition['contract_info'];
@@ -958,7 +958,7 @@ type TContractReplay = {
         display_status: string;
         getContractsArray: () => {
             type: string;
-            markers: unknown[];
+            markers: Array<unknown>;
             props: {
                 hasPersistentBorders: boolean;
             };
@@ -966,11 +966,20 @@ type TContractReplay = {
         is_digit_contract: boolean;
         is_ended: boolean;
         marker: {
+            contract_info: TPortfolioPosition['contract_info'];
+            epoch_array: Array<number> | [];
+            key: string;
+            price_array: Array<number> | [];
             type: string;
-            markers: unknown[];
-            color: unknown;
         } | null;
-        markers_array: [] | Array<Record<string, unknown>>;
+        markers_array:
+            | []
+            | Array<{
+                  content_config: { className: string };
+                  marker_config: { ContentComponent: unknown; x: string | number; y: string | number };
+                  react_key: string;
+                  type: string;
+              }>;
     };
     chart_state: string;
     chartStateChange: (state: string, option: Record<string, unknown>) => void;

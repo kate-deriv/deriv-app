@@ -41,6 +41,8 @@ import ChartMarkerBeta from 'Modules/SmartChartBeta/Components/Markers/marker.js
 import { observer, useStore } from '@deriv/stores';
 import { useTraderStore } from 'Stores/useTraderStores';
 
+type TLocation = Location & { state: { from_table_row: boolean } | Record<string, never> };
+
 const ContractReplay = observer(({ contract_id }: { contract_id: number }) => {
     const { common, contract_replay, ui } = useStore();
     const [swipe_index, setSwipeIndex] = React.useState(0);
@@ -69,8 +71,8 @@ const ContractReplay = observer(({ contract_id }: { contract_id: number }) => {
     const history = useHistory();
 
     React.useEffect(() => {
-        // @ts-expect-error needs fix
-        const url_contract_id = +/[^/]*$/.exec(location.pathname)[0];
+        const url_array = /[^/]*$/.exec(location.pathname);
+        const url_contract_id = url_array ? +url_array[0] : undefined;
         onMount(contract_id || url_contract_id);
         setIsVisible(true);
 
@@ -83,8 +85,9 @@ const ContractReplay = observer(({ contract_id }: { contract_id: number }) => {
 
     const onClickClose = React.useCallback(() => {
         setIsVisible(false);
-        // @ts-expect-error needs fix
-        const is_from_table_row = !isEmptyObject(location.state) ? location.state.from_table_row : false;
+        const is_from_table_row = !isEmptyObject((location as TLocation).state)
+            ? (location as TLocation).state.from_table_row
+            : false;
         return is_from_table_row ? history.goBack() : routeBackInApp(history);
     }, [history, routeBackInApp]);
 
@@ -247,6 +250,7 @@ const ReplayChart = observer(
         const { is_chart_layout_default, is_chart_countdown_visible } = ui;
         const { end_epoch, chart_type, start_epoch, granularity } = contract_config || {};
         const is_dark_theme = is_dark_theme_prop || ui.is_dark_mode_on;
+
         /**
          * TODO: remove forcing light theme once DBot supports dark theme
          * DBot does not support for dark theme since till now,
@@ -268,10 +272,9 @@ const ReplayChart = observer(
         const { wsForget, wsSubscribe, wsSendRequest, wsForgetStream } = trade;
         const { is_beta_chart } = client;
 
-        const accu_barriers_marker_component = !is_beta_chart
-            ? allMarkers[accumulators_barriers_marker?.type as keyof typeof allMarkers]
-            : undefined;
-
+        const accu_barriers_marker_component = is_beta_chart
+            ? undefined
+            : allMarkers[accumulators_barriers_marker?.type as keyof typeof allMarkers];
         const isBottomWidgetVisible = () => {
             return isDesktop() && is_digit_contract;
         };
@@ -344,11 +347,8 @@ const ReplayChart = observer(
                 {is_beta_chart &&
                     markers_array.map(({ content_config, marker_config, react_key }) => (
                         <ChartMarkerBeta
-                            // @ts-expect-error: wait for ChartMarkerBeta to be migrated to TS
                             key={react_key}
-                            // @ts-expect-error: wait for ChartMarkerBeta to be migrated to TS
                             marker_config={marker_config}
-                            // @ts-expect-error: wait for ChartMarkerBeta to be migrated to TS
                             marker_content_props={content_config}
                             is_bottom_widget_visible={isBottomWidgetVisible()}
                         />
@@ -356,21 +356,21 @@ const ReplayChart = observer(
                 {!is_beta_chart &&
                     markers_array.map(({ content_config, marker_config, react_key }) => (
                         <ChartMarker
-                            // @ts-expect-error: wait for ChartMarkerBeta to be migrated to TS
                             key={react_key}
-                            // @ts-expect-error: wait for ChartMarkerBeta to be migrated to TS
                             marker_config={marker_config}
-                            // @ts-expect-error: wait for ChartMarkerBeta to be migrated to TS
                             marker_content_props={content_config}
                             is_bottom_widget_visible={isBottomWidgetVisible()}
                         />
                     ))}
                 {!is_beta_chart && is_accumulator_contract && !!markers_array && (
+                    // @ts-expect-error needs fix
                     <DelayedAccuBarriersMarker
-                        // @ts-expect-error needs fix
-                        marker_component={accu_barriers_marker_component}
-                        // @ts-expect-error needs fix
-                        key={accumulators_barriers_marker.key}
+                        marker_component={
+                            accu_barriers_marker_component as React.ComponentProps<
+                                typeof DelayedAccuBarriersMarker
+                            >['marker_component']
+                        }
+                        key={accumulators_barriers_marker?.key}
                         is_dark_theme={is_dark_theme}
                         granularity={granularity}
                         is_in_contract_details
