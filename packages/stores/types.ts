@@ -958,7 +958,13 @@ type TContractReplay = {
         display_status: string;
         getContractsArray: () => {
             type: string;
-            markers: Array<unknown>;
+            markers: Array<{
+                color: string;
+                epoch: number;
+                quote?: number;
+                text?: string;
+                type: string;
+            }>;
             props: {
                 hasPersistentBorders: boolean;
             };
