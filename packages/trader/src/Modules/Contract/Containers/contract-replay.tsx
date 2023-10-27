@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import {
     DesktopWrapper,
     Div100vhContainer,
@@ -41,9 +41,10 @@ import ChartMarkerBeta from 'Modules/SmartChartBeta/Components/Markers/marker.js
 import { observer, useStore } from '@deriv/stores';
 import { useTraderStore } from 'Stores/useTraderStores';
 
-type TLocation = Location & { state: { from_table_row: boolean } | Record<string, never> };
+type TLocationState = { from_table_row: boolean };
 
 const ContractReplay = observer(({ contract_id }: { contract_id: number }) => {
+    const { state } = useLocation<TLocationState>();
     const { common, contract_replay, ui } = useStore();
     const [swipe_index, setSwipeIndex] = React.useState(0);
     const { contract_store } = contract_replay;
@@ -85,9 +86,7 @@ const ContractReplay = observer(({ contract_id }: { contract_id: number }) => {
 
     const onClickClose = React.useCallback(() => {
         setIsVisible(false);
-        const is_from_table_row = !isEmptyObject((location as TLocation).state)
-            ? (location as TLocation).state.from_table_row
-            : false;
+        const is_from_table_row = !isEmptyObject(state) ? state.from_table_row : false;
         return is_from_table_row ? history.goBack() : routeBackInApp(history);
     }, [history, routeBackInApp]);
 

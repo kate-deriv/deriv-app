@@ -1,5 +1,6 @@
 import React from 'react';
 import { Redirect, withRouter } from 'react-router';
+import { RouteComponentProps } from 'react-router-dom';
 import { CSSTransition } from 'react-transition-group';
 import { routes } from '@deriv/shared';
 import ErrorComponent from 'App/Components/Elements/Errors';
@@ -7,10 +8,8 @@ import { localize } from '@deriv/translations';
 import ContractReplay from './contract-replay';
 import { observer, useStore } from '@deriv/stores';
 
-type TContract = {
-    match: { isExact: boolean; params: { contract_id: string }; path: string; url: string };
-    history: Array<string>;
-};
+type TContractParams = { contract_id: string };
+type TContract = RouteComponentProps<TContractParams>;
 
 const dialog_errors = ['GetProposalFailure', 'ContractValidationError'];
 

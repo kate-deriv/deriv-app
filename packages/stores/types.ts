@@ -940,7 +940,7 @@ type TTradersHubStore = {
 type TContractReplay = {
     contract_store: {
         accumulator_previous_spot_time: number | null;
-        barriers_array: Array<unknown> | [];
+        barriers_array: Array<TCoreStores['chart_barrier_store']> | [];
         contract_config:
             | Record<string, never>
             | {
