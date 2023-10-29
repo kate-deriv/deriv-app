@@ -157,14 +157,12 @@ const ReplayChart = observer(
                         />
                     ))}
                 {!is_beta_chart && is_accumulator_contract && !!markers_array && (
-                    // @ts-expect-error DelayedAccuBarriersMarker doesn't accept undefined in marker_component
                     <DelayedAccuBarriersMarker
                         marker_component={
                             accu_barriers_marker_component as React.ComponentProps<
                                 typeof DelayedAccuBarriersMarker
                             >['marker_component']
                         }
-                        key={accumulators_barriers_marker?.key}
                         is_dark_theme={is_dark_theme}
                         granularity={granularity}
                         is_in_contract_details

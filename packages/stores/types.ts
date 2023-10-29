@@ -977,7 +977,7 @@ type TContractReplay = {
             key: string;
             price_array: Array<number> | [];
             type: string;
-        } | null;
+        };
         markers_array:
             | []
             | Array<{

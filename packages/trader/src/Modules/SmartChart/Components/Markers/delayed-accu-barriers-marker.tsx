@@ -7,7 +7,7 @@ type TDelayedAccuBarriersMarkerProps = {
     granularity?: number;
     is_dark_theme?: boolean;
     is_in_contract_details?: boolean;
-    marker_component: React.ComponentType<
+    marker_component?: React.ComponentType<
         Omit<TDelayedAccuBarriersMarkerProps, 'previous_spot_time' | 'marker_component'>
     >;
     previous_spot_time: number | null;
@@ -16,9 +16,9 @@ type TDelayedAccuBarriersMarkerProps = {
 };
 
 const DelayedAccuBarriersMarker = React.memo(
-    ({ marker_component: MarkerComponent, ...props }: TDelayedAccuBarriersMarkerProps) => (
-        <MarkerComponent {...{ ...props, previous_spot_time: undefined }} />
-    ), // barrier range will get updated only when previous_spot_time changes:
+    ({ marker_component: MarkerComponent, ...props }: TDelayedAccuBarriersMarkerProps) => {
+        return MarkerComponent ? <MarkerComponent {...{ ...props, previous_spot_time: undefined }} /> : null;
+    }, // barrier range will get updated only when previous_spot_time changes:
     (prevProps, nextProps) => prevProps.previous_spot_time === nextProps.previous_spot_time
 );
 DelayedAccuBarriersMarker.displayName = 'DelayedAccuBarriersMarker';
