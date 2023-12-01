@@ -37,6 +37,7 @@ type TContractDrawerCardProps = {
     | 'is_multiplier'
     | 'is_turbos'
     | 'is_vanilla'
+    | 'is_lookbacks'
     | 'status'
 > &
     Pick<TContractCardFooterProps, 'is_sell_requested' | 'onClickCancel' | 'onClickSell'> &
@@ -56,6 +57,7 @@ const ContractDrawerCard = observer(
         is_smarttrader_contract,
         is_sell_requested,
         is_turbos,
+        is_lookbacks,
         onClickCancel,
         onClickSell,
         onSwipedUp,
@@ -118,6 +120,7 @@ const ContractDrawerCard = observer(
                 is_sold={is_sold}
                 is_turbos={is_turbos}
                 is_vanilla={is_vanilla}
+                is_lookbacks={is_lookbacks}
                 has_progress_slider={has_progress_slider}
                 removeToast={removeToast}
                 server_time={server_time}
@@ -134,6 +137,7 @@ const ContractDrawerCard = observer(
                 getCardLabels={getCardLabels}
                 is_multiplier={is_multiplier}
                 is_sell_requested={is_sell_requested}
+                is_lookbacks={is_lookbacks}
                 onClickCancel={onClickCancel}
                 onClickSell={onClickSell}
                 server_time={server_time}

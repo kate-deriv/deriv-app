@@ -257,6 +257,7 @@ export const getCardLabels = () =>
         INDICATIVE_PRICE: localize('Indicative price:'),
         INITIAL_STAKE: localize('Initial stake:'),
         LOST: localize('Lost'),
+        MULTIPLIER: localize('Multiplier:'),
         PAYOUT: localize('Sell price:'),
         PURCHASE_PRICE: localize('Buy price:'),
         POTENTIAL_PAYOUT: localize('Payout limit:'),
@@ -386,18 +387,6 @@ export const getUnsupportedContracts = () =>
             name: localize('Low Tick'),
             position: 'bottom',
         },
-        LBFLOATCALL: {
-            name: localize('Close-to-Low'),
-            position: 'top',
-        },
-        LBFLOATPUT: {
-            name: localize('High-to-Close'),
-            position: 'top',
-        },
-        LBHIGHLOW: {
-            name: localize('High-to-Low'),
-            position: 'top',
-        },
         CALLSPREAD: {
             name: localize('Spread Up'),
             position: 'top',
@@ -526,6 +515,18 @@ export const getSupportedContracts = (is_high_low?: boolean) =>
         ASIAND: {
             name: localize('Asian Down'),
             position: 'bottom',
+        },
+        LBFLOATCALL: {
+            name: localize('Close-Low'),
+            position: 'top',
+        },
+        LBFLOATPUT: {
+            name: localize('High-Close'),
+            position: 'top',
+        },
+        LBHIGHLOW: {
+            name: localize('High-Low'),
+            position: 'top',
         },
         // To add a feature flag for a new trade_type, please add 'feature_flag' to its config here:
         // SHARKFIN: {
