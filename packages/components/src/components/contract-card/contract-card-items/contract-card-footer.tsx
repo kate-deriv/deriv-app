@@ -1,14 +1,8 @@
 import classNames from 'classnames';
 import React from 'react';
 import { CSSTransition } from 'react-transition-group';
-import {
-    isValidToCancel,
-    isValidToSell,
-    hasContractEntered,
-    isOpen,
-    useNewRowTransition,
-    TContractInfo,
-} from '@deriv/shared';
+import { isValidToCancel, isValidToSell, hasContractEntered, isOpen, useNewRowTransition } from '@deriv/shared';
+import { TContractInfo } from '@deriv/shared/src/utils/contract/contract-types';
 import { Localize } from '@deriv/translations';
 import ContractCardSell from './contract-card-sell';
 import MultiplierCloseActions from './multiplier-close-actions';

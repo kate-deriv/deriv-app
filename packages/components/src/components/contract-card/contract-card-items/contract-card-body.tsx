@@ -147,7 +147,7 @@ const ContractCardBody = ({
                 indicative={indicative}
                 progress_slider_mobile_el={progress_slider_mobile_el}
                 status={status}
-                // is_mobile={is_mobile}
+                is_mobile={is_mobile}
             />
         );
     } else {

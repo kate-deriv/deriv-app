@@ -9,7 +9,10 @@ import Text from '../../text';
 import { ResultStatusIcon } from '../result-overlay/result-overlay';
 import { TGeneralContractCardBodyProps } from './contract-update-form';
 
-type TLookBacksCardBody = Pick<TGeneralContractCardBodyProps, 'contract_info' | 'currency' | 'is_sold' | 'status'> & {
+type TLookBacksCardBody = Pick<
+    TGeneralContractCardBodyProps,
+    'contract_info' | 'currency' | 'is_sold' | 'status' | 'is_mobile'
+> & {
     progress_slider_mobile_el: React.ReactNode;
     indicative?: number | null;
 };
@@ -18,6 +21,7 @@ const LookBacksCardBody = ({
     contract_info,
     currency,
     is_sold,
+    is_mobile,
     indicative,
     progress_slider_mobile_el,
     status,
@@ -48,7 +52,7 @@ const LookBacksCardBody = ({
         <React.Fragment>
             <div
                 className={classNames('dc-contract-card-items-wrapper', {
-                    'dc-contract-card-items-wrapper--mobile': true,
+                    'dc-contract-card-items-wrapper--mobile': is_mobile,
                 })}
             >
                 <ContractCardItem
