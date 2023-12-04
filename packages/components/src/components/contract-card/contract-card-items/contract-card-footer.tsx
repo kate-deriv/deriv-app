@@ -39,10 +39,10 @@ const CardFooter = ({
     const { in_prop } = useNewRowTransition(!!should_show_transition);
 
     const is_valid_to_cancel = isValidToCancel(contract_info);
+    const is_valid_to_sell = isValidToSell(contract_info);
 
     const should_show_sell = hasContractEntered(contract_info) && isOpen(contract_info);
-
-    const is_valid_to_sell = isValidToSell(contract_info);
+    const should_show_sell_note = is_lookbacks && is_valid_to_sell && should_show_sell;
 
     if (!should_show_sell) return null;
 
@@ -94,8 +94,14 @@ const CardFooter = ({
                                 onClickSell={onClickSell}
                             />
                         </div>
-                        {is_lookbacks && is_valid_to_sell && should_show_sell && (
-                            <Text as='div' size='xxxs' color='less-prominent' line_height='s'>
+                        {should_show_sell_note && (
+                            <Text
+                                as='div'
+                                size='xxxs'
+                                color='less-prominent'
+                                line_height='s'
+                                className='lookbacks--note'
+                            >
                                 <Localize
                                     i18n_default_text='<0>Note:</0> Contract will be sold at the prevailing market price when the request is received by our servers. This price may differ from the indicated price.'
                                     components={[<strong key={0} />]}

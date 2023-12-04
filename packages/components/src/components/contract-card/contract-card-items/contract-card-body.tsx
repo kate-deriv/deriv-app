@@ -147,7 +147,6 @@ const ContractCardBody = ({
                 indicative={indicative}
                 progress_slider_mobile_el={progress_slider_mobile_el}
                 status={status}
-                is_mobile={is_mobile}
             />
         );
     } else {
@@ -211,7 +210,7 @@ const ContractCardBody = ({
             <MobileWrapper>
                 <div
                     className={classNames('dc-contract-card__separatorclass', {
-                        'dc-contract-card__body-wrapper': !is_multiplier && !is_turbos,
+                        'dc-contract-card__body-wrapper': !is_multiplier && !is_turbos && !is_lookbacks,
                     })}
                 >
                     {card_body}
