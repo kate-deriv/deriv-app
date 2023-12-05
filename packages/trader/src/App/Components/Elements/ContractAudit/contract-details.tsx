@@ -7,6 +7,7 @@ import {
     getCancellationPrice,
     getCurrencyDisplayCode,
     getLocalizedBasis,
+    getLookBacksMarkerIcons,
     hasTwoBarriers,
     isAccumulatorContract,
     isEndedBeforeCancellationExpired,
@@ -14,6 +15,7 @@ import {
     isMultiplierContract,
     isSmartTraderContract,
     isAsiansContract,
+    isLookBacksContract,
     isTurbosContract,
     isUserCancelled,
     isUserSold,
@@ -61,6 +63,7 @@ const ContractDetails = ({
         underlying,
     } = contract_info;
 
+    const [high_spot, setHighSpot] = React.useState(entry_spot_display_value);
     const is_profit = Number(profit) >= 0;
     const cancellation_price = getCancellationPrice(contract_info);
     const show_barrier = !is_vanilla && !isAccumulatorContract(contract_type) && !isSmartTraderContract(contract_type);
@@ -83,6 +86,16 @@ const ContractDetails = ({
         if (isCancellationExpired(contract_info)) return localize('Deal cancellation (expired)');
         return localize('Deal cancellation (active)');
     };
+
+    React.useEffect(() => {
+        const updateHighSpot = (new_spot: string) => {
+            if (Number(new_spot) > Number(high_spot)) {
+                setHighSpot(new_spot);
+            }
+        };
+
+        updateHighSpot(contract_info?.barrier ?? '0');
+    }, [contract_info?.barrier]);
 
     React.useEffect(() => {
         Analytics.trackEvent('ce_reports_form', {
@@ -188,6 +201,14 @@ const ContractDetails = ({
                     label={localize('Start time')}
                     value={toGMTFormat(epochToMoment(Number(date_start))) || ' - '}
                 />
+                {isLookBacksContract(contract_type) && (
+                    <ContractAuditItem
+                        id='dt_indicative_high_spot'
+                        icon={getLookBacksMarkerIcons().high_spot_marker}
+                        label={localize('Indicative high spot')}
+                        value={high_spot}
+                    />
+                )}
                 {!isDigitType(contract_type) && (
                     <ContractAuditItem
                         id='dt_entry_spot_label'
