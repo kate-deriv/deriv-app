@@ -1,0 +1,38 @@
+.filter {
+    &__item {
+        justify-content: space-between;
+        width: 100%;
+
+        &__wrapper {
+            padding: var(--core-spacing-800) 0;
+        }
+        // TODO: temporary css (until quill fix)
+        .quill-checkbox__wrapper {
+            order: 3;
+        }
+    }
+}
+
+// TODO: temporary css (until quill fix)
+.quill-action-sheet {
+    &--root {
+        width: 100%;
+    }
+
+    &--handle-bar--line {
+        width: var(--core-size-2400);
+    }
+
+    &--header > p,
+    &--title--icon {
+        display: none;
+    }
+
+    &--header {
+        padding: var(--core-spacing-400) 0;
+    }
+
+    &--title {
+        height: var(--core-size-2400);
+    }
+}

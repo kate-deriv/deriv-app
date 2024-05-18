@@ -33,4 +33,10 @@ $FOOTER_HEIGHT: 5.8rem;
             }
         }
     }
+
+    &__filter {
+        &__wrapper {
+            padding: var(--core-spacing-400);
+        }
+    }
 }
