@@ -10,6 +10,7 @@ type TPositionsContentProps = Omit<TEmptyMessageProps, 'noMatchesFound'> & {
 
 const PositionsContent = ({
     isClosedTab,
+    onRedirectToTrade,
     positions = ['1' as unknown as TPortfolioPosition],
 }: TPositionsContentProps) => {
     const noMatchesFound = false; // TODO: Implement noMatchesFound state change based on filter results
@@ -23,7 +24,11 @@ const PositionsContent = ({
                     </div>
                 </div>
             ) : (
-                <EmptyMessage isClosedTab={isClosedTab} noMatchesFound={noMatchesFound} />
+                <EmptyMessage
+                    isClosedTab={isClosedTab}
+                    onRedirectToTrade={onRedirectToTrade}
+                    noMatchesFound={noMatchesFound}
+                />
             )}
         </div>
     );
