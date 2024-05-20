@@ -17,8 +17,6 @@ $FOOTER_HEIGHT: 5.8rem;
     }
     &__tabs {
         height: 100%;
-        // TODO: Temporary css
-        overflow-y: scroll;
 
         &-content {
             height: calc(100% - $TABS_HEIGHT);
@@ -30,6 +28,8 @@ $FOOTER_HEIGHT: 5.8rem;
                     &__open,
                     &__closed {
                         height: 100%;
+                        // TODO: Temporary css
+                        overflow-y: scroll;
                     }
                 }
             }

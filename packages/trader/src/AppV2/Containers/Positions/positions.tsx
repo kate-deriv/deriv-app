@@ -1,8 +1,8 @@
 import React from 'react';
 import { Localize } from '@deriv/translations';
 import { Tab } from '@deriv-com/quill-ui';
-import { getSupportedContracts, isHighLow } from '@deriv/shared';
 import { TPortfolioPosition } from '@deriv/stores/types';
+import { filterPositions } from '../../Utils/positions-utils';
 import PositionsContent from './positions-content';
 
 type TPositionsProps = {
@@ -89,21 +89,9 @@ const Positions = ({ onRedirectToTrade }: TPositionsProps) => {
 
     React.useEffect(() => {
         if (contractTypeFilter.length) {
-            // Split name with '/' (e.g. Rise/Fall)
-            const splittedSelectedOptions = contractTypeFilter
-                .map(option => (option.includes('/') ? option.split('/') : option))
-                .flat();
-
-            //TODO: Create own config and move filtration into a separate util function
-            const filteredPositions = mockPositions.filter(({ contract_info }) => {
-                const config = getSupportedContracts(isHighLow({ shortcode: contract_info.shortcode }))[
-                    contract_info.contract_type as keyof ReturnType<typeof getSupportedContracts>
-                ];
-
-                return splittedSelectedOptions.includes('main_title' in config ? config.main_title : config.name);
-            });
-            setNoMatchesFound(!filteredPositions.length);
-            setFilteredPositions(filteredPositions);
+            const result = filterPositions(mockPositions, contractTypeFilter);
+            setNoMatchesFound(!result.length);
+            setFilteredPositions(result);
         } else setFilteredPositions(mockPositions);
     }, [contractTypeFilter]);
 
