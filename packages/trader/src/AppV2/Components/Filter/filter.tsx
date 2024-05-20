@@ -40,11 +40,9 @@ const Filter = () => {
     };
 
     const onApply = () => {
-        console.log('applied');
         setSelectedOptions(changedOptions);
     };
     const onClearAll = () => {
-        console.log('clear all');
         setSelectedOptions([]);
         setChangedOptions([]);
     };
@@ -78,7 +76,7 @@ const Filter = () => {
                                 key={item.props.i18n_default_text}
                                 onChange={onChange}
                                 id={item.props.i18n_default_text}
-                                checked={selectedOptions.length ? undefined : false}
+                                checked={selectedOptions.includes(item.props.i18n_default_text)}
                                 size='md'
                             />
                         ))}
