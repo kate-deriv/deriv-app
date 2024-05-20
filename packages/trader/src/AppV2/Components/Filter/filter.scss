@@ -2,9 +2,11 @@
     &__item {
         justify-content: space-between;
         width: 100%;
+        height: var(--core-size-2000);
+        padding-block: var(--core-spacing-400);
 
         &__wrapper {
-            padding: var(--core-spacing-800) 0;
+            padding-block: var(--core-spacing-800);
         }
         // TODO: temporary css (until quill fix)
         .quill-checkbox__wrapper {
@@ -29,10 +31,14 @@
     }
 
     &--header {
-        padding: var(--core-spacing-400) 0;
+        padding-block: var(--core-spacing-400);
     }
 
     &--title {
         height: var(--core-size-2400);
+    }
+
+    &--footer {
+        padding-block: var(--core-spacing-800);
     }
 }

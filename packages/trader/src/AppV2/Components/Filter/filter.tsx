@@ -1,6 +1,6 @@
 import React from 'react';
 import Chip from 'AppV2/Components/Chip';
-import { ActionSheet, Checkbox, CheckboxGroup } from '@deriv-com/quill-ui';
+import { ActionSheet, Checkbox } from '@deriv-com/quill-ui';
 import { Localize } from '@deriv/translations';
 
 // type TFilter = {};
@@ -17,53 +17,77 @@ const TRADE_TYPE_LIST = [
     <Localize i18n_default_text='Even/Odd' key='8' />,
     <Localize i18n_default_text='Over/Under' key='9' />,
 ];
-const config = [
-    {
-        label: 'Parent 1',
-        id: 1,
-        className: 'filter__item',
-    },
-    {
-        label: 'Parent 2',
-        id: 2,
-        className: 'filter__item',
-    },
-    {
-        label: 'Parent 3',
-        id: 3,
-        checked: true,
-        className: 'filter__item',
-    },
-];
+
 // TODO: replace title string with Localize after type fix in quill
 
 const Filter = () => {
     const [isDropdownOpen, setIsDropDownOpen] = React.useState(false);
+    // const [isChecked, setIsChecked] = React.useState<boolean>();
+
+    const [selectedOptions, setSelectedOptions] = React.useState<string[]>([]);
 
     const onDropdownClick = () => {
         setIsDropDownOpen(!isDropdownOpen);
+        // setIsChecked(false);
+    };
+
+    const onChange = (e: React.ChangeEvent<HTMLInputElement> | React.KeyboardEvent<HTMLSpanElement>) => {
+        const newSelectedOption = (e.target as EventTarget & HTMLInputElement).id;
+        if (!selectedOptions.includes(newSelectedOption)) {
+            setSelectedOptions([...selectedOptions, newSelectedOption]);
+        } else {
+            setSelectedOptions([...selectedOptions.filter(item => item !== newSelectedOption)]);
+        }
+    };
+
+    const onApply = () => {
+        console.log('applied');
+        setIsDropDownOpen(true);
+    };
+    const onClearAll = () => {
+        console.log('clear all');
+        setSelectedOptions([]);
+        // setIsChecked(false);
+    };
+
+    const chipLabelFormatting = () => {
+        const arrayLength = selectedOptions.length;
+        if (!arrayLength) return <Localize i18n_default_text='All trade types' />;
+        if (selectedOptions.length === 1)
+            return <Localize i18n_default_text='{{tradeType}}' values={{ tradeType: selectedOptions[0] }} />;
+        return <Localize i18n_default_text='{{amount}} trade types' values={{ amount: arrayLength }} />;
     };
 
     return (
         <>
             <Chip
-                label={<Localize i18n_default_text='All trade types' />}
+                label={chipLabelFormatting()}
                 dropdown
                 isDropdownOpen={isDropdownOpen}
                 onClick={onDropdownClick}
+                selected={!!selectedOptions.length}
             />
             <ActionSheet.Root isOpen={isDropdownOpen} onClose={() => setIsDropDownOpen(false)} position='left'>
                 <ActionSheet.Portal>
+                    {/* TODO: add PR to Quill with changing type of title (need ReactNode)*/}
                     <ActionSheet.Header title='Filter by trade types' />
                     <ActionSheet.Content className='filter__item__wrapper'>
                         {TRADE_TYPE_LIST.map(item => (
-                            <Checkbox label={item} className='filter__item' key={item.props.i18n_default_text} />
+                            <Checkbox
+                                label={item}
+                                className='filter__item'
+                                key={item.props.i18n_default_text}
+                                onChange={onChange}
+                                id={item.props.i18n_default_text}
+                                // checked={isChecked}
+                                size='md'
+                            />
                         ))}
-                        <CheckboxGroup checkboxGroupConfig={config} />
                     </ActionSheet.Content>
+                    {/* TODO: add PR to Quill in order to switch off (make optional) ability to close action sheet by clicking on btns */}
                     <ActionSheet.Footer
-                        primaryAction={{ content: 'Apply', onAction: () => null }}
-                        secondaryAction={{ content: 'Clear All', onAction: () => null }}
+                        primaryAction={{ content: 'Apply', onAction: onApply }}
+                        secondaryAction={{ content: 'Clear All', onAction: onClearAll }}
                         alignment='vertical'
                     />
                 </ActionSheet.Portal>
