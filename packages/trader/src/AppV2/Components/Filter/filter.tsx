@@ -22,13 +22,11 @@ const TRADE_TYPE_LIST = [
 
 const Filter = () => {
     const [isDropdownOpen, setIsDropDownOpen] = React.useState(false);
-    // const [isChecked, setIsChecked] = React.useState<boolean>();
 
     const [selectedOptions, setSelectedOptions] = React.useState<string[]>([]);
 
     const onDropdownClick = () => {
         setIsDropDownOpen(!isDropdownOpen);
-        // setIsChecked(false);
     };
 
     const onChange = (e: React.ChangeEvent<HTMLInputElement> | React.KeyboardEvent<HTMLSpanElement>) => {
@@ -47,7 +45,6 @@ const Filter = () => {
     const onClearAll = () => {
         console.log('clear all');
         setSelectedOptions([]);
-        // setIsChecked(false);
     };
 
     const chipLabelFormatting = () => {
@@ -79,7 +76,7 @@ const Filter = () => {
                                 key={item.props.i18n_default_text}
                                 onChange={onChange}
                                 id={item.props.i18n_default_text}
-                                // checked={isChecked}
+                                checked={selectedOptions.length ? undefined : false}
                                 size='md'
                             />
                         ))}
