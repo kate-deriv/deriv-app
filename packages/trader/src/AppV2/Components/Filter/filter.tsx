@@ -22,8 +22,8 @@ const TRADE_TYPE_LIST = [
 
 const Filter = () => {
     const [isDropdownOpen, setIsDropDownOpen] = React.useState(false);
-
     const [selectedOptions, setSelectedOptions] = React.useState<string[]>([]);
+    const [changedOptions, setChangedOptions] = React.useState<string[]>([]);
 
     const onDropdownClick = () => {
         setIsDropDownOpen(!isDropdownOpen);
@@ -31,20 +31,22 @@ const Filter = () => {
 
     const onChange = (e: React.ChangeEvent<HTMLInputElement> | React.KeyboardEvent<HTMLSpanElement>) => {
         const newSelectedOption = (e.target as EventTarget & HTMLInputElement).id;
-        if (!selectedOptions.includes(newSelectedOption)) {
-            setSelectedOptions([...selectedOptions, newSelectedOption]);
+
+        if (changedOptions.includes(newSelectedOption)) {
+            setChangedOptions([...changedOptions.filter(item => item !== newSelectedOption)]);
         } else {
-            setSelectedOptions([...selectedOptions.filter(item => item !== newSelectedOption)]);
+            setChangedOptions([...changedOptions, newSelectedOption]);
         }
     };
 
     const onApply = () => {
         console.log('applied');
-        setIsDropDownOpen(true);
+        setSelectedOptions(changedOptions);
     };
     const onClearAll = () => {
         console.log('clear all');
         setSelectedOptions([]);
+        setChangedOptions([]);
     };
 
     const chipLabelFormatting = () => {
