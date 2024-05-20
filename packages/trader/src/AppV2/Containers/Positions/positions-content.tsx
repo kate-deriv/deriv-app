@@ -3,33 +3,65 @@ import { TPortfolioPosition } from '@deriv/stores/types';
 import EmptyMessage from 'AppV2/Components/EmptyMessage';
 import { TEmptyMessageProps } from 'AppV2/Components/EmptyMessage/empty-message';
 import Filter from 'AppV2/Components/Filter';
+import { isHighLow } from '@deriv/shared';
 
 type TPositionsContentProps = Omit<TEmptyMessageProps, 'noMatchesFound'> & {
     positions?: TPortfolioPosition[];
+    setSelectedOptions: React.Dispatch<React.SetStateAction<string[]>>;
+    noMatchesFound?: boolean;
 };
+
+//TODO: Implement contract card
+const ContractCard = ({
+    contractType,
+    purchaseTime,
+    shortcode,
+}: {
+    contractType?: string;
+    purchaseTime?: number;
+    shortcode?: string;
+}) => (
+    <div className='contract-card'>
+        <div>{contractType}</div>
+        <div>{purchaseTime}</div>
+        <div>{`${isHighLow({ shortcode }) ? 'High/Low' : 'Rise/Fall'}`}</div>
+    </div>
+);
 
 const PositionsContent = ({
     isClosedTab,
     onRedirectToTrade,
-    positions = ['1' as unknown as TPortfolioPosition],
+    positions = [],
+    setSelectedOptions,
+    noMatchesFound,
 }: TPositionsContentProps) => {
-    const noMatchesFound = false; // TODO: Implement noMatchesFound state change based on filter results
-
     return (
         <div className={`positions-page__${isClosedTab ? 'closed' : 'open'}`}>
-            {positions.length ? (
-                <div className='positions-page__container'>
-                    <div className='positions-page__filter__wrapper'>
-                        <Filter />
-                    </div>
+            <div className='positions-page__container'>
+                <div className='positions-page__filter__wrapper'>
+                    {(positions.length || (!positions.length && noMatchesFound)) && (
+                        <Filter setSelectedOptions={setSelectedOptions} />
+                    )}
                 </div>
-            ) : (
-                <EmptyMessage
-                    isClosedTab={isClosedTab}
-                    onRedirectToTrade={onRedirectToTrade}
-                    noMatchesFound={noMatchesFound}
-                />
-            )}
+                {positions.length ? (
+                    <React.Fragment>
+                        {positions.map(({ contract_info }) => (
+                            <ContractCard
+                                contractType={contract_info.contract_type}
+                                purchaseTime={contract_info.purchase_time}
+                                shortcode={contract_info.shortcode}
+                                key={contract_info.purchase_time}
+                            />
+                        ))}
+                    </React.Fragment>
+                ) : (
+                    <EmptyMessage
+                        isClosedTab={isClosedTab}
+                        onRedirectToTrade={onRedirectToTrade}
+                        noMatchesFound={noMatchesFound}
+                    />
+                )}
+            </div>
         </div>
     );
 };
