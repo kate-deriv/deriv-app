@@ -6,9 +6,9 @@ import Filter from 'AppV2/Components/Filter';
 import { isHighLow } from '@deriv/shared';
 
 type TPositionsContentProps = Omit<TEmptyMessageProps, 'noMatchesFound'> & {
-    positions?: TPortfolioPosition[];
-    setSelectedOptions: React.Dispatch<React.SetStateAction<string[]>>;
     noMatchesFound?: boolean;
+    positions?: TPortfolioPosition[];
+    setContractTypeFilter: React.Dispatch<React.SetStateAction<string[]>>;
 };
 
 //TODO: Implement contract card
@@ -30,17 +30,17 @@ const ContractCard = ({
 
 const PositionsContent = ({
     isClosedTab,
+    noMatchesFound,
     onRedirectToTrade,
     positions = [],
-    setSelectedOptions,
-    noMatchesFound,
+    setContractTypeFilter,
 }: TPositionsContentProps) => {
     return (
         <div className={`positions-page__${isClosedTab ? 'closed' : 'open'}`}>
             <div className='positions-page__container'>
                 <div className='positions-page__filter__wrapper'>
                     {(positions.length || (!positions.length && noMatchesFound)) && (
-                        <Filter setSelectedOptions={setSelectedOptions} />
+                        <Filter setContractTypeFilter={setContractTypeFilter} />
                     )}
                 </div>
             </div>

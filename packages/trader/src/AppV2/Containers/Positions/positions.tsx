@@ -9,7 +9,7 @@ type TPositionsProps = {
     onRedirectToTrade?: () => void;
 };
 
-//TODO: remove after Bala's PR with hook for real data will be merged
+//TODO: Remove after Bala's PR with hook for real data will be merged
 const mockPositions = [
     {
         contract_info: {
@@ -56,7 +56,7 @@ const mockPositions = [
 ] as TPortfolioPosition[];
 
 const Positions = ({ onRedirectToTrade }: TPositionsProps) => {
-    const [selectedOptions, setSelectedOptions] = React.useState<string[]>([]);
+    const [contractTypeFilter, setContractTypeFilter] = React.useState<string[]>([]);
     const [filteredPositions, setFilteredPositions] = React.useState<TPortfolioPosition[]>(mockPositions || []);
     const [noMatchesFound, setNoMatchesFound] = React.useState(false);
 
@@ -66,10 +66,10 @@ const Positions = ({ onRedirectToTrade }: TPositionsProps) => {
             title: <Localize i18n_default_text='Open' />,
             content: (
                 <PositionsContent
-                    onRedirectToTrade={onRedirectToTrade}
-                    setSelectedOptions={setSelectedOptions}
-                    positions={filteredPositions}
                     noMatchesFound={noMatchesFound}
+                    onRedirectToTrade={onRedirectToTrade}
+                    positions={filteredPositions}
+                    setContractTypeFilter={setContractTypeFilter}
                 />
             ),
         },
@@ -79,22 +79,22 @@ const Positions = ({ onRedirectToTrade }: TPositionsProps) => {
             content: (
                 <PositionsContent
                     isClosedTab
-                    setSelectedOptions={setSelectedOptions}
-                    positions={filteredPositions}
                     noMatchesFound={noMatchesFound}
+                    positions={filteredPositions}
+                    setContractTypeFilter={setContractTypeFilter}
                 />
             ),
         },
     ];
 
     React.useEffect(() => {
-        if (selectedOptions.length) {
-            //Split name with '/' (e.g. Rise/Fall)
-            const splittedSelectedOptions = selectedOptions
+        if (contractTypeFilter.length) {
+            // Split name with '/' (e.g. Rise/Fall)
+            const splittedSelectedOptions = contractTypeFilter
                 .map(option => (option.includes('/') ? option.split('/') : option))
                 .flat();
 
-            //TODO: create own config and move filtration into a separate util function
+            //TODO: Create own config and move filtration into a separate util function
             const filteredPositions = mockPositions.filter(({ contract_info }) => {
                 const config = getSupportedContracts(isHighLow({ shortcode: contract_info.shortcode }))[
                     contract_info.contract_type as keyof ReturnType<typeof getSupportedContracts>
@@ -105,7 +105,7 @@ const Positions = ({ onRedirectToTrade }: TPositionsProps) => {
             setNoMatchesFound(!filteredPositions.length);
             setFilteredPositions(filteredPositions);
         } else setFilteredPositions(mockPositions);
-    }, [selectedOptions]);
+    }, [contractTypeFilter]);
 
     return (
         <div className='positions-page'>

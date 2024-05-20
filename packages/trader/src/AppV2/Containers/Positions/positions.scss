@@ -17,6 +17,7 @@ $FOOTER_HEIGHT: 5.8rem;
     }
     &__tabs {
         height: 100%;
+        // TODO: Temporary css
         overflow-y: scroll;
 
         &-content {
@@ -41,11 +42,11 @@ $FOOTER_HEIGHT: 5.8rem;
         }
     }
 
-    // TODO: temporary css (until contract card will be done)
+    // TODO: Temporary css (until contract card will be done)
     .contract-card {
         height: 107px;
         width: 100%;
-        border: 1px solid black;
+        border: 1px solid var(--component-textIcon-normal-prominent);
         box-shadow: 12px 12px 2px 1px rgba(0, 0, 255, 0.2);
         background-color: var(--general-main-1);
         margin-block: 15px;

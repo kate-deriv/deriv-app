@@ -4,11 +4,11 @@ import { ActionSheet, Checkbox } from '@deriv-com/quill-ui';
 import { Localize } from '@deriv/translations';
 
 type TFilter = {
-    setSelectedOptions: React.Dispatch<React.SetStateAction<string[]>>;
+    setContractTypeFilter: React.Dispatch<React.SetStateAction<string[]>>;
 };
 
-// TODO: replace TRADE_TYPE_LIST with real data when BE will be ready (send list of all available contracts based on account)
-const TRADE_TYPE_LIST = [
+// TODO: Replace mockAvailableContractsList with real data when BE will be ready (send list of all available contracts based on account)
+const mockAvailableContractsList = [
     { tradeType: <Localize i18n_default_text='Accumulators' />, id: 'Accumulators' },
     { tradeType: <Localize i18n_default_text='Vanillas' />, id: 'Vanillas' },
     { tradeType: <Localize i18n_default_text='Turbos' />, id: 'Turbos' },
@@ -21,9 +21,7 @@ const TRADE_TYPE_LIST = [
     { tradeType: <Localize i18n_default_text='Over/Under' />, id: 'Over/Under' },
 ];
 
-// TODO: replace title string with Localize after type fix in quill
-
-const Filter = ({ setSelectedOptions }: TFilter) => {
+const Filter = ({ setContractTypeFilter }: TFilter) => {
     const [isDropdownOpen, setIsDropDownOpen] = React.useState(false);
     const [changedOptions, setChangedOptions] = React.useState<string[]>([]);
 
@@ -42,17 +40,18 @@ const Filter = ({ setSelectedOptions }: TFilter) => {
     };
 
     const onApply = () => {
-        setSelectedOptions(changedOptions);
+        setContractTypeFilter(changedOptions);
     };
     const onClearAll = () => {
-        setSelectedOptions([]);
+        setContractTypeFilter([]);
         setChangedOptions([]);
     };
 
     const chipLabelFormatting = () => {
         const arrayLength = changedOptions.length;
         if (!arrayLength) return <Localize i18n_default_text='All trade types' />;
-        if (changedOptions.length === 1) return TRADE_TYPE_LIST.find(type => type.id === changedOptions[0])?.tradeType;
+        if (changedOptions.length === 1)
+            return mockAvailableContractsList.find(type => type.id === changedOptions[0])?.tradeType;
         return <Localize i18n_default_text='{{amount}} trade types' values={{ amount: arrayLength }} />;
     };
 
@@ -67,10 +66,10 @@ const Filter = ({ setSelectedOptions }: TFilter) => {
             />
             <ActionSheet.Root isOpen={isDropdownOpen} onClose={() => setIsDropDownOpen(false)} position='left'>
                 <ActionSheet.Portal>
-                    {/* TODO: add PR to Quill with changing type of title (need ReactNode)*/}
+                    {/* TODO: Add a PR to Quill with changing type of title (need ReactNode)*/}
                     <ActionSheet.Header title='Filter by trade types' />
                     <ActionSheet.Content className='filter__item__wrapper'>
-                        {TRADE_TYPE_LIST.map(({ tradeType, id }) => (
+                        {mockAvailableContractsList.map(({ tradeType, id }) => (
                             <Checkbox
                                 label={tradeType}
                                 className='filter__item'
@@ -82,7 +81,7 @@ const Filter = ({ setSelectedOptions }: TFilter) => {
                             />
                         ))}
                     </ActionSheet.Content>
-                    {/* TODO: add PR to Quill in order to switch off (make optional) ability to close action sheet by clicking on btns */}
+                    {/* TODO: Add PR to Quill in order to switch off (make optional) ability to close action sheet by clicking on btns */}
                     <ActionSheet.Footer
                         primaryAction={{ content: 'Apply', onAction: onApply }}
                         secondaryAction={{ content: 'Clear All', onAction: onClearAll }}
