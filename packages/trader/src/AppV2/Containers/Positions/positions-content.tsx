@@ -43,25 +43,25 @@ const PositionsContent = ({
                         <Filter setSelectedOptions={setSelectedOptions} />
                     )}
                 </div>
-                {positions.length ? (
-                    <React.Fragment>
-                        {positions.map(({ contract_info }) => (
-                            <ContractCard
-                                contractType={contract_info.contract_type}
-                                purchaseTime={contract_info.purchase_time}
-                                shortcode={contract_info.shortcode}
-                                key={contract_info.purchase_time}
-                            />
-                        ))}
-                    </React.Fragment>
-                ) : (
-                    <EmptyMessage
-                        isClosedTab={isClosedTab}
-                        onRedirectToTrade={onRedirectToTrade}
-                        noMatchesFound={noMatchesFound}
-                    />
-                )}
             </div>
+            {positions.length ? (
+                <React.Fragment>
+                    {positions.map(({ contract_info }) => (
+                        <ContractCard
+                            contractType={contract_info.contract_type}
+                            purchaseTime={contract_info.purchase_time}
+                            shortcode={contract_info.shortcode}
+                            key={contract_info.purchase_time}
+                        />
+                    ))}
+                </React.Fragment>
+            ) : (
+                <EmptyMessage
+                    isClosedTab={isClosedTab}
+                    onRedirectToTrade={onRedirectToTrade}
+                    noMatchesFound={noMatchesFound}
+                />
+            )}
         </div>
     );
 };

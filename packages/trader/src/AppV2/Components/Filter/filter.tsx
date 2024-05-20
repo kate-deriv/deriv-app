@@ -35,11 +35,7 @@ const Filter = ({ setSelectedOptions }: TFilter) => {
         const newSelectedOption = (e.target as EventTarget & HTMLInputElement).id;
 
         if (changedOptions.includes(newSelectedOption)) {
-            // case when we are removing option
             setChangedOptions([...changedOptions.filter(item => item !== newSelectedOption)]);
-        } else if (newSelectedOption.includes('/')) {
-            // case when option contains '/' (e.g. Rise/Fall) as we need to split it
-            setChangedOptions([...changedOptions, ...newSelectedOption.split('/')]);
         } else {
             setChangedOptions([...changedOptions, newSelectedOption]);
         }
@@ -56,8 +52,7 @@ const Filter = ({ setSelectedOptions }: TFilter) => {
     const chipLabelFormatting = () => {
         const arrayLength = changedOptions.length;
         if (!arrayLength) return <Localize i18n_default_text='All trade types' />;
-        if (changedOptions.length === 1)
-            return <Localize i18n_default_text='{{tradeType}}' values={{ tradeType: changedOptions[0] }} />;
+        if (changedOptions.length === 1) return TRADE_TYPE_LIST.find(type => type.id === changedOptions[0])?.tradeType;
         return <Localize i18n_default_text='{{amount}} trade types' values={{ amount: arrayLength }} />;
     };
 

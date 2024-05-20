@@ -89,13 +89,18 @@ const Positions = ({ onRedirectToTrade }: TPositionsProps) => {
 
     React.useEffect(() => {
         if (selectedOptions.length) {
+            //Split name with '/' (e.g. Rise/Fall)
+            const splittedSelectedOptions = selectedOptions
+                .map(option => (option.includes('/') ? option.split('/') : option))
+                .flat();
+
             //TODO: create own config and move filtration into a separate util function
             const filteredPositions = mockPositions.filter(({ contract_info }) => {
                 const config = getSupportedContracts(isHighLow({ shortcode: contract_info.shortcode }))[
                     contract_info.contract_type as keyof ReturnType<typeof getSupportedContracts>
                 ];
 
-                return selectedOptions.includes('main_title' in config ? config.main_title : config.name);
+                return splittedSelectedOptions.includes('main_title' in config ? config.main_title : config.name);
             });
             setNoMatchesFound(!filteredPositions.length);
             setFilteredPositions(filteredPositions);
