@@ -1,7 +1,7 @@
 import React from 'react';
 import EmptyMessage from 'AppV2/Components/EmptyMessage';
 import { TEmptyMessageProps } from 'AppV2/Components/EmptyMessage/empty-message';
-import Filter from 'AppV2/Components/Filter';
+import TradeTypeFilter from 'AppV2/Components/Filter';
 import { isHighLow } from '@deriv/shared';
 import { TClosedPositions } from './positions';
 
@@ -42,7 +42,10 @@ const PositionsContent = ({
             <div className='positions-page__container'>
                 {(!!positions.length || (!positions.length && noMatchesFound)) && (
                     <div className='positions-page__filter__wrapper'>
-                        <Filter setContractTypeFilter={setContractTypeFilter} contractTypeFilter={contractTypeFilter} />
+                        <TradeTypeFilter
+                            setContractTypeFilter={setContractTypeFilter}
+                            contractTypeFilter={contractTypeFilter}
+                        />
                     </div>
                 )}
             </div>

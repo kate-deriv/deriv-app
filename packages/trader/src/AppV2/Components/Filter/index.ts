@@ -1,4 +1,4 @@
-import Filter from './filter';
+import TradeTypeFilter from './trade-type-filter';
 import './filter.scss';
 
-export default Filter;
+export default TradeTypeFilter;
