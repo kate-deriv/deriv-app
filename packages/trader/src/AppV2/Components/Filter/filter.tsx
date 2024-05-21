@@ -81,7 +81,7 @@ const Filter = ({ setContractTypeFilter, contractTypeFilter }: TFilter) => {
                         alignment='vertical'
                         shouldCloseOnSecondaryButtonClick={false}
                         // TODO: replace className with disabling props after Quill library updates
-                        className={`${changedOptions.length ? null : 'disabled'}`}
+                        className={`${changedOptions.length ? '' : 'disabled'}`}
                     />
                 </ActionSheet.Portal>
             </ActionSheet.Root>

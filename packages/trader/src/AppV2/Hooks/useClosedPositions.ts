@@ -2,17 +2,14 @@ import { WS } from '@deriv/shared';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { ProfitTable, ProfitTableResponse } from '@deriv/api-types';
 
-type TPros =
-    | {
-          date_from?: string;
-          date_to?: string;
-      }
-    | Record<string, never>;
-
+type TPros = {
+    date_from?: string;
+    date_to?: string;
+};
 // TODO: we can't filtrate by contractTypes here as for BE High/low and Rise/Fall is ONE contract. So for contractTypes filtration is implemented in position.tsx
 // TODO: refactor this hook for date filtration. e.g. date_from and date_to
 
-const useClosedPositions = ({ date_from, date_to }: TPros) => {
+const useClosedPositions = ({ date_from, date_to }: TPros = {}) => {
     const [positions, setPositions] = useState<NonNullable<ProfitTable['transactions']>>([]);
     const [isLoading, setLoading] = React.useState(false);
     const positionsRef = useRef<NonNullable<ProfitTable['transactions']>>([]);

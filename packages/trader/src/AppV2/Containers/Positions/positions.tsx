@@ -17,7 +17,7 @@ const Loader = () => <div style={{ fontSize: '25px' }}>Loader</div>;
 
 const Positions = observer(({ onRedirectToTrade }: TPositionsProps) => {
     // TODO: refactor this hook for date filtration. e.g. date_from and date_to
-    const { closedPositions, isLoading } = useClosedPositions({});
+    const { closedPositions, isLoading } = useClosedPositions();
 
     const [contractTypeFilter, setContractTypeFilter] = React.useState<string[]>([]);
     const [filteredPositions, setFilteredPositions] = React.useState<TClosedPositions>(closedPositions);
