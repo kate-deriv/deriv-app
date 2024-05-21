@@ -70,6 +70,7 @@ const Positions = ({ onRedirectToTrade }: TPositionsProps) => {
                     onRedirectToTrade={onRedirectToTrade}
                     positions={filteredPositions}
                     setContractTypeFilter={setContractTypeFilter}
+                    contractTypeFilter={contractTypeFilter}
                 />
             ),
         },
@@ -82,6 +83,7 @@ const Positions = ({ onRedirectToTrade }: TPositionsProps) => {
                     noMatchesFound={noMatchesFound}
                     positions={filteredPositions}
                     setContractTypeFilter={setContractTypeFilter}
+                    contractTypeFilter={contractTypeFilter}
                 />
             ),
         },
