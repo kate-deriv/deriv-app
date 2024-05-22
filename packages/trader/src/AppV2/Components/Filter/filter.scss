@@ -10,3 +10,31 @@
         }
     }
 }
+
+// TODO: Temporary, remove after QUill will be ready
+.test {
+    &__wrapper {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 8px;
+    }
+
+    &__radio {
+        appearance: none;
+
+        border-radius: 50%;
+        width: 16px;
+        height: 16px;
+
+        border: 2px solid #999;
+        transition: 0.2s all linear;
+
+        position: relative;
+        top: 4px;
+
+        &:checked {
+            border: 6px solid black;
+        }
+    }
+}

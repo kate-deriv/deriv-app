@@ -1,4 +1,4 @@
-import Filter from './filter';
 import './filter.scss';
 
-export default Filter;
+export { default as Filter } from './filter';
+export { default as TimeFilter } from './time-filter';

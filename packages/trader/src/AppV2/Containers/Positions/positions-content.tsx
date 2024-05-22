@@ -3,7 +3,7 @@ import EmptyMessage from 'AppV2/Components/EmptyMessage';
 import { TEmptyMessageProps } from 'AppV2/Components/EmptyMessage/empty-message';
 import { TPortfolioPosition } from '@deriv/stores/types';
 import { ContractCardList } from 'AppV2/Components/ContractCard';
-import Filter from 'AppV2/Components/Filter';
+import { Filter, TimeFilter } from 'AppV2/Components/Filter';
 import { Loading } from '@deriv/components';
 import { observer, useStore } from '@deriv/stores';
 import { filterPositions } from '../../Utils/positions-utils';
@@ -312,6 +312,7 @@ const PositionsContent = observer(({ isClosedTab, onRedirectToTrade }: TPosition
             <div className='positions-page__container'>
                 {(!!filteredPositions.length || (!filteredPositions.length && noMatchesFound)) && (
                     <div className='positions-page__filter__wrapper'>
+                        {isClosedTab && <TimeFilter />}
                         <Filter setContractTypeFilter={setContractTypeFilter} contractTypeFilter={contractTypeFilter} />
                     </div>
                 )}
