@@ -1,8 +1,22 @@
 import React from 'react';
 import Chip from 'AppV2/Components/Chip';
-// import { daysFromTodayTo, toMoment } from '@deriv/shared';
+import { toMoment } from '@deriv/shared';
 import { ActionSheet, RadioGroup } from '@deriv-com/quill-ui';
 import { Localize } from '@deriv/translations';
+
+type TTimeFilter = {
+    chosenTimeFilter?: string;
+    setChosenTimeFilter: React.Dispatch<React.SetStateAction<string>>;
+    handleDateChange: (
+        date_values: { from?: moment.Moment; to: moment.Moment; is_batch: boolean },
+        {
+            date_range,
+        }?: {
+            // TODO: refactor type
+            date_range: any;
+        }
+    ) => void;
+};
 
 // TODO: replace strings with numbers
 const timeFilterList = [
@@ -36,26 +50,36 @@ const timeFilterList = [
     },
 ];
 
-const TimeFilter = () => {
+const TimeFilter = ({ chosenTimeFilter, setChosenTimeFilter, handleDateChange }: TTimeFilter) => {
     const [isDropdownOpen, setIsDropdownOpen] = React.useState(false);
-    const [chosenTimeFilter, setChosenTimeFilter] = React.useState<string>('');
 
     const defaultCheckedTime = '0';
 
     const onRadioButtonChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
+        if (value === defaultCheckedTime) {
+            onReset();
+            return;
+        }
         setChosenTimeFilter(value);
         setIsDropdownOpen(false);
-        // console.log({
-        //     from: value ? toMoment().startOf('day').subtract(value, 'day').add(1, 's') : undefined,
-        //     to: toMoment().endOf('day'),
-        //     is_batch: true,
-        // });
+        handleDateChange({
+            from: Number(value) ? toMoment().startOf('day').subtract(Number(value), 'day').add(1, 's') : undefined,
+            to: toMoment().endOf('day'),
+            is_batch: true,
+        });
     };
 
     const onReset = () => {
         setChosenTimeFilter('');
         setIsDropdownOpen(false);
+        handleDateChange({
+            from: Number(defaultCheckedTime)
+                ? toMoment().startOf('day').subtract(Number(defaultCheckedTime), 'day').add(1, 's')
+                : undefined,
+            to: toMoment().endOf('day'),
+            is_batch: true,
+        });
     };
 
     const chipLabelFormatting = () =>
