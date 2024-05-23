@@ -18,7 +18,7 @@ type TTimeFilter = {
     ) => void;
 };
 
-// TODO: replace strings with numbers
+// TODO: replace strings with numbers when types in Quill be changed
 const timeFilterList = [
     {
         value: '0',
