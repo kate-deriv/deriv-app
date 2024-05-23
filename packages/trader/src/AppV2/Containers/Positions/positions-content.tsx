@@ -4,6 +4,7 @@ import { TEmptyMessageProps } from 'AppV2/Components/EmptyMessage/empty-message'
 import { TPortfolioPosition } from '@deriv/stores/types';
 import { ContractCardList } from 'AppV2/Components/ContractCard';
 import { ContractTypeFilter, TimeFilter } from 'AppV2/Components/Filter';
+import DatePicker from 'AppV2/Components/DatePicker';
 import { Loading } from '@deriv/components';
 import { observer, useStore } from '@deriv/stores';
 import { filterPositions } from '../../Utils/positions-utils';
@@ -24,6 +25,7 @@ const PositionsContent = observer(
         const [chosenTimeFilter, setChosenTimeFilter] = React.useState<string>('');
         const [filteredPositions, setFilteredPositions] = React.useState<(TPortfolioPosition | TClosedPosition)[]>([]);
         const [noMatchesFound, setNoMatchesFound] = React.useState(false);
+        const [showDatePicker, setShowDatePicker] = React.useState(false);
 
         const { client, portfolio } = useStore();
         const { currency } = client;
@@ -66,11 +68,17 @@ const PositionsContent = observer(
                     {!emptyPositions && (
                         <div className='positions-page__filter__wrapper'>
                             {isClosedTab && (
-                                <TimeFilter
-                                    chosenTimeFilter={chosenTimeFilter}
-                                    setChosenTimeFilter={setChosenTimeFilter}
-                                    handleDateChange={handleDateChange}
-                                />
+                                <React.Fragment>
+                                    <TimeFilter
+                                        chosenTimeFilter={chosenTimeFilter}
+                                        setChosenTimeFilter={setChosenTimeFilter}
+                                        handleDateChange={handleDateChange}
+                                        setShowDatePicker={setShowDatePicker}
+                                    />
+                                    {showDatePicker && (
+                                        <DatePicker isOpen={showDatePicker} onClose={() => setShowDatePicker(false)} />
+                                    )}
+                                </React.Fragment>
                             )}
                             <ContractTypeFilter
                                 setContractTypeFilter={setContractTypeFilter}

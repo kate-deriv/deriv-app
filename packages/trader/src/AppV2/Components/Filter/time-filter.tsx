@@ -3,19 +3,18 @@ import Chip from 'AppV2/Components/Chip';
 import { toMoment } from '@deriv/shared';
 import { ActionSheet, RadioGroup } from '@deriv-com/quill-ui';
 import { Localize } from '@deriv/translations';
+import CustomDateFilterButton from './custom-time-filter-button';
 
 type TTimeFilter = {
     chosenTimeFilter?: string;
     setChosenTimeFilter: React.Dispatch<React.SetStateAction<string>>;
     handleDateChange: (
         date_values: { from?: moment.Moment; to: moment.Moment; is_batch: boolean },
-        {
-            date_range,
-        }?: {
-            // TODO: refactor type
+        date_range?: {
             date_range: any;
         }
     ) => void;
+    setShowDatePicker: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 // TODO: replace strings with numbers when types in Quill be changed
@@ -50,7 +49,7 @@ const timeFilterList = [
     },
 ];
 
-const TimeFilter = ({ chosenTimeFilter, setChosenTimeFilter, handleDateChange }: TTimeFilter) => {
+const TimeFilter = ({ chosenTimeFilter, setChosenTimeFilter, setShowDatePicker, handleDateChange }: TTimeFilter) => {
     const [isDropdownOpen, setIsDropdownOpen] = React.useState(false);
 
     const defaultCheckedTime = '0';
@@ -98,13 +97,17 @@ const TimeFilter = ({ chosenTimeFilter, setChosenTimeFilter, handleDateChange }:
                 <ActionSheet.Portal>
                     <ActionSheet.Header title={<Localize i18n_default_text='Filter by trade types' />} />
                     <ActionSheet.Content className='filter__item__wrapper'>
-                        <RadioGroup selected={chosenTimeFilter || defaultCheckedTime} onToggle={onRadioButtonChange}>
+                        <RadioGroup
+                            selected={chosenTimeFilter || defaultCheckedTime}
+                            onToggle={onRadioButtonChange}
+                            size='sm'
+                            className='filter__item--radio'
+                        >
                             {timeFilterList.map(({ value, label }) => (
                                 <RadioGroup.Item value={value} label={label.props.i18n_default_text} key={value} />
                             ))}
                         </RadioGroup>
-                        {/* TODO: Replace with real component*/}
-                        <div>Custom</div>
+                        <CustomDateFilterButton setShowDatePicker={setShowDatePicker} />
                     </ActionSheet.Content>
                     <ActionSheet.Footer
                         secondaryAction={{
