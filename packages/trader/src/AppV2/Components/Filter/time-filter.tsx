@@ -4,6 +4,7 @@ import Chip from 'AppV2/Components/Chip';
 import { ActionSheet, RadioGroup } from '@deriv-com/quill-ui';
 import { Localize } from '@deriv/translations';
 
+// TODO: replace strings with numbers
 const timeFilterList = [
     {
         value: '0',
@@ -36,13 +37,14 @@ const timeFilterList = [
 ];
 
 const TimeFilter = () => {
-    const defaultCheckedTime = '0';
     const [isDropdownOpen, setIsDropdownOpen] = React.useState(false);
-    const [changedOptions, setChangedOptions] = React.useState<string>(defaultCheckedTime);
+    const [chosenTimeFilter, setChosenTimeFilter] = React.useState<string>('');
+
+    const defaultCheckedTime = '0';
 
     const onRadioButtonChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
-        setChangedOptions(value);
+        setChosenTimeFilter(value);
         setIsDropdownOpen(false);
         // console.log({
         //     from: value ? toMoment().startOf('day').subtract(value, 'day').add(1, 's') : undefined,
@@ -52,11 +54,12 @@ const TimeFilter = () => {
     };
 
     const onReset = () => {
-        setChangedOptions(defaultCheckedTime);
+        setChosenTimeFilter('');
         setIsDropdownOpen(false);
     };
 
-    const chipLabelFormatting = () => timeFilterList.find(item => item.value === changedOptions)?.label;
+    const chipLabelFormatting = () =>
+        timeFilterList.find(item => item.value === (chosenTimeFilter || defaultCheckedTime))?.label;
 
     return (
         <React.Fragment>
@@ -65,18 +68,18 @@ const TimeFilter = () => {
                 dropdown
                 isDropdownOpen={isDropdownOpen}
                 onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                selected={changedOptions !== defaultCheckedTime}
+                selected={!!chosenTimeFilter}
             />
             <ActionSheet.Root isOpen={isDropdownOpen} onClose={() => setIsDropdownOpen(false)} position='left'>
                 <ActionSheet.Portal>
                     <ActionSheet.Header title={<Localize i18n_default_text='Filter by trade types' />} />
                     <ActionSheet.Content className='filter__item__wrapper'>
-                        {/* TODO: Replace with Quill component */}
-                        <RadioGroup selected={changedOptions}>
+                        <RadioGroup selected={chosenTimeFilter || defaultCheckedTime} onToggle={onRadioButtonChange}>
                             {timeFilterList.map(({ value, label }) => (
                                 <RadioGroup.Item value={value} label={label.props.i18n_default_text} key={value} />
                             ))}
                         </RadioGroup>
+                        {/* TODO: Replace with real component*/}
                         <div>Custom</div>
                     </ActionSheet.Content>
                     <ActionSheet.Footer
