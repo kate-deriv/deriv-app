@@ -5,7 +5,7 @@ import EmptyMessage from '../empty-message';
 describe('EmptyMessage', () => {
     const iconId = 'dt_empty_state_icon';
 
-    it('should render "No open positions" content with button when isClosedTab prop is false', () => {
+    it('should render "No open positions" content when isClosedTab prop is false', () => {
         render(<EmptyMessage />);
         expect(screen.getByText('No open positions')).toBeInTheDocument();
         expect(screen.getByText('Your open trades will appear here.')).toBeInTheDocument();
