@@ -1,7 +1,7 @@
 import React from 'react';
 import Chip from 'AppV2/Components/Chip';
 // import { daysFromTodayTo, toMoment } from '@deriv/shared';
-import { ActionSheet } from '@deriv-com/quill-ui';
+import { ActionSheet, RadioGroup } from '@deriv-com/quill-ui';
 import { Localize } from '@deriv/translations';
 
 const timeFilterList = [
@@ -72,22 +72,11 @@ const TimeFilter = () => {
                     <ActionSheet.Header title={<Localize i18n_default_text='Filter by trade types' />} />
                     <ActionSheet.Content className='filter__item__wrapper'>
                         {/* TODO: Replace with Quill component */}
-                        <fieldset>
+                        <RadioGroup selected={changedOptions}>
                             {timeFilterList.map(({ value, label }) => (
-                                <div key={value} className='test__wrapper'>
-                                    <label htmlFor={value}>{label}</label>
-                                    <input
-                                        id={value}
-                                        type='radio'
-                                        value={value}
-                                        name={value}
-                                        className='test__radio'
-                                        onChange={onRadioButtonChange}
-                                        checked={value === changedOptions}
-                                    />
-                                </div>
+                                <RadioGroup.Item value={value} label={label.props.i18n_default_text} key={value} />
                             ))}
-                        </fieldset>
+                        </RadioGroup>
                         <div>Custom</div>
                     </ActionSheet.Content>
                     <ActionSheet.Footer
