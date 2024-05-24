@@ -4,17 +4,15 @@ import { toMoment } from '@deriv/shared';
 import { ActionSheet, RadioGroup } from '@deriv-com/quill-ui';
 import { Localize } from '@deriv/translations';
 import CustomDateFilterButton from './custom-time-filter-button';
+import DateRangePicker from 'AppV2/Components/DatePicker';
 
 type TTimeFilter = {
-    chosenTimeFilter?: string;
-    setChosenTimeFilter: React.Dispatch<React.SetStateAction<string>>;
     handleDateChange: (
         date_values: { from?: moment.Moment; to: moment.Moment; is_batch: boolean },
         date_range?: {
             date_range: any;
         }
     ) => void;
-    setShowDatePicker: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 // TODO: replace strings with numbers when types in Quill be changed
@@ -49,8 +47,11 @@ const timeFilterList = [
     },
 ];
 
-const TimeFilter = ({ chosenTimeFilter, setChosenTimeFilter, setShowDatePicker, handleDateChange }: TTimeFilter) => {
+const TimeFilter = ({ handleDateChange }: TTimeFilter) => {
     const [isDropdownOpen, setIsDropdownOpen] = React.useState(false);
+    const [showDatePicker, setShowDatePicker] = React.useState(false);
+    const [chosenTimeFilter, setChosenTimeFilter] = React.useState<string>();
+    const [formattedSelectedRangeDate, setFormattedSelectedRangeDate] = React.useState<string>();
 
     const defaultCheckedTime = '0';
 
@@ -98,7 +99,7 @@ const TimeFilter = ({ chosenTimeFilter, setChosenTimeFilter, setShowDatePicker, 
                     <ActionSheet.Header title={<Localize i18n_default_text='Filter by trade types' />} />
                     <ActionSheet.Content className='filter__item__wrapper'>
                         <RadioGroup
-                            selected={chosenTimeFilter || defaultCheckedTime}
+                            selected={formattedSelectedRangeDate || chosenTimeFilter || defaultCheckedTime}
                             onToggle={onRadioButtonChange}
                             size='sm'
                             className='filter__item--radio'
@@ -107,7 +108,10 @@ const TimeFilter = ({ chosenTimeFilter, setChosenTimeFilter, setShowDatePicker, 
                                 <RadioGroup.Item value={value} label={label.props.i18n_default_text} key={value} />
                             ))}
                         </RadioGroup>
-                        <CustomDateFilterButton setShowDatePicker={setShowDatePicker} />
+                        <CustomDateFilterButton
+                            setShowDatePicker={setShowDatePicker}
+                            formattedSelectedRangeDate={formattedSelectedRangeDate}
+                        />
                     </ActionSheet.Content>
                     <ActionSheet.Footer
                         secondaryAction={{
@@ -119,6 +123,13 @@ const TimeFilter = ({ chosenTimeFilter, setChosenTimeFilter, setShowDatePicker, 
                     />
                 </ActionSheet.Portal>
             </ActionSheet.Root>
+            {showDatePicker && (
+                <DateRangePicker
+                    isOpen={showDatePicker}
+                    onClose={() => setShowDatePicker(false)}
+                    setFormattedSelectedRangeDate={setFormattedSelectedRangeDate}
+                />
+            )}
         </React.Fragment>
     );
 };
