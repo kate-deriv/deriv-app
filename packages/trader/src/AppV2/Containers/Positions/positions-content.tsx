@@ -41,7 +41,9 @@ const PositionsContent = observer(
             () => (isClosedTab ? closedPositions : active_positions),
             [active_positions, isClosedTab, closedPositions]
         );
-        const emptyPositions = isClosedTab ? is_empty : is_active_empty;
+        const emptyPositions = isClosedTab
+            ? is_empty && !chosenTimeFilter && !formattedSelectedRangeDate
+            : is_active_empty;
         const shouldShowEmptyMessage = emptyPositions || noMatchesFound;
 
         React.useEffect(() => {
@@ -59,6 +61,12 @@ const PositionsContent = observer(
                 setFilteredPositions(positions);
             }
         }, [contractTypeFilter, positions]);
+
+        React.useEffect(() => {
+            if (!positions.length && isClosedTab && (formattedSelectedRangeDate || chosenTimeFilter)) {
+                setNoMatchesFound(true);
+            }
+        }, [formattedSelectedRangeDate, chosenTimeFilter, positions, isClosedTab]);
 
         if (isLoading) return <Loading />;
         return (
