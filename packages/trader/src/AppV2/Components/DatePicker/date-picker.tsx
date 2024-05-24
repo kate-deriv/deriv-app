@@ -6,7 +6,7 @@ import { Localize } from '@deriv/translations';
 type TDateRangePicker = {
     isOpen?: boolean;
     onClose: () => void;
-    setSelectedDateRangeString: React.Dispatch<React.SetStateAction<string | undefined>>;
+    setSelectedDateRangeString: (newCustomTimeFilter?: string | undefined) => void;
     handleDateChange: (values: { to?: moment.Moment; from?: moment.Moment; is_batch?: boolean }) => void;
 };
 const DateRangePicker = ({ isOpen, onClose, setSelectedDateRangeString, handleDateChange }: TDateRangePicker) => {

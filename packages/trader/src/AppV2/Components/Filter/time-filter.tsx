@@ -9,9 +9,9 @@ import DateRangePicker from 'AppV2/Components/DatePicker';
 type TTimeFilter = {
     handleDateChange: (values: { to?: moment.Moment; from?: moment.Moment; is_batch?: boolean }) => void;
     chosenTimeFilter?: string;
-    setChosenTimeFilter: React.Dispatch<React.SetStateAction<string | undefined>>;
-    selectedRangeDateString?: string;
-    setSelectedDateRangeString: React.Dispatch<React.SetStateAction<string | undefined>>;
+    setChosenTimeFilter: (newTimeFilter?: string | undefined) => void;
+    customTimeRangeFilter?: string;
+    setSelectedDateRangeString: (newCustomTimeFilter?: string | undefined) => void;
     setNoMatchesFound: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
@@ -52,7 +52,7 @@ const TimeFilter = ({
     handleDateChange,
     chosenTimeFilter,
     setChosenTimeFilter,
-    selectedRangeDateString,
+    customTimeRangeFilter,
     setSelectedDateRangeString,
     setNoMatchesFound,
 }: TTimeFilter) => {
@@ -91,7 +91,7 @@ const TimeFilter = ({
     };
 
     const chipLabelFormatting = () =>
-        selectedRangeDateString ||
+        customTimeRangeFilter ||
         timeFilterList.find(item => item.value === (chosenTimeFilter || defaultCheckedTime))?.label;
 
     return (
@@ -101,7 +101,7 @@ const TimeFilter = ({
                 dropdown
                 isDropdownOpen={isDropdownOpen}
                 onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                selected={!!(selectedRangeDateString || chosenTimeFilter)}
+                selected={!!(customTimeRangeFilter || chosenTimeFilter)}
                 size='sm'
             />
             <ActionSheet.Root isOpen={isDropdownOpen} onClose={() => setIsDropdownOpen(false)} position='left'>
@@ -109,7 +109,7 @@ const TimeFilter = ({
                     <ActionSheet.Header title={<Localize i18n_default_text='Filter by trade types' />} />
                     <ActionSheet.Content className='filter__item__wrapper'>
                         <RadioGroup
-                            selected={selectedRangeDateString || chosenTimeFilter || defaultCheckedTime}
+                            selected={customTimeRangeFilter || chosenTimeFilter || defaultCheckedTime}
                             onToggle={onRadioButtonChange}
                             size='sm'
                             className='filter__item--radio'
@@ -120,7 +120,7 @@ const TimeFilter = ({
                         </RadioGroup>
                         <CustomDateFilterButton
                             setShowDatePicker={setShowDatePicker}
-                            selectedRangeDateString={selectedRangeDateString}
+                            customTimeRangeFilter={customTimeRangeFilter}
                         />
                     </ActionSheet.Content>
                     <ActionSheet.Footer

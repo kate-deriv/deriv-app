@@ -1,0 +1,18 @@
+import { useModulesStore } from 'Stores/useModulesStores';
+
+type TUseTradeTypeFilter = { isClosedTab?: boolean };
+
+const useTradeTypeFilter = ({ isClosedTab }: TUseTradeTypeFilter) => {
+    const { positions } = useModulesStore();
+    const { setClosedContractTypeFilter, setOpenContractTypeFilter, openContractTypeFilter, closedContractTypeFilter } =
+        positions;
+
+    const contractTypeFilter = isClosedTab ? closedContractTypeFilter : openContractTypeFilter;
+    const setContractTypeFilter = isClosedTab ? setClosedContractTypeFilter : setOpenContractTypeFilter;
+
+    // TODO: extract filtration logic from positions-content and move here
+
+    return { contractTypeFilter, setContractTypeFilter };
+};
+
+export default useTradeTypeFilter;
