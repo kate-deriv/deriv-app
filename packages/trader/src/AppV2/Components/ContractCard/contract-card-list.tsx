@@ -1,9 +1,10 @@
+import React from 'react';
 import { getContractPath } from '@deriv/shared';
 import { TPortfolioPosition } from '@deriv/stores/types';
-import React from 'react';
-import ContractCard from './contract-card';
 import classNames from 'classnames';
 import { TClosedPosition } from 'AppV2/Containers/Positions/positions-content';
+import { TRootStore } from 'Types';
+import ContractCard from './contract-card';
 
 export type TContractCardListProps = {
     currency?: string;
@@ -12,6 +13,7 @@ export type TContractCardListProps = {
     onClickSell?: (contractId: number) => void;
     positions?: (TPortfolioPosition | TClosedPosition)[];
     setHasButtonsDemo?: React.Dispatch<React.SetStateAction<boolean>>;
+    serverTime: TRootStore['common']['server_time'];
 };
 
 const ContractCardList = ({
@@ -20,28 +22,16 @@ const ContractCardList = ({
     onClickCancel,
     onClickSell,
     positions = [],
+    serverTime,
     setHasButtonsDemo,
 }: TContractCardListProps) => {
-    const closedCardsTimeouts = React.useRef<Array<ReturnType<typeof setTimeout>>>([]);
-
     React.useEffect(() => {
-        const timers = closedCardsTimeouts.current;
-        const demoTimeout = setTimeout(() => setHasButtonsDemo?.(false), 720);
+        const demoTimeout = setTimeout(() => setHasButtonsDemo?.(false), 720); // 720 is the length of demo animation
         return () => {
-            if (timers.length) {
-                timers.forEach(id => clearTimeout(id));
-            }
             if (demoTimeout) clearTimeout(demoTimeout);
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
-
-    const handleClose = (id: number, shouldCancel?: boolean) => {
-        const timeoutId = setTimeout(() => {
-            shouldCancel ? onClickCancel?.(id) : onClickSell?.(id);
-        }, 160);
-        closedCardsTimeouts.current.push(timeoutId);
-    };
 
     if (!positions.length) return null;
     return (
@@ -57,11 +47,12 @@ const ContractCardList = ({
                         key={id}
                         contractInfo={position.contract_info}
                         currency={currency}
-                        id={id}
+                        hasActionButtons={!!onClickSell}
                         isSellRequested={(position as TPortfolioPosition).is_sell_requested}
-                        onCancel={() => id && handleClose?.(id, true)}
-                        onClose={() => id && handleClose?.(id)}
+                        onCancel={() => id && onClickCancel?.(id)}
+                        onClose={() => id && onClickSell?.(id)}
                         redirectTo={id ? getContractPath(id) : undefined}
+                        serverTime={serverTime}
                     />
                 );
             })}

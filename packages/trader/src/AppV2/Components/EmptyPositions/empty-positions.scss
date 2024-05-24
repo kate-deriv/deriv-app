@@ -1,26 +1,18 @@
-// TODO: Utilize tokens from quill and logical css properties;
-.empty-message {
+.empty-positions {
     &__open,
     &__closed {
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        padding: 0 4.8rem;
+        padding-inline: var(--core-spacing-2400);
         flex-grow: 1;
 
-        .icon {
-            margin-bottom: 0.8rem;
-        }
         .message {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 0.4rem;
-        }
-        .button-container {
-            align-self: stretch;
-            margin-top: 1.6rem;
+            gap: var(--semantic-spacing-gap-sm);
         }
     }
 }
