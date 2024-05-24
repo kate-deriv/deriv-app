@@ -75,6 +75,7 @@ const TimeFilter = ({
 
     const onReset = () => {
         setChosenTimeFilter('');
+        setFormattedSelectedRangeDate('');
         setIsDropdownOpen(false);
         handleDateChange({
             from: Number(defaultCheckedTime)
@@ -86,9 +87,8 @@ const TimeFilter = ({
     };
 
     const chipLabelFormatting = () =>
-        formattedSelectedRangeDate
-            ? formattedSelectedRangeDate
-            : timeFilterList.find(item => item.value === (chosenTimeFilter || defaultCheckedTime))?.label;
+        formattedSelectedRangeDate ||
+        timeFilterList.find(item => item.value === (chosenTimeFilter || defaultCheckedTime))?.label;
 
     return (
         <React.Fragment>
@@ -97,7 +97,8 @@ const TimeFilter = ({
                 dropdown
                 isDropdownOpen={isDropdownOpen}
                 onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                selected={!!chosenTimeFilter}
+                selected={!!(formattedSelectedRangeDate || chosenTimeFilter)}
+                size='sm'
             />
             <ActionSheet.Root isOpen={isDropdownOpen} onClose={() => setIsDropdownOpen(false)} position='left'>
                 <ActionSheet.Portal>

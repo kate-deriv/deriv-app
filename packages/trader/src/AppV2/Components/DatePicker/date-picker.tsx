@@ -14,7 +14,6 @@ const DateRangePicker = ({ isOpen, onClose, setFormattedSelectedRangeDate, handl
     const [chosenRange, setChosenRange] = React.useState<(string | null | Date)[] | null | Date>([]);
 
     const onApply = () => {
-        console.log('formattedChosenRange', formattedChosenRange);
         setFormattedSelectedRangeDate(formattedChosenRange);
         if (Array.isArray(chosenRange) && chosenRange.length)
             handleDateChange({ from: toMoment(chosenRange[0]), to: toMoment(chosenRange[1]) });
@@ -31,6 +30,11 @@ const DateRangePicker = ({ isOpen, onClose, setFormattedSelectedRangeDate, handl
                         onFormattedDate={value => setFormattedChosenRange(value)}
                         className='date-picker__action-sheet'
                         onChange={value => setChosenRange(value)}
+                        optionsConfig={{
+                            day: '2-digit',
+                            month: 'short',
+                            year: 'numeric',
+                        }}
                     />
                 </ActionSheet.Content>
                 <ActionSheet.Footer
