@@ -5,17 +5,17 @@ import { Localize } from '@deriv/translations';
 
 type TCustomDateFilterButton = {
     setShowDatePicker: React.Dispatch<React.SetStateAction<boolean>>;
-    formattedSelectedRangeDate?: string;
+    selectedRangeDateString?: string;
 };
 
-const CustomDateFilterButton = ({ setShowDatePicker, formattedSelectedRangeDate }: TCustomDateFilterButton) => (
+const CustomDateFilterButton = ({ setShowDatePicker, selectedRangeDateString }: TCustomDateFilterButton) => (
     <button className='custom-time-filter__wrapper' onClick={() => setShowDatePicker(true)}>
         <Text size='md' className='custom-time-filter__label'>
             <Localize i18n_default_text='Custom' />
         </Text>
-        {formattedSelectedRangeDate && (
+        {selectedRangeDateString && (
             <Text size='sm' color='quill-typography__color--subtle'>
-                {formattedSelectedRangeDate}
+                {selectedRangeDateString}
             </Text>
         )}
         <LabelPairedChevronRightSmBoldIcon className='custom-time-filter__icon' />

@@ -6,15 +6,15 @@ import { Localize } from '@deriv/translations';
 type TDateRangePicker = {
     isOpen?: boolean;
     onClose: () => void;
-    setFormattedSelectedRangeDate: React.Dispatch<React.SetStateAction<string | undefined>>;
+    setSelectedDateRangeString: React.Dispatch<React.SetStateAction<string | undefined>>;
     handleDateChange: (values: { to?: moment.Moment; from?: moment.Moment; is_batch?: boolean }) => void;
 };
-const DateRangePicker = ({ isOpen, onClose, setFormattedSelectedRangeDate, handleDateChange }: TDateRangePicker) => {
-    const [formattedChosenRange, setFormattedChosenRange] = React.useState<string>();
+const DateRangePicker = ({ isOpen, onClose, setSelectedDateRangeString, handleDateChange }: TDateRangePicker) => {
+    const [chosenRangeString, setChosenRangeString] = React.useState<string>();
     const [chosenRange, setChosenRange] = React.useState<(string | null | Date)[] | null | Date>([]);
 
     const onApply = () => {
-        setFormattedSelectedRangeDate(formattedChosenRange);
+        setSelectedDateRangeString(chosenRangeString);
         if (Array.isArray(chosenRange) && chosenRange.length)
             handleDateChange({ from: toMoment(chosenRange[0]), to: toMoment(chosenRange[1]) });
         onClose();
@@ -27,7 +27,7 @@ const DateRangePicker = ({ isOpen, onClose, setFormattedSelectedRangeDate, handl
                 <ActionSheet.Content>
                     <DatePicker
                         selectRange
-                        onFormattedDate={value => setFormattedChosenRange(value)}
+                        onFormattedDate={value => setChosenRangeString(value)}
                         className='date-picker__action-sheet'
                         onChange={value => setChosenRange(value)}
                         optionsConfig={{
@@ -43,7 +43,7 @@ const DateRangePicker = ({ isOpen, onClose, setFormattedSelectedRangeDate, handl
                         onAction: onApply,
                     }}
                     alignment='vertical'
-                    isPrimaryButtonDisabled={!formattedChosenRange}
+                    isPrimaryButtonDisabled={!chosenRangeString}
                 />
             </ActionSheet.Portal>
         </ActionSheet.Root>

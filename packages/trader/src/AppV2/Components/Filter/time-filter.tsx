@@ -10,8 +10,8 @@ type TTimeFilter = {
     handleDateChange: (values: { to?: moment.Moment; from?: moment.Moment; is_batch?: boolean }) => void;
     chosenTimeFilter?: string;
     setChosenTimeFilter: React.Dispatch<React.SetStateAction<string | undefined>>;
-    formattedSelectedRangeDate?: string;
-    setFormattedSelectedRangeDate: React.Dispatch<React.SetStateAction<string | undefined>>;
+    selectedRangeDateString?: string;
+    setSelectedDateRangeString: React.Dispatch<React.SetStateAction<string | undefined>>;
     setNoMatchesFound: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
@@ -52,8 +52,8 @@ const TimeFilter = ({
     handleDateChange,
     chosenTimeFilter,
     setChosenTimeFilter,
-    formattedSelectedRangeDate,
-    setFormattedSelectedRangeDate,
+    selectedRangeDateString,
+    setSelectedDateRangeString,
     setNoMatchesFound,
 }: TTimeFilter) => {
     const [isDropdownOpen, setIsDropdownOpen] = React.useState(false);
@@ -78,7 +78,7 @@ const TimeFilter = ({
 
     const onReset = () => {
         setChosenTimeFilter('');
-        setFormattedSelectedRangeDate('');
+        setSelectedDateRangeString('');
         setIsDropdownOpen(false);
         handleDateChange({
             from: Number(defaultCheckedTime)
@@ -91,7 +91,7 @@ const TimeFilter = ({
     };
 
     const chipLabelFormatting = () =>
-        formattedSelectedRangeDate ||
+        selectedRangeDateString ||
         timeFilterList.find(item => item.value === (chosenTimeFilter || defaultCheckedTime))?.label;
 
     return (
@@ -101,7 +101,7 @@ const TimeFilter = ({
                 dropdown
                 isDropdownOpen={isDropdownOpen}
                 onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                selected={!!(formattedSelectedRangeDate || chosenTimeFilter)}
+                selected={!!(selectedRangeDateString || chosenTimeFilter)}
                 size='sm'
             />
             <ActionSheet.Root isOpen={isDropdownOpen} onClose={() => setIsDropdownOpen(false)} position='left'>
@@ -109,7 +109,7 @@ const TimeFilter = ({
                     <ActionSheet.Header title={<Localize i18n_default_text='Filter by trade types' />} />
                     <ActionSheet.Content className='filter__item__wrapper'>
                         <RadioGroup
-                            selected={formattedSelectedRangeDate || chosenTimeFilter || defaultCheckedTime}
+                            selected={selectedRangeDateString || chosenTimeFilter || defaultCheckedTime}
                             onToggle={onRadioButtonChange}
                             size='sm'
                             className='filter__item--radio'
@@ -125,7 +125,7 @@ const TimeFilter = ({
                         </RadioGroup>
                         <CustomDateFilterButton
                             setShowDatePicker={setShowDatePicker}
-                            formattedSelectedRangeDate={formattedSelectedRangeDate}
+                            selectedRangeDateString={selectedRangeDateString}
                         />
                     </ActionSheet.Content>
                     <ActionSheet.Footer
@@ -142,7 +142,7 @@ const TimeFilter = ({
                 <DateRangePicker
                     isOpen={showDatePicker}
                     onClose={() => setShowDatePicker(false)}
-                    setFormattedSelectedRangeDate={setFormattedSelectedRangeDate}
+                    setSelectedDateRangeString={setSelectedDateRangeString}
                     handleDateChange={handleDateChange}
                 />
             )}

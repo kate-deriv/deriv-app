@@ -23,7 +23,7 @@ const PositionsContent = observer(({ hasButtonsDemo, isClosedTab, setHasButtonsD
     const [contractTypeFilter, setContractTypeFilter] = React.useState<string[]>([]);
     const [chosenTimeFilter, setChosenTimeFilter] = React.useState<string>();
     const [filteredPositions, setFilteredPositions] = React.useState<(TPortfolioPosition | TClosedPosition)[]>([]);
-    const [formattedSelectedRangeDate, setFormattedSelectedRangeDate] = React.useState<string>();
+    const [selectedRangeDateString, setSelectedDateRangeString] = React.useState<string>();
     const [noMatchesFound, setNoMatchesFound] = React.useState(false);
 
     const { common, client, portfolio } = useStore();
@@ -42,7 +42,7 @@ const PositionsContent = observer(({ hasButtonsDemo, isClosedTab, setHasButtonsD
         () => (isClosedTab ? closedPositions : active_positions),
         [active_positions, isClosedTab, closedPositions]
     );
-    const hasNoPositions = isClosedTab ? is_empty && !chosenTimeFilter && !formattedSelectedRangeDate : is_active_empty;
+    const hasNoPositions = isClosedTab ? is_empty && !chosenTimeFilter && !selectedRangeDateString : is_active_empty;
     const shouldShowEmptyMessage = hasNoPositions || noMatchesFound;
     const shouldShowContractCards =
         isClosedTab || (filteredPositions.length && (filteredPositions[0]?.contract_info as TContractInfo)?.status);
@@ -67,12 +67,12 @@ const PositionsContent = observer(({ hasButtonsDemo, isClosedTab, setHasButtonsD
     };
 
     React.useEffect(() => {
-        if (!positions.length && isClosedTab && (formattedSelectedRangeDate || chosenTimeFilter)) {
+        if (!positions.length && isClosedTab && (selectedRangeDateString || chosenTimeFilter)) {
             setNoMatchesFound(true);
         } else {
             setNoMatchesFound(false);
         }
-    }, [formattedSelectedRangeDate, chosenTimeFilter, positions, isClosedTab]);
+    }, [selectedRangeDateString, chosenTimeFilter, positions, isClosedTab]);
 
     if (isLoading || (!shouldShowContractCards && !shouldShowEmptyMessage)) return <Loading />;
     return (
@@ -85,8 +85,8 @@ const PositionsContent = observer(({ hasButtonsDemo, isClosedTab, setHasButtonsD
                                 chosenTimeFilter={chosenTimeFilter}
                                 setChosenTimeFilter={setChosenTimeFilter}
                                 handleDateChange={handleDateChange}
-                                formattedSelectedRangeDate={formattedSelectedRangeDate}
-                                setFormattedSelectedRangeDate={setFormattedSelectedRangeDate}
+                                selectedRangeDateString={selectedRangeDateString}
+                                setSelectedDateRangeString={setSelectedDateRangeString}
                                 setNoMatchesFound={setNoMatchesFound}
                             />
                         )}
