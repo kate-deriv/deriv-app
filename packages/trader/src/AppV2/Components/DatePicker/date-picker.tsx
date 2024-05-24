@@ -10,7 +10,7 @@ type TDateRangePicker = {
     handleDateChange: (values: { to?: moment.Moment; from?: moment.Moment; is_batch?: boolean }) => void;
 };
 const DateRangePicker = ({ isOpen, onClose, setFormattedSelectedRangeDate, handleDateChange }: TDateRangePicker) => {
-    const [formattedChosenRange, setFormattedChosenRange] = React.useState('');
+    const [formattedChosenRange, setFormattedChosenRange] = React.useState<string>();
     const [chosenRange, setChosenRange] = React.useState<(string | null | Date)[] | null | Date>([]);
 
     const onApply = () => {
@@ -43,8 +43,7 @@ const DateRangePicker = ({ isOpen, onClose, setFormattedSelectedRangeDate, handl
                         onAction: onApply,
                     }}
                     alignment='vertical'
-                    // TODO: update Quill to the latest version and disable button based on chosenRange
-                    // isPrimaryButtonDisabled
+                    isPrimaryButtonDisabled={!formattedChosenRange}
                 />
             </ActionSheet.Portal>
         </ActionSheet.Root>

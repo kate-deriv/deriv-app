@@ -69,6 +69,8 @@ const PositionsContent = observer(({ hasButtonsDemo, isClosedTab, setHasButtonsD
     React.useEffect(() => {
         if (!positions.length && isClosedTab && (formattedSelectedRangeDate || chosenTimeFilter)) {
             setNoMatchesFound(true);
+        } else {
+            setNoMatchesFound(false);
         }
     }, [formattedSelectedRangeDate, chosenTimeFilter, positions, isClosedTab]);
 
@@ -85,6 +87,7 @@ const PositionsContent = observer(({ hasButtonsDemo, isClosedTab, setHasButtonsD
                                 handleDateChange={handleDateChange}
                                 formattedSelectedRangeDate={formattedSelectedRangeDate}
                                 setFormattedSelectedRangeDate={setFormattedSelectedRangeDate}
+                                setNoMatchesFound={setNoMatchesFound}
                             />
                         )}
                         <ContractTypeFilter

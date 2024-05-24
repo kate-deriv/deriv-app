@@ -12,6 +12,7 @@ type TTimeFilter = {
     setChosenTimeFilter: React.Dispatch<React.SetStateAction<string | undefined>>;
     formattedSelectedRangeDate?: string;
     setFormattedSelectedRangeDate: React.Dispatch<React.SetStateAction<string | undefined>>;
+    setNoMatchesFound: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 // TODO: replace strings with numbers when types in Quill be changed
@@ -20,6 +21,7 @@ const timeFilterList = [
         value: '0',
         label: <Localize i18n_default_text='All time' />,
     },
+    // TODO: Fix today and yesterday
     {
         value: '1',
         label: <Localize i18n_default_text='Today' />,
@@ -52,6 +54,7 @@ const TimeFilter = ({
     setChosenTimeFilter,
     formattedSelectedRangeDate,
     setFormattedSelectedRangeDate,
+    setNoMatchesFound,
 }: TTimeFilter) => {
     const [isDropdownOpen, setIsDropdownOpen] = React.useState(false);
     const [showDatePicker, setShowDatePicker] = React.useState(false);
@@ -84,6 +87,7 @@ const TimeFilter = ({
             to: toMoment().endOf('day'),
             is_batch: true,
         });
+        setNoMatchesFound(false);
     };
 
     const chipLabelFormatting = () =>
@@ -111,7 +115,12 @@ const TimeFilter = ({
                             className='filter__item--radio'
                         >
                             {timeFilterList.map(({ value, label }) => (
-                                <RadioGroup.Item value={value} label={label.props.i18n_default_text} key={value} />
+                                <RadioGroup.Item
+                                    value={value}
+                                    label={label.props.i18n_default_text}
+                                    key={value}
+                                    radioButtonPosition='right'
+                                />
                             ))}
                         </RadioGroup>
                         <CustomDateFilterButton

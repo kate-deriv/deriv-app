@@ -48,11 +48,3 @@ $TABS_HEIGHT: 4.8rem;
         height: 100%;
     }
 }
-
-// TODO: Temporary style, waiting for new Quill version
-.disabled {
-    .quill__color--secondary-black {
-        pointer-events: none;
-        opacity: 0.1;
-    }
-}
