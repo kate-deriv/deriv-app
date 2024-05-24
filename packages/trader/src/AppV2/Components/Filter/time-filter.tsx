@@ -7,12 +7,11 @@ import CustomDateFilterButton from './custom-time-filter-button';
 import DateRangePicker from 'AppV2/Components/DatePicker';
 
 type TTimeFilter = {
-    handleDateChange: (
-        date_values: { from?: moment.Moment; to: moment.Moment; is_batch: boolean },
-        date_range?: {
-            date_range: any;
-        }
-    ) => void;
+    handleDateChange: (values: { to?: moment.Moment; from?: moment.Moment; is_batch?: boolean }) => void;
+    chosenTimeFilter?: string;
+    setChosenTimeFilter: React.Dispatch<React.SetStateAction<string | undefined>>;
+    formattedSelectedRangeDate?: string;
+    setFormattedSelectedRangeDate: React.Dispatch<React.SetStateAction<string | undefined>>;
 };
 
 // TODO: replace strings with numbers when types in Quill be changed
@@ -47,11 +46,15 @@ const timeFilterList = [
     },
 ];
 
-const TimeFilter = ({ handleDateChange }: TTimeFilter) => {
+const TimeFilter = ({
+    handleDateChange,
+    chosenTimeFilter,
+    setChosenTimeFilter,
+    formattedSelectedRangeDate,
+    setFormattedSelectedRangeDate,
+}: TTimeFilter) => {
     const [isDropdownOpen, setIsDropdownOpen] = React.useState(false);
     const [showDatePicker, setShowDatePicker] = React.useState(false);
-    const [chosenTimeFilter, setChosenTimeFilter] = React.useState<string>();
-    const [formattedSelectedRangeDate, setFormattedSelectedRangeDate] = React.useState<string>();
 
     const defaultCheckedTime = '0';
 
@@ -83,7 +86,9 @@ const TimeFilter = ({ handleDateChange }: TTimeFilter) => {
     };
 
     const chipLabelFormatting = () =>
-        timeFilterList.find(item => item.value === (chosenTimeFilter || defaultCheckedTime))?.label;
+        formattedSelectedRangeDate
+            ? formattedSelectedRangeDate
+            : timeFilterList.find(item => item.value === (chosenTimeFilter || defaultCheckedTime))?.label;
 
     return (
         <React.Fragment>
@@ -128,6 +133,7 @@ const TimeFilter = ({ handleDateChange }: TTimeFilter) => {
                     isOpen={showDatePicker}
                     onClose={() => setShowDatePicker(false)}
                     setFormattedSelectedRangeDate={setFormattedSelectedRangeDate}
+                    handleDateChange={handleDateChange}
                 />
             )}
         </React.Fragment>

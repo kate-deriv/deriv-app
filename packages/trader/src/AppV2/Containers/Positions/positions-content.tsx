@@ -21,7 +21,9 @@ export type TClosedPosition = {
 const PositionsContent = observer(
     ({ hasButtonsDemo, isClosedTab, onRedirectToTrade, setHasButtonsDemo }: TPositionsContentProps) => {
         const [contractTypeFilter, setContractTypeFilter] = React.useState<string[]>([]);
+        const [chosenTimeFilter, setChosenTimeFilter] = React.useState<string>();
         const [filteredPositions, setFilteredPositions] = React.useState<(TPortfolioPosition | TClosedPosition)[]>([]);
+        const [formattedSelectedRangeDate, setFormattedSelectedRangeDate] = React.useState<string>();
         const [noMatchesFound, setNoMatchesFound] = React.useState(false);
 
         const { client, portfolio } = useStore();
@@ -64,7 +66,15 @@ const PositionsContent = observer(
                 <div className='positions-page__container'>
                     {!emptyPositions && (
                         <div className='positions-page__filter__wrapper'>
-                            {isClosedTab && <TimeFilter handleDateChange={handleDateChange} />}
+                            {isClosedTab && (
+                                <TimeFilter
+                                    handleDateChange={handleDateChange}
+                                    chosenTimeFilter={chosenTimeFilter}
+                                    setChosenTimeFilter={setChosenTimeFilter}
+                                    formattedSelectedRangeDate={formattedSelectedRangeDate}
+                                    setFormattedSelectedRangeDate={setFormattedSelectedRangeDate}
+                                />
+                            )}
                             <ContractTypeFilter
                                 setContractTypeFilter={setContractTypeFilter}
                                 contractTypeFilter={contractTypeFilter}
