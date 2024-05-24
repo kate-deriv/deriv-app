@@ -8,10 +8,10 @@ import DateRangePicker from 'AppV2/Components/DatePicker';
 
 type TTimeFilter = {
     handleDateChange: (values: { to?: moment.Moment; from?: moment.Moment; is_batch?: boolean }) => void;
-    chosenTimeFilter?: string;
-    setChosenTimeFilter: (newTimeFilter?: string | undefined) => void;
+    timeFilter?: string;
+    setTimeFilter: (newTimeFilter?: string | undefined) => void;
     customTimeRangeFilter?: string;
-    setSelectedDateRangeString: (newCustomTimeFilter?: string | undefined) => void;
+    setCustomTimeRangeFilter: (newCustomTimeFilter?: string | undefined) => void;
     setNoMatchesFound: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
@@ -50,16 +50,18 @@ const timeFilterList = [
 
 const TimeFilter = ({
     handleDateChange,
-    chosenTimeFilter,
-    setChosenTimeFilter,
+    timeFilter,
+    setTimeFilter,
     customTimeRangeFilter,
-    setSelectedDateRangeString,
+    setCustomTimeRangeFilter,
     setNoMatchesFound,
 }: TTimeFilter) => {
     const [isDropdownOpen, setIsDropdownOpen] = React.useState(false);
     const [showDatePicker, setShowDatePicker] = React.useState(false);
 
     const defaultCheckedTime = '0';
+    const selectedRadioButtonValue = customTimeRangeFilter || timeFilter || defaultCheckedTime;
+    const isChipSelected = !!(customTimeRangeFilter || timeFilter);
 
     const onRadioButtonChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
@@ -67,7 +69,7 @@ const TimeFilter = ({
             onReset();
             return;
         }
-        setChosenTimeFilter(value);
+        setTimeFilter(value);
         setIsDropdownOpen(false);
         handleDateChange({
             from: Number(value) ? toMoment().startOf('day').subtract(Number(value), 'day').add(1, 's') : undefined,
@@ -77,8 +79,8 @@ const TimeFilter = ({
     };
 
     const onReset = () => {
-        setChosenTimeFilter('');
-        setSelectedDateRangeString('');
+        setTimeFilter('');
+        setCustomTimeRangeFilter('');
         setIsDropdownOpen(false);
         handleDateChange({
             from: Number(defaultCheckedTime)
@@ -91,8 +93,7 @@ const TimeFilter = ({
     };
 
     const chipLabelFormatting = () =>
-        customTimeRangeFilter ||
-        timeFilterList.find(item => item.value === (chosenTimeFilter || defaultCheckedTime))?.label;
+        customTimeRangeFilter || timeFilterList.find(item => item.value === (timeFilter || defaultCheckedTime))?.label;
 
     return (
         <React.Fragment>
@@ -101,7 +102,7 @@ const TimeFilter = ({
                 dropdown
                 isDropdownOpen={isDropdownOpen}
                 onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                selected={!!(customTimeRangeFilter || chosenTimeFilter)}
+                selected={isChipSelected}
                 size='sm'
             />
             <ActionSheet.Root isOpen={isDropdownOpen} onClose={() => setIsDropdownOpen(false)} position='left'>
@@ -109,7 +110,7 @@ const TimeFilter = ({
                     <ActionSheet.Header title={<Localize i18n_default_text='Filter by trade types' />} />
                     <ActionSheet.Content className='filter__item__wrapper'>
                         <RadioGroup
-                            selected={customTimeRangeFilter || chosenTimeFilter || defaultCheckedTime}
+                            selected={selectedRadioButtonValue}
                             onToggle={onRadioButtonChange}
                             size='sm'
                             className='filter__item--radio'
@@ -137,7 +138,7 @@ const TimeFilter = ({
                 <DateRangePicker
                     isOpen={showDatePicker}
                     onClose={() => setShowDatePicker(false)}
-                    setSelectedDateRangeString={setSelectedDateRangeString}
+                    setCustomTimeRangeFilter={setCustomTimeRangeFilter}
                     handleDateChange={handleDateChange}
                 />
             )}

@@ -84,11 +84,11 @@ const PositionsContent = observer(({ hasButtonsDemo, isClosedTab, setHasButtonsD
                     <div className='positions-page__filter__wrapper'>
                         {isClosedTab && (
                             <TimeFilter
-                                chosenTimeFilter={timeFilter}
-                                setChosenTimeFilter={setTimeFilter}
+                                timeFilter={timeFilter}
+                                setTimeFilter={setTimeFilter}
                                 handleDateChange={handleDateChange}
                                 customTimeRangeFilter={customTimeRangeFilter}
-                                setSelectedDateRangeString={setCustomTimeRangeFilter}
+                                setCustomTimeRangeFilter={setCustomTimeRangeFilter}
                                 setNoMatchesFound={setNoMatchesFound}
                             />
                         )}

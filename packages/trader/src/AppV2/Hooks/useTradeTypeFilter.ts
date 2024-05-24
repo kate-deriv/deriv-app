@@ -10,8 +10,6 @@ const useTradeTypeFilter = ({ isClosedTab }: TUseTradeTypeFilter) => {
     const contractTypeFilter = isClosedTab ? closedContractTypeFilter : openContractTypeFilter;
     const setContractTypeFilter = isClosedTab ? setClosedContractTypeFilter : setOpenContractTypeFilter;
 
-    // TODO: extract filtration logic from positions-content and move here
-
     return { contractTypeFilter, setContractTypeFilter };
 };
 
