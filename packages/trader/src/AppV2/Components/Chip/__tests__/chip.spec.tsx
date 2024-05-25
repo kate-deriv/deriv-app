@@ -15,11 +15,13 @@ describe('Chip', () => {
         userEvent.click(chipButton);
         expect(mockProps.onClick).toBeCalled();
     });
+
     it('should render component with label if it was passed', () => {
         render(<Chip {...mockProps} label={label} />);
 
         expect(screen.getByText(label)).toBeInTheDocument();
     });
+
     it('should render component with applied size for label if label and size were passed', () => {
         render(<Chip {...mockProps} label={label} size='sm' />);
 
@@ -27,6 +29,7 @@ describe('Chip', () => {
             'quill-typography__body-text__size--sm__weight--regular__decoration--default quill-typography__color--default'
         );
     });
+
     it('should render component with dropdown and specific className if dropdown was passed', () => {
         render(<Chip {...mockProps} dropdown />);
 
@@ -37,6 +40,7 @@ describe('Chip', () => {
         expect(dropdown).toBeInTheDocument();
         expect(dropdown).toHaveAttribute('data-state', 'close');
     });
+
     it('should render component with specific className if it was passed', () => {
         const className = 'mockClassName';
         render(<Chip {...mockProps} className={className} />);
@@ -44,12 +48,14 @@ describe('Chip', () => {
         const chipButton = screen.getByRole('button');
         expect(chipButton).toHaveClass(className);
     });
+
     it('should render component data-state === selected if selected was passed', () => {
         render(<Chip {...mockProps} selected />);
 
         const chipButton = screen.getByRole('button');
         expect(chipButton).toHaveAttribute('data-state', 'selected');
     });
+
     it('should render component with dropdown data-state === open if dropdown and isDropdownOpen are true', () => {
         render(<Chip {...mockProps} dropdown isDropdownOpen />);
 
