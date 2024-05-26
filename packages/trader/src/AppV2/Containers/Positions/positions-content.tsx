@@ -66,15 +66,16 @@ const PositionsContent = observer(({ hasButtonsDemo, isClosedTab, setHasButtonsD
             setFilteredPositions(positions);
         }
     };
-
+    // TODO: Problem with double filter
     React.useEffect(() => {
-        if (!positions.length && isClosedTab && (customTimeRangeFilter || timeFilter)) {
-            setNoMatchesFound(true);
-        } else {
-            setNoMatchesFound(false);
+        if (isClosedTab) {
+            if (is_empty && (timeFilter || customTimeRangeFilter)) {
+                setNoMatchesFound(true);
+            } else {
+                setNoMatchesFound(false);
+            }
         }
-        handleTradeTypeFilterChange(contractTypeFilter);
-    }, [customTimeRangeFilter, timeFilter, positions, isClosedTab]);
+    }, [customTimeRangeFilter, timeFilter, is_empty, isClosedTab]);
 
     if (isLoading || (!shouldShowContractCards && !shouldShowEmptyMessage)) return <Loading />;
     return (

@@ -15,19 +15,17 @@ type TTimeFilter = {
     setNoMatchesFound: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-// TODO: replace strings with numbers when types in Quill be changed
 const timeFilterList = [
     {
         value: '0',
         label: <Localize i18n_default_text='All time' />,
     },
-    // TODO: Fix today and yesterday
     {
-        value: '1',
+        value: 'Today',
         label: <Localize i18n_default_text='Today' />,
     },
     {
-        value: '2',
+        value: 'Yesterday',
         label: <Localize i18n_default_text='Yesterday' />,
     },
     {
@@ -71,11 +69,26 @@ const TimeFilter = ({
         }
         setTimeFilter(value);
         setIsDropdownOpen(false);
-        handleDateChange({
-            from: Number(value) ? toMoment().startOf('day').subtract(Number(value), 'day').add(1, 's') : undefined,
-            to: toMoment().endOf('day'),
-            is_batch: true,
-        });
+
+        if (value === 'Today') {
+            handleDateChange({
+                from: toMoment().startOf('day'),
+                to: toMoment().endOf('day'),
+                is_batch: true,
+            });
+        } else if (value === 'Yesterday') {
+            handleDateChange({
+                from: toMoment().subtract(1, 'days').startOf('day'),
+                to: toMoment().subtract(1, 'days').endOf('day'),
+                is_batch: true,
+            });
+        } else {
+            handleDateChange({
+                from: Number(value) ? toMoment().startOf('day').subtract(Number(value), 'day').add(1, 's') : undefined,
+                to: toMoment().endOf('day'),
+                is_batch: true,
+            });
+        }
     };
 
     const onReset = () => {
@@ -83,9 +96,6 @@ const TimeFilter = ({
         setCustomTimeRangeFilter('');
         setIsDropdownOpen(false);
         handleDateChange({
-            from: Number(defaultCheckedTime)
-                ? toMoment().startOf('day').subtract(Number(defaultCheckedTime), 'day').add(1, 's')
-                : undefined,
             to: toMoment().endOf('day'),
             is_batch: true,
         });
