@@ -69,11 +69,7 @@ const PositionsContent = observer(({ hasButtonsDemo, isClosedTab, setHasButtonsD
 
     React.useEffect(() => {
         if (isClosedTab) {
-            if (!positions.length && (timeFilter || customTimeRangeFilter)) {
-                setNoMatchesFound(true);
-            } else {
-                setNoMatchesFound(false);
-            }
+            setNoMatchesFound(!positions.length && !!(timeFilter || customTimeRangeFilter));
 
             // For cases with 2 filters: when time filter was reset and we received new positions, we need to filter them by contract type
             if (contractTypeFilter.length && positions.length && !timeFilter && !customTimeRangeFilter) {
