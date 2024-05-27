@@ -7,12 +7,12 @@ import CustomDateFilterButton from './custom-time-filter-button';
 import DateRangePicker from 'AppV2/Components/DatePicker';
 
 type TTimeFilter = {
-    handleDateChange: (values: { to?: moment.Moment; from?: moment.Moment; is_batch?: boolean }) => void;
-    timeFilter?: string;
-    setTimeFilter: (newTimeFilter?: string | undefined) => void;
     customTimeRangeFilter?: string;
+    handleDateChange: (values: { to?: moment.Moment; from?: moment.Moment; is_batch?: boolean }) => void;
+    setTimeFilter: (newTimeFilter?: string | undefined) => void;
     setCustomTimeRangeFilter: (newCustomTimeFilter?: string | undefined) => void;
     setNoMatchesFound: React.Dispatch<React.SetStateAction<boolean>>;
+    timeFilter?: string;
 };
 
 const timeFilterList = [
@@ -47,12 +47,12 @@ const timeFilterList = [
 ];
 
 const TimeFilter = ({
-    handleDateChange,
-    timeFilter,
-    setTimeFilter,
     customTimeRangeFilter,
+    handleDateChange,
+    setTimeFilter,
     setCustomTimeRangeFilter,
     setNoMatchesFound,
+    timeFilter,
 }: TTimeFilter) => {
     const [isDropdownOpen, setIsDropdownOpen] = React.useState(false);
     const [showDatePicker, setShowDatePicker] = React.useState(false);
@@ -108,9 +108,9 @@ const TimeFilter = ({
     return (
         <React.Fragment>
             <Chip
-                label={chipLabelFormatting()}
                 dropdown
                 isDropdownOpen={isDropdownOpen}
+                label={chipLabelFormatting()}
                 onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                 selected={isChipSelected}
                 size='sm'
@@ -120,36 +120,37 @@ const TimeFilter = ({
                     <ActionSheet.Header title={<Localize i18n_default_text='Filter by trade types' />} />
                     <ActionSheet.Content className='filter__item__wrapper'>
                         <RadioGroup
-                            selected={selectedRadioButtonValue}
-                            onToggle={onRadioButtonChange}
-                            size='sm'
                             className='filter__item--radio'
+                            onToggle={onRadioButtonChange}
+                            selected={selectedRadioButtonValue}
+                            size='sm'
                         >
                             {timeFilterList.map(({ value, label }) => (
                                 <RadioGroup.Item value={value} label={label} key={value} radioButtonPosition='right' />
                             ))}
                         </RadioGroup>
                         <CustomDateFilterButton
-                            setShowDatePicker={setShowDatePicker}
                             customTimeRangeFilter={customTimeRangeFilter}
+                            setShowDatePicker={setShowDatePicker}
                         />
                     </ActionSheet.Content>
                     <ActionSheet.Footer
+                        alignment='vertical'
+                        // TODO: Replace btn name with localize after quill type updates
                         secondaryAction={{
                             content: 'Reset',
                             onAction: onReset,
                         }}
-                        alignment='vertical'
                         shouldCloseOnSecondaryButtonClick={false}
                     />
                 </ActionSheet.Portal>
             </ActionSheet.Root>
             {showDatePicker && (
                 <DateRangePicker
+                    handleDateChange={handleDateChange}
                     isOpen={showDatePicker}
                     onClose={() => setShowDatePicker(false)}
                     setCustomTimeRangeFilter={setCustomTimeRangeFilter}
-                    handleDateChange={handleDateChange}
                 />
             )}
         </React.Fragment>
