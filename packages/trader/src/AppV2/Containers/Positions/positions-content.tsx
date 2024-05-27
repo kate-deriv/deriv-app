@@ -83,26 +83,24 @@ const PositionsContent = observer(({ hasButtonsDemo, isClosedTab, setHasButtonsD
     if (isLoading || (!shouldShowContractCards && !shouldShowEmptyMessage)) return <Loading />;
     return (
         <div className={`positions-page__${isClosedTab ? 'closed' : 'open'}`}>
-            <React.Fragment>
-                {!hasNoPositions && (
-                    <div className='positions-page__filter__wrapper'>
-                        {isClosedTab && (
-                            <TimeFilter
-                                timeFilter={timeFilter}
-                                setTimeFilter={setTimeFilter}
-                                handleDateChange={handleDateChange}
-                                customTimeRangeFilter={customTimeRangeFilter}
-                                setCustomTimeRangeFilter={setCustomTimeRangeFilter}
-                                setNoMatchesFound={setNoMatchesFound}
-                            />
-                        )}
-                        <ContractTypeFilter
-                            setContractTypeFilter={filterValues => handleTradeTypeFilterChange(filterValues)}
-                            contractTypeFilter={contractTypeFilter}
+            {!hasNoPositions && (
+                <div className='positions-page__filter__wrapper'>
+                    {isClosedTab && (
+                        <TimeFilter
+                            timeFilter={timeFilter}
+                            setTimeFilter={setTimeFilter}
+                            handleDateChange={handleDateChange}
+                            customTimeRangeFilter={customTimeRangeFilter}
+                            setCustomTimeRangeFilter={setCustomTimeRangeFilter}
+                            setNoMatchesFound={setNoMatchesFound}
                         />
-                    </div>
-                )}
-            </React.Fragment>
+                    )}
+                    <ContractTypeFilter
+                        setContractTypeFilter={filterValues => handleTradeTypeFilterChange(filterValues)}
+                        contractTypeFilter={contractTypeFilter}
+                    />
+                </div>
+            )}
             {shouldShowEmptyMessage ? (
                 <EmptyPositions isClosedTab={isClosedTab} noMatchesFound={noMatchesFound} />
             ) : (
