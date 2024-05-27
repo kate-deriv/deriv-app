@@ -7,16 +7,16 @@ type TFormatDate = ({
     locale,
     dateFormattingConfig,
 }: {
-    time: string;
+    time: string | number | Date;
     locale?: string;
     dateFormattingConfig?: Record<string, string>;
 }) => string;
 
-export const DEFAULT_DATE_FORMATTING_CONFIG = Object.freeze({
+export const DEFAULT_DATE_FORMATTING_CONFIG = {
     day: '2-digit',
     month: 'short',
     year: 'numeric',
-});
+} as Record<string, string>;
 
 export const filterPositions = (positions: (TPortfolioPosition | TClosedPosition)[], filter: string[]) => {
     // Split contract type names with '/' (e.g. Rise/Fall)

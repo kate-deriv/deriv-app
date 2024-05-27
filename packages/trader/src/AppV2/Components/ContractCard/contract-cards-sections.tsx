@@ -10,7 +10,11 @@ type TContractCardsSections = {
 };
 
 const ContractCardsSections = ({ positions }: TContractCardsSections) => {
-    const dates = positions?.map(element => formatDate({ time: String(element.contract_info.sell_time) }));
+    const dates = positions?.map(element => {
+        const sellTime = element.contract_info.sell_time;
+        return sellTime && formatDate({ time: sellTime });
+    });
+
     const uniqueDates = [...new Set(dates)];
 
     if (!positions?.length) return null;
@@ -22,9 +26,10 @@ const ContractCardsSections = ({ positions }: TContractCardsSections) => {
                         {date}
                     </Text>
                     <ContractCardList
-                        positions={positions.filter(
-                            position => formatDate({ time: String(position.contract_info.sell_time) }) === date
-                        )}
+                        positions={positions.filter(position => {
+                            const sellTime = position.contract_info.sell_time;
+                            return sellTime && formatDate({ time: sellTime }) === date;
+                        })}
                     />
                 </div>
             ))}

@@ -2,10 +2,9 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import ContractCardsSections from '../contract-cards-sections';
 
-jest.mock('App/Components/Routes', () => ({
-    ...jest.requireActual('App/Components/Routes'),
-    BinaryLink: jest.fn(({ children }) => children),
-}));
+const ContractCard = 'Contract Card';
+
+jest.mock('../contract-card', () => jest.fn(() => <div>{ContractCard}</div>));
 
 const mockProps = {
     positions: [
@@ -67,11 +66,6 @@ describe('ContractCardsSections', () => {
 
         const dateSeparator = screen.getByText('27 May 2024');
         expect(dateSeparator).toBeInTheDocument();
-
-        const stakeAndTPLContainer = screen.getAllByTestId('dt_span');
-        expect(stakeAndTPLContainer).toHaveLength(4);
-
-        expect(screen.getByText('Turbos Up')).toBeInTheDocument();
-        expect(screen.getByText('Multipliers Up')).toBeInTheDocument();
+        expect(screen.getAllByText(ContractCard)).toHaveLength(2);
     });
 });
