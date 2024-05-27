@@ -2,6 +2,7 @@ import React from 'react';
 import { TClosedPosition } from 'AppV2/Containers/Positions/positions-content';
 import { TPortfolioPosition } from '@deriv/stores/types';
 import { Text } from '@deriv-com/quill-ui';
+import { formatDate } from 'AppV2/Utils/positions-utils';
 import ContractCardList from './contract-card-list';
 
 type TContractCardsSections = {
@@ -9,13 +10,7 @@ type TContractCardsSections = {
 };
 
 const ContractCardsSections = ({ positions }: TContractCardsSections) => {
-    const dates = positions?.map(element =>
-        new Date(element.contract_info.sell_time as string).toLocaleDateString(navigator.language, {
-            day: '2-digit',
-            month: 'short',
-            year: 'numeric',
-        })
-    );
+    const dates = positions?.map(element => formatDate({ time: String(element.contract_info.sell_time) }));
     const uniqueDates = [...new Set(dates)];
 
     if (!positions?.length) return null;
@@ -28,15 +23,7 @@ const ContractCardsSections = ({ positions }: TContractCardsSections) => {
                     </Text>
                     <ContractCardList
                         positions={positions.filter(
-                            position =>
-                                new Date(position.contract_info.sell_time as string).toLocaleDateString(
-                                    navigator.language,
-                                    {
-                                        day: '2-digit',
-                                        month: 'short',
-                                        year: 'numeric',
-                                    }
-                                ) === date
+                            position => formatDate({ time: String(position.contract_info.sell_time) }) === date
                         )}
                     />
                 </div>
