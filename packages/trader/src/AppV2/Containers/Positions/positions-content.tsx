@@ -1,5 +1,4 @@
 import React from 'react';
-import moment from 'moment';
 import { TContractInfo } from '@deriv/shared';
 import { Loading } from '@deriv/components';
 import { observer, useStore } from '@deriv/stores';
@@ -29,7 +28,7 @@ const PositionsContent = observer(({ hasButtonsDemo, isClosedTab, setHasButtonsD
     const [noMatchesFound, setNoMatchesFound] = React.useState(false);
 
     const { common, client, portfolio } = useStore();
-    const { server_time = moment() } = isClosedTab ? {} : common; // Server time is required for cards update in Open positions
+    const { server_time = undefined } = isClosedTab ? {} : common; // Server time is required only to update cards timers in Open positions
     const { currency } = client;
     const { active_positions, is_active_empty, onClickCancel, onClickSell, onMount: onOpenTabMount } = portfolio;
     const {
