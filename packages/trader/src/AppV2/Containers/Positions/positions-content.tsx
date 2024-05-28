@@ -7,11 +7,11 @@ import { EmptyPositions, TEmptyPositionsProps } from 'AppV2/Components/EmptyPosi
 import { TPortfolioPosition } from '@deriv/stores/types';
 import { ContractCardList, ContractCardsSections } from 'AppV2/Components/ContractCard';
 import { ContractTypeFilter, TimeFilter } from 'AppV2/Components/Filter';
+import TotalProfitLoss from 'AppV2/Components/TotalProfitLoss';
 import { filterPositions, getTotalPositionsProfit } from '../../Utils/positions-utils';
 import { TReportsStore, useReportsStore } from '../../../../../reports/src/Stores/useReportsStores';
 import useTradeTypeFilter from 'AppV2/Hooks/useTradeTypeFilter';
 import useTimeFilter from 'AppV2/Hooks/useTimeFilter';
-import TotalProfitLoss from './total-profit-loss';
 
 type TPositionsContentProps = Omit<TEmptyPositionsProps, 'noMatchesFound'> & {
     hasButtonsDemo?: boolean;
